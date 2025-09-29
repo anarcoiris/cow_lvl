@@ -1,0 +1,1281 @@
+#!/usr/bin/env python3
+# trading_gui_extended.py
+"""
+Trading GUI extended: preview · prepare dataset · train model · backtest
+- Uses fiboevo for features and model (expects fiboevo.add_technical_features and LSTM2Head)
+- Thread-safe logging via queue
+- Separate Prepare(Data) and Train(Model) workers; also combined Prepare+Train
+- Saves artifacts in ./artifacts/
+"""
+
+
+from __future__ import annotations
+import threading
+import time
+import json
+import traceback
+
+# --------------- logging setup
+import logging
+import logging.handlers
+import os
+from pathlib import Path
+from datetime import datetime
+import sys
+import traceback
+
+def init_logging(log_dir: str = "logs", app_name: str = "trading_gui", level: int = logging.INFO, max_bytes: int = 10_000_000, backup_count: int = 5):
+    """
+    Inicializa logging con:
+      - fichero logs/log_YYYYMMDD_HHMMSS.txt (rotating handler)
+      - salida a consola
+      - captura de excepciones no manejadas
+    Llamar lo antes posible en el script principal.
+    """
+    # ensure dir
+    ld = Path(log_dir)
+    ld.mkdir(parents=True, exist_ok=True)
+
+    ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    logfile = ld / f"log_{ts}.txt"
+
+    root = logging.getLogger()
+    root.setLevel(level)
+
+    # formatter
+    fmt = logging.Formatter("[%(asctime)s] %(levelname)s %(name)s: %(message)s", "%Y-%m-%d %H:%M:%S")
+
+    # rotating file handler
+    fh = logging.handlers.RotatingFileHandler(str(logfile), maxBytes=max_bytes, backupCount=backup_count, encoding="utf-8")
+    fh.setLevel(level)
+    fh.setFormatter(fmt)
+    root.addHandler(fh)
+
+    # console handler
+    ch = logging.StreamHandler()
+    ch.setLevel(level)
+    ch.setFormatter(fmt)
+    root.addHandler(ch)
+
+    # uncaught exceptions -> log
+    def excepthook(exc_type, exc_value, exc_tb):
+        root.critical("Uncaught exception", exc_info=(exc_type, exc_value, exc_tb))
+        # also print to stderr
+        sys.__excepthook__(exc_type, exc_value, exc_tb)
+
+    sys.excepthook = excepthook
+
+    # log startup info
+    root.info("init_logging: logfile=%s", logfile)
+    root.debug("Python executable: %s", sys.executable)
+    root.debug("CWD: %s", os.getcwd())
+    root.debug("sys.path: %s", sys.path)
+    return logfile
+
+# Example of use (call at very top, before heavy imports):
+# LOGFILE = init_logging(log_dir="logs", app_name="trading_gui", level=logging.DEBUG)
+# logging.getLogger(__name__).info("Logging initialized")
+
+import queue
+from typing import Optional, List, Dict, Any
+import math
+
+import numpy as np
+import pandas as pd
+from tkinter import *
+from tkinter import ttk, filedialog, messagebox
+
+# optional deps
+try:
+    import torch
+except Exception:
+    torch = None
+
+try:
+    import joblib
+except Exception:
+    joblib = None
+
+try:
+    from sklearn.preprocessing import StandardScaler
+except Exception:
+    StandardScaler = None
+
+# local modules (robust import)
+try:
+    from trading_daemon import TradingDaemon
+except Exception:
+    TradingDaemon = None
+
+# Normalize fiboevo import so 'fibo' variable is always present (fix inconsistency)
+try:
+    import fiboevo as fibo
+except Exception:
+    try:
+        import importlib
+        fibo = importlib.import_module("fiboevo")
+    except Exception:
+        fibo = None
+
+try:
+    import utils_clean as utils
+except Exception:
+    try:
+        import utils as utils
+    except Exception:
+        utils = None
+
+APP_TITLE = "Trading GUI Extended (Prepare · Train · Backtest)"
+
+
+
+def safe_now_str():
+    return time.strftime("%Y-%m-%d %H:%M:%S")
+
+def detect_suspicious_feature_names(feature_cols: List[str]) -> List[str]:
+    import re
+    return [c for c in feature_cols if re.match(r"^lr_\d+$", c)]
+
+# --------------------------
+# Main GUI
+# --------------------------
+class TradingAppExtended:
+    POLL_MS = 250
+
+    def __init__(self, root):
+        self.root = root
+        root.title(APP_TITLE)
+        root.geometry("1200x800")
+
+        # Config vars
+        self.sqlite_path = StringVar(value="data_manager/exports/marketdata_base.db")
+        self.table = StringVar(value="ohlcv")
+        self.symbol = StringVar(value="BTCUSDT")
+        self.timeframe = StringVar(value="30m")
+        self.seq_len = IntVar(value=32)
+        self.horizon = IntVar(value=10)
+        self.batch_size = IntVar(value=64)
+        self.epochs = IntVar(value=10)
+        self.hidden = IntVar(value=64)
+        self.lr = DoubleVar(value=1e-3)
+        self.val_frac = DoubleVar(value=0.1)
+        self.dtype_choice = StringVar(value="float32")
+        self.feature_cols_manual = StringVar(value="")
+
+        # internals
+        self.daemon: Optional[TradingDaemon] = None
+        self.training_thread: Optional[threading.Thread] = None
+        self.prepare_thread: Optional[threading.Thread] = None
+        self.combine_thread: Optional[threading.Thread] = None
+        self.backtest_thread: Optional[threading.Thread] = None
+
+        # thread-safe logging queue
+        self.log_queue: "queue.Queue[str]" = queue.Queue()
+
+        # dataframes for preview
+        self.df_loaded: Optional[pd.DataFrame] = None
+        self.df_features: Optional[pd.DataFrame] = None
+        self.df_scaled: Optional[pd.DataFrame] = None
+
+        # arrays for training
+        self.X_full: Optional[np.ndarray] = None
+        self.y_full: Optional[np.ndarray] = None
+        self.feature_cols_used: Optional[List[str]] = None
+        self.scaler_used: Optional[Any] = None
+
+        # model artifacts in memory
+        self.model = None
+        self.model_meta = None
+        self.model_scaler = None
+
+        # config path
+        self.config_path = Path("config/gui_config.json")
+
+        # build UI
+        self._build_ui()
+
+        # load saved config if any
+        self._load_config_on_start()
+
+        # schedule log flush
+        self._schedule_log_flush()
+
+    # --------------------------
+    # UI building
+    # --------------------------
+    def _build_ui(self):
+        top = Frame(self.root)
+        top.pack(side=TOP, fill=X, padx=6, pady=6)
+
+        Label(top, text="SQLite:").pack(side=LEFT)
+        Entry(top, textvariable=self.sqlite_path, width=40).pack(side=LEFT, padx=4)
+        Button(top, text="Browse", command=self._browse_sqlite).pack(side=LEFT, padx=4)
+        Label(top, text="Table:").pack(side=LEFT, padx=(8,0))
+        Entry(top, textvariable=self.table, width=10).pack(side=LEFT, padx=4)
+        Label(top, text="Symbol:").pack(side=LEFT, padx=(8,0))
+        Entry(top, textvariable=self.symbol, width=12).pack(side=LEFT, padx=4)
+        Label(top, text="TF:").pack(side=LEFT, padx=(8,0))
+        Entry(top, textvariable=self.timeframe, width=6).pack(side=LEFT, padx=4)
+
+        frame_ctl = Frame(self.root)
+        frame_ctl.pack(side=TOP, fill=X, padx=6, pady=6)
+        self.btn_start = Button(frame_ctl, text="Start Daemon", bg="#4CAF50", fg="white", command=self._start_daemon)
+        self.btn_start.pack(side=LEFT, padx=6)
+        self.btn_stop = Button(frame_ctl, text="Stop Daemon", bg="#f44336", fg="white", command=self._stop_daemon, state=DISABLED)
+        self.btn_stop.pack(side=LEFT, padx=6)
+
+        # Notebook
+        self.nb = ttk.Notebook(self.root)
+        self.nb.pack(side=TOP, fill=BOTH, expand=True, padx=6, pady=6)
+
+        # Tabs
+        self._build_preview_tab()
+        self._build_train_tab()
+        self._build_backtest_tab()
+        self._build_status_tab()
+
+        # Logs area
+        frame_logs = Frame(self.root)
+        frame_logs.pack(side=BOTTOM, fill=BOTH, padx=6, pady=6)
+        Label(frame_logs, text="Logs").pack(anchor="w")
+        self.txt_logs = Text(frame_logs, height=8)
+        self.txt_logs.pack(fill=BOTH, expand=True)
+        Button(frame_logs, text="Clear logs", command=self._clear_logs).pack(side=LEFT, padx=6)
+
+    def _build_preview_tab(self):
+        tab = Frame(self.nb); self.nb.add(tab, text="Preview")
+        top = Frame(tab); top.pack(fill=X, padx=6, pady=6)
+        Label(top, text="Preview latest rows from SQLite:").pack(side=LEFT)
+        Button(top, text="Refresh Preview", command=self._refresh_preview).pack(side=LEFT, padx=6)
+        Button(top, text="Preview loaded (df_loaded)", command=lambda: self._show_preview("loaded")).pack(side=LEFT, padx=6)
+        Button(top, text="Preview features", command=lambda: self._show_preview("features")).pack(side=LEFT, padx=6)
+        Button(top, text="Preview scaled", command=lambda: self._show_preview("scaled")).pack(side=LEFT, padx=6)
+
+        self.preview_tree = ttk.Treeview(tab)
+        self.preview_tree.pack(fill=BOTH, expand=True, padx=6, pady=6)
+
+    def _build_train_tab(self):
+        tab = Frame(self.nb); self.nb.add(tab, text="Training")
+        left = Frame(tab); left.pack(side=LEFT, fill=Y, padx=6, pady=6)
+        Label(left, text="Training config", font=("Arial",11,"bold")).pack(anchor="w")
+        self._add_labeled_entry(left, "seq_len", self.seq_len)
+        self._add_labeled_entry(left, "horizon", self.horizon)
+        self._add_labeled_entry(left, "hidden", self.hidden)
+        self._add_labeled_entry(left, "epochs", self.epochs)
+        self._add_labeled_entry(left, "batch_size", self.batch_size)
+        self._add_labeled_entry(left, "learning rate", self.lr)
+        self._add_labeled_entry(left, "val fraction", self.val_frac)
+        Label(left, text="dtype:").pack(anchor="w", pady=(6,0))
+        OptionMenu(left, self.dtype_choice, "float32", "float64").pack(anchor="w")
+        Label(left, text="feature_cols (comma optional)").pack(anchor="w", pady=(6,0))
+        Entry(left, textvariable=self.feature_cols_manual, width=30).pack(anchor="w")
+        Button(left, text="Save Config", command=self._save_config).pack(anchor="w", pady=(6,2))
+        Button(left, text="Prepare Data (background)", command=self._start_prepare).pack(anchor="w", pady=(2,2))
+        Button(left, text="Train Model (background)", command=self._start_train_model).pack(anchor="w", pady=(2,2))
+        Button(left, text="Prepare + Train (background)", command=self._start_prepare_and_train).pack(anchor="w", pady=(2,2))
+        Button(left, text="Load artifacts model", command=self._load_model_from_artifacts).pack(anchor="w", pady=(6,2))
+
+        right = Frame(tab); right.pack(side=LEFT, fill=BOTH, expand=True, padx=6, pady=6)
+        Label(right, text="Prepare / Train log & previews", font=("Arial",11,"bold")).pack(anchor="w")
+        self.train_info_text = Text(right)
+        self.train_info_text.pack(fill=BOTH, expand=True)
+
+    def _build_backtest_tab(self):
+        tab = Frame(self.nb); self.nb.add(tab, text="Backtest")
+        top = Frame(tab); top.pack(fill=X, padx=6, pady=6)
+        Label(top, text="enter_th").pack(side=LEFT)
+        Entry(top, textvariable=DoubleVar(value=0.0005), width=8).pack(side=LEFT, padx=4)  # placeholder local
+        Button(top, text="Run simple backtest", command=self._start_backtest).pack(side=LEFT, padx=6)
+        self.bt_text = Text(tab, height=20)
+        self.bt_text.pack(fill=BOTH, expand=True, padx=6, pady=6)
+
+    def _build_status_tab(self):
+        tab = Frame(self.nb); self.nb.add(tab, text="Status")
+        Label(tab, text="Daemon status & ledger").pack(anchor="w", padx=6, pady=4)
+        self.status_tree = ttk.Treeview(tab, columns=("v",), show="headings", height=10)
+        self.status_tree.heading("v", text="Value")
+        self.status_tree.pack(fill=BOTH, padx=6, pady=6)
+
+    def _add_labeled_entry(self, parent, label, var):
+        Label(parent, text=label).pack(anchor="w", pady=(6,0))
+        Entry(parent, textvariable=var).pack(anchor="w", pady=(0,6))
+
+    # --------------------------
+    # Logging queue flush & helpers
+    # --------------------------
+    def _enqueue_log(self, msg: str):
+        ts = safe_now_str()
+        try:
+            self.log_queue.put(f"[{ts}] {msg}")
+        except Exception:
+            pass
+
+    def _schedule_log_flush(self):
+        """Main-thread: flush queue to text widget periodically."""
+        try:
+            for _ in range(200):
+                try:
+                    line = self.log_queue.get_nowait()
+                except queue.Empty:
+                    break
+                self.txt_logs.insert(END, line + "\n")
+                self.txt_logs.see(END)
+        except Exception:
+            # avoid crash
+            try:
+                self.txt_logs.insert(END, f"[{safe_now_str()}] ERROR flushing logs\n")
+            except Exception:
+                pass
+        finally:
+            self.root.after(self.POLL_MS, self._schedule_log_flush)
+
+    def _append_log(self, msg: str):
+        """Safe to call from main thread (puts in queue too)."""
+        self._enqueue_log(msg)
+
+    def _clear_logs(self):
+        self.txt_logs.delete("1.0", END)
+
+    # --------------------------
+    # Config persistence
+    # --------------------------
+    def _save_config(self):
+        cfg = {
+            "sqlite_path": self.sqlite_path.get(),
+            "table": self.table.get(),
+            "symbol": self.symbol.get(),
+            "timeframe": self.timeframe.get(),
+            "seq_len": int(self.seq_len.get()),
+            "horizon": int(self.horizon.get()),
+            "hidden": int(self.hidden.get()),
+            "epochs": int(self.epochs.get()),
+            "batch_size": int(self.batch_size.get()),
+            "lr": float(self.lr.get()),
+            "val_frac": float(self.val_frac.get()),
+            "dtype": self.dtype_choice.get(),
+            "feature_cols_manual": self.feature_cols_manual.get()
+        }
+        try:
+            self.config_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(self.config_path, "w", encoding="utf-8") as f:
+                json.dump(cfg, f, indent=2)
+            self._enqueue_log(f"Config saved to {self.config_path}")
+        except Exception as e:
+            self._enqueue_log(f"Save config failed: {e}")
+
+    def _load_config_on_start(self):
+        if self.config_path.exists():
+            try:
+                cfg = json.loads(self.config_path.read_text(encoding="utf-8"))
+                self.sqlite_path.set(cfg.get("sqlite_path", self.sqlite_path.get()))
+                self.table.set(cfg.get("table", self.table.get()))
+                self.symbol.set(cfg.get("symbol", self.symbol.get()))
+                self.timeframe.set(cfg.get("timeframe", self.timeframe.get()))
+                self.seq_len.set(cfg.get("seq_len", self.seq_len.get()))
+                self.horizon.set(cfg.get("horizon", self.horizon.get()))
+                self.hidden.set(cfg.get("hidden", self.hidden.get()))
+                self.epochs.set(cfg.get("epochs", self.epochs.get()))
+                self.batch_size.set(cfg.get("batch_size", self.batch_size.get()))
+                self.lr.set(cfg.get("lr", self.lr.get()))
+                self.val_frac.set(cfg.get("val_frac", self.val_frac.get()))
+                self.dtype_choice.set(cfg.get("dtype", self.dtype_choice.get()))
+                self.feature_cols_manual.set(cfg.get("feature_cols_manual", self.feature_cols_manual.get()))
+                self._enqueue_log(f"Config loaded from {self.config_path}")
+            except Exception as e:
+                self._enqueue_log(f"Failed loading config: {e}")
+
+    # --------------------------
+    # SQLite preview and load helpers
+    # --------------------------
+    def _browse_sqlite(self):
+        p = filedialog.askopenfilename(title="Select SQLite", filetypes=[("SQLite","*.db *.sqlite *.sqlite3"),("All","*.*")])
+        if p:
+            self.sqlite_path.set(p)
+
+    def _refresh_preview(self):
+        p = Path(self.sqlite_path.get())
+        if not p.exists():
+            self._enqueue_log(f"SQLite not found: {p}")
+            return
+        try:
+            import sqlite3
+            con = sqlite3.connect(str(p))
+            q = f"SELECT * FROM {self.table.get()} WHERE symbol = ? AND timeframe = ? ORDER BY ts DESC LIMIT 200"
+            df = pd.read_sql_query(q, con, params=[self.symbol.get(), self.timeframe.get()])
+            con.close()
+            if df.empty:
+                self._enqueue_log("No rows found for selection.")
+                # clear tree
+                for iid in self.preview_tree.get_children():
+                    self.preview_tree.delete(iid)
+                return
+            df = df.astype(str)
+            cols = list(df.columns)
+            self.preview_tree["columns"] = cols
+            for c in cols:
+                self.preview_tree.heading(c, text=c)
+                self.preview_tree.column(c, width=120)
+            # clear and insert
+            for iid in self.preview_tree.get_children():
+                self.preview_tree.delete(iid)
+            for _, row in df.iterrows():
+                self.preview_tree.insert("", "end", values=list(row.values))
+            self._enqueue_log(f"Preview loaded: {len(df)} rows.")
+        except Exception as e:
+            self._enqueue_log(f"Preview failed: {e}")
+            self._enqueue_log(traceback.format_exc())
+
+    def _show_preview(self, which: str):
+        if which == "features":
+            df = self.df_features
+        elif which == "scaled":
+            df = self.df_scaled
+        else:
+            df = self.df_loaded
+        if df is None:
+            self._enqueue_log(f"No dataframe available for preview: {which}")
+            return
+        try:
+            s = df.head(200).to_string()
+            self.train_info_text.delete("1.0", END)
+            self.train_info_text.insert(END, s)
+        except Exception as e:
+            self._enqueue_log(f"Preview show failed: {e}")
+
+    # --------------------------
+    # Prepare Data worker (background)
+    # --------------------------
+    def _start_prepare(self):
+        if self.prepare_thread and self.prepare_thread.is_alive():
+            self._enqueue_log("Prepare already running.")
+            return
+        t = threading.Thread(target=self._training_worker_prepare_only, daemon=True)
+        self.prepare_thread = t
+        t.start()
+        self._enqueue_log("Prepare thread started.")
+
+    def _training_worker_prepare_only(self):
+        """Prepare: load sqlite, compute features, dropna, build sequences, fit scaler (only preview), store X/y/scaler."""
+        try:
+            self._enqueue_log("Prepare: loading data from sqlite...")
+            df = self._load_df_for_training()
+            if df is None:
+                self._enqueue_log("No data; abort prepare.")
+                return
+            self.df_loaded = df.copy()
+            self._enqueue_log(f"Loaded {len(df)} rows from sqlite.")
+
+            # features
+            if fibo is None or not hasattr(fibo, "add_technical_features"):
+                self._enqueue_log("fiboevo.add_technical_features not available; abort.")
+                return
+            try:
+                close = df["close"].astype(float).values
+                high = df["high"].astype(float).values
+                low = df["low"].astype(float).values
+                vol = df["volume"].astype(float).values if "volume" in df.columns else None
+                feats = fibo.add_technical_features(close, high=high, low=low, volume=vol)
+                if not isinstance(feats, pd.DataFrame):
+                    # try to coerce
+                    arr = np.asarray(feats)
+                    if arr.ndim == 2:
+                        cols = [f"f{i}" for i in range(arr.shape[1])]
+                        feats = pd.DataFrame(arr, columns=cols)
+                    else:
+                        self._enqueue_log("Features from fiboevo not in expected shape. Abort.")
+                        return
+                # attach OHLCV and timestamp if not present
+                for col in ("timestamp","open","high","low","close","volume","symbol","timeframe"):
+                    if col in df.columns and col not in feats.columns:
+                        feats[col] = df[col].values
+                if "timestamp" in feats.columns:
+                    feats = feats.sort_values("timestamp").reset_index(drop=True)
+                self.df_features = feats.copy()
+                self._enqueue_log(f"Computed features. Shape: {self.df_features.shape}")
+            except Exception as e:
+                self._enqueue_log(f"Feature computation error: {e}")
+                self._enqueue_log(traceback.format_exc())
+                return
+
+            # dropna
+            before = len(self.df_features)
+            self.df_features = self.df_features.dropna().reset_index(drop=True)
+            after = len(self.df_features)
+            self._enqueue_log(f"dropna: before={before}, after={after}, removed={before-after}")
+
+            # detect feature cols
+            if self.feature_cols_manual.get().strip():
+                feature_cols = [c.strip() for c in self.feature_cols_manual.get().split(",") if c.strip() and c in self.df_features.columns]
+            else:
+                exclude = {"timestamp","open","high","low","close","volume","symbol","timeframe","exchange"}
+                feature_cols = [c for c in self.df_features.columns if c not in exclude and pd.api.types.is_numeric_dtype(self.df_features[c])]
+            if not feature_cols:
+                self._enqueue_log("No numeric feature columns detected after cleaning. Abort.")
+                return
+            self.feature_cols_used = feature_cols
+            self._enqueue_log(f"Feature cols selected ({len(feature_cols)}): {feature_cols[:20]}{'...' if len(feature_cols)>20 else ''}")
+
+            # build sequences
+            seq_len = int(self.seq_len.get()); horizon = int(self.horizon.get())
+            dtype = np.float32 if self.dtype_choice.get() == "float32" else np.float64
+            self._enqueue_log("Building sequences...")
+            try:
+                if hasattr(fibo, "create_sequences_from_df"):
+                    X, y_ret, y_vol = fibo.create_sequences_from_df(self.df_features, feature_cols, seq_len=seq_len, horizon=horizon)
+                    X = np.asarray(X).astype(dtype)
+                    y = np.asarray(y_ret).astype(dtype).reshape(-1,)
+                else:
+                    X, y = self._build_sequences_internal(self.df_features, feature_cols, seq_len, horizon, dtype=dtype)
+            except Exception as e:
+                self._enqueue_log(f"Sequence building failed: {e}")
+                self._enqueue_log(traceback.format_exc())
+                return
+
+            if X.size == 0:
+                self._enqueue_log("No sequences produced. Check seq_len/horizon/warmup.")
+                return
+            self.X_full = X
+            self.y_full = y
+            self._enqueue_log(f"Sequences built: N={X.shape[0]}, seq_len={X.shape[1]}, features={X.shape[2]}")
+
+            # fit scaler on training portion only (temporal)
+            N = X.shape[0]; val_frac = float(self.val_frac.get())
+            n_val = int(np.floor(N * val_frac)); n_train = N - n_val
+            if n_train <= 0:
+                self._enqueue_log("Train split <= 0; adjust val_frac or get more data.")
+                return
+            Xtr = X[:n_train]
+            if StandardScaler is not None:
+                try:
+                    scaler = StandardScaler()
+                    flat = Xtr.reshape(-1, Xtr.shape[2])
+                    scaler.fit(flat)
+                    # prepare df_scaled for preview (transform original features matrix)
+                    if self.feature_cols_used is not None:
+                        flat_all = self.df_features[self.feature_cols_used].astype(float).values
+                        flat_scaled = scaler.transform(flat_all)
+                        df_scaled = self.df_features.copy()
+                        for i, c in enumerate(self.feature_cols_used):
+                            df_scaled[c] = flat_scaled[:, i]
+                        self.df_scaled = df_scaled
+                        self._enqueue_log("Scaler fitted and df_scaled prepared.")
+                    self.scaler_used = scaler
+                except Exception as e:
+                    self._enqueue_log(f"Scaler fit failed: {e}")
+                    self.scaler_used = None
+            else:
+                self._enqueue_log("scikit-learn not available: skipping scaler.")
+                self.scaler_used = None
+
+            # previews into train_info_text (main thread safe since we only enqueue)
+            try:
+                self._enqueue_log("Preview raw (first 5 rows):\n" + self.df_loaded.head(5).to_string())
+                self._enqueue_log("Preview features (first 5 rows):\n" + self.df_features.head(5).to_string())
+                if self.df_scaled is not None:
+                    self._enqueue_log("Preview scaled (first 5 rows):\n" + self.df_scaled.head(5).to_string())
+            except Exception:
+                pass
+
+            self._enqueue_log("Prepare stage finished successfully.")
+        except Exception as e:
+            self._enqueue_log(f"Prepare worker unexpected error: {e}")
+            self._enqueue_log(traceback.format_exc())
+
+    # --------------------------
+    # Train Model worker (A)
+    # --------------------------
+    def _start_train_model(self):
+        if self.training_thread and self.training_thread.is_alive():
+            self._enqueue_log("Training already running.")
+            return
+        # require X_full loaded
+        if self.X_full is None or self.y_full is None:
+            self._enqueue_log("No prepared dataset found. Run Prepare Data first or use Prepare+Train.")
+            return
+        t = threading.Thread(target=self._train_model_worker, daemon=True)
+        self.training_thread = t
+        t.start()
+        self._enqueue_log("Training thread started.")
+
+    def _train_model_worker(self):
+        """Train model using self.X_full, self.y_full, self.feature_cols_used and scaler_used.
+           Saves best model to artifacts/model_best.pt, scaler to artifacts/scaler.pkl and meta.json.
+        """
+        try:
+            if torch is None:
+                self._enqueue_log("PyTorch is not available; cannot train.")
+                return
+            X = self.X_full; y = self.y_full
+            if X is None or y is None:
+                self._enqueue_log("No data found to train.")
+                return
+            dtype_np = np.float32 if self.dtype_choice.get()=="float32" else np.float64
+            # temporal split
+            N = X.shape[0]; val_frac = float(self.val_frac.get())
+            n_val = int(np.floor(N * val_frac)); n_train = N - n_val
+            if n_train <= 0:
+                self._enqueue_log("Train split <= 0; abort.")
+                return
+            Xtr = X[:n_train]; ytr = y[:n_train]
+            Xv = X[n_train:] if n_val>0 else None; yv = y[n_train:] if n_val>0 else None
+
+            # apply scaler if present
+            scaler = self.scaler_used
+            if scaler is not None:
+                try:
+                    flat_tr = Xtr.reshape(-1, Xtr.shape[2])
+                    flat_tr_t = scaler.transform(flat_tr).reshape(Xtr.shape)
+                    Xtr = flat_tr_t.astype(dtype_np)
+                    if Xv is not None:
+                        flat_v = Xv.reshape(-1, Xv.shape[2])
+                        Xv = scaler.transform(flat_v).reshape(Xv.shape).astype(dtype_np)
+                    self._enqueue_log("Applied scaler to sequences for training.")
+                except Exception as e:
+                    self._enqueue_log(f"Scaler.transform failed: {e}. Proceeding without scaling for training.")
+
+            # Torch datasets
+            device = torch.device("cuda" if torch and torch.cuda.is_available() else "cpu")
+            self._enqueue_log(f"Using device: {device}")
+            Xtr_t = torch.from_numpy(Xtr).float().to(device) if dtype_np==np.float32 else torch.from_numpy(Xtr).double().to(device)
+            ytr_t = torch.from_numpy(ytr).float().view(-1,1).to(device)
+            train_ds = torch.utils.data.TensorDataset(Xtr_t, ytr_t)
+            train_loader = torch.utils.data.DataLoader(train_ds, batch_size=int(self.batch_size.get()), shuffle=True)
+
+            val_loader = None
+            if Xv is not None:
+                Xv_t = torch.from_numpy(Xv).float().to(device) if dtype_np==np.float32 else torch.from_numpy(Xv).double().to(device)
+                yv_t = torch.from_numpy(yv).float().view(-1,1).to(device)
+                val_loader = torch.utils.data.DataLoader(torch.utils.data.TensorDataset(Xv_t, yv_t), batch_size=int(self.batch_size.get()), shuffle=False)
+
+            # instantiate model
+            F = X.shape[2]
+            hidden = int(self.hidden.get())
+            try:
+                model = fibo.LSTM2Head(input_size=F, hidden_size=hidden)
+            except Exception as e:
+                self._enqueue_log(f"Could not instantiate model LSTM2Head: {e}")
+                return
+            model.to(device)
+            opt = torch.optim.Adam(model.parameters(), lr=float(self.lr.get()))
+            loss_fn = torch.nn.MSELoss()
+
+            # training loop
+            best_val = float("inf")
+            artifacts_dir = Path("artifacts"); artifacts_dir.mkdir(parents=True, exist_ok=True)
+            model_path = artifacts_dir / "model_best.pt"
+            scaler_path = artifacts_dir / "scaler.pkl"
+            meta_path = artifacts_dir / "meta.json"
+
+            epochs = int(self.epochs.get())
+            for ep in range(epochs):
+                model.train()
+                running_loss = 0.0; batches = 0
+                for xb, yb in train_loader:
+                    opt.zero_grad()
+                    out_r, out_v = model(xb)
+                    # ensure out_r shape is (batch,1)
+                    if out_r.dim() == 1:
+                        out_r = out_r.view(-1,1)
+                    loss = loss_fn(out_r, yb)
+                    loss.backward()
+                    opt.step()
+                    running_loss += float(loss.item()); batches += 1
+                train_loss = running_loss / max(1, batches)
+                val_loss = None
+                if val_loader is not None:
+                    model.eval()
+                    vl = 0.0; vc = 0
+                    with torch.no_grad():
+                        for xv, yv_b in val_loader:
+                            out_r, _ = model(xv)
+                            if out_r.dim() == 1:
+                                out_r = out_r.view(-1,1)
+                            l = loss_fn(out_r, yv_b)
+                            vl += float(l.item()); vc += 1
+                    val_loss = vl / max(1, vc)
+                # log
+                self._enqueue_log(f"[Train] Epoch {ep+1}/{epochs} train_loss={train_loss:.6f}" + (f" val_loss={val_loss:.6f}" if val_loss is not None else ""))
+                # save best
+                if val_loss is not None and val_loss < best_val:
+                    best_val = val_loss
+                    try:
+                        torch.save(model.state_dict(), str(model_path))
+                        meta = {"feature_cols": self.feature_cols_used, "seq_len": int(self.seq_len.get()), "horizon": int(self.horizon.get()), "hidden": hidden}
+                        meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+                        if scaler is not None and joblib is not None:
+                            joblib.dump(scaler, str(scaler_path))
+                        self._enqueue_log(f"Saved best model & artifacts to {artifacts_dir}")
+                    except Exception as e:
+                        self._enqueue_log(f"Saving artifacts failed: {e}")
+
+            # final save if best never updated
+            if not model_path.exists():
+                try:
+                    torch.save(model.state_dict(), str(model_path))
+                    meta = {"feature_cols": self.feature_cols_used, "seq_len": int(self.seq_len.get()), "horizon": int(self.horizon.get()), "hidden": hidden}
+                    meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+                    if scaler is not None and joblib is not None:
+                        joblib.dump(scaler, str(scaler_path))
+                    self._enqueue_log(f"Saved final model to {model_path}")
+                except Exception as e:
+                    self._enqueue_log(f"Final save failed: {e}")
+
+            self.model = model
+            self.model_meta = {"feature_cols": self.feature_cols_used}
+            self.model_scaler = scaler
+            self._enqueue_log("Training completed.")
+        except Exception as e:
+            self._enqueue_log(f"Training worker failed: {e}")
+            self._enqueue_log(traceback.format_exc())
+
+    # --------------------------
+    # Combined Prepare + Train (C)
+    # --------------------------
+    def _start_prepare_and_train(self):
+        if self.combine_thread and self.combine_thread.is_alive():
+            self._enqueue_log("Prepare+Train already running.")
+            return
+        t = threading.Thread(target=self._prepare_and_train_worker, daemon=True)
+        self.combine_thread = t
+        t.start()
+        self._enqueue_log("Prepare+Train worker started.")
+
+    def _prepare_and_train_worker(self):
+        # run prepare then train sequentially
+        self._training_worker_prepare_only()
+        # small pause to ensure arrays are set
+        time.sleep(0.5)
+        if self.X_full is None:
+            self._enqueue_log("After prepare, no X_full available. Aborting train.")
+            return
+        self._train_model_worker()
+
+    # --------------------------
+    # Load artifacts helper (ADDED METHOD)
+    # --------------------------
+    def _load_model_from_artifacts(self):
+        """
+        Carga modelo, meta y scaler desde ./artifacts:
+          - model_best.pt (estado guardado con torch.save(...))
+          - meta.json
+          - scaler.pkl (joblib)
+        Guarda en self.model, self.model_meta, self.model_scaler.
+        Usa self._enqueue_log() para mensajes (thread-safe).
+        """
+        try:
+            artifacts_dir = Path("artifacts")
+            model_path = artifacts_dir / "model_best.pt"
+            meta_path = artifacts_dir / "meta.json"
+            scaler_path = artifacts_dir / "scaler.pkl"
+
+            if not model_path.exists():
+                self._enqueue_log(f"No se encontró {model_path}. Ejecuta entrenamiento o coloca el artefacto en ./artifacts/")
+                return
+
+            if fibo is None:
+                self._enqueue_log("fiboevo no disponible; no puedo reconstruir la arquitectura del modelo.")
+                return
+
+            # leer meta si existe
+            meta = {}
+            if meta_path.exists():
+                try:
+                    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                    self._enqueue_log(f"meta.json leído: {meta_path}")
+                except Exception as e:
+                    self._enqueue_log(f"Advertencia: no se pudo leer meta.json: {e}")
+
+            # require torch to load state dict
+            if torch is None:
+                self._enqueue_log("torch no está instalado; no se puede cargar el state_dict del modelo (instala torch).")
+                return
+
+            # Cargar checkpoint en CPU (no asignamos aún al dispositivo final)
+            try:
+                ckpt = torch.load(str(model_path), map_location="cpu")
+            except Exception as e:
+                self._enqueue_log(f"Fallo al cargar checkpoint {model_path}: {e}")
+                self._enqueue_log(traceback.format_exc())
+                return
+
+            # Extraer state_dict y meta embebida si existe
+            state = ckpt
+            ckpt_meta = {}
+            if isinstance(ckpt, dict):
+                # casos comunes: {'state': state_dict, 'meta': meta}, {'model_state_dict': ...}, plain state_dict
+                if "state" in ckpt and isinstance(ckpt["state"], dict):
+                    state = ckpt["state"]
+                    ckpt_meta = ckpt.get("meta", {})
+                elif "model_state_dict" in ckpt and isinstance(ckpt["model_state_dict"], dict):
+                    state = ckpt["model_state_dict"]
+                    ckpt_meta = ckpt.get("meta", {})
+                elif "state_dict" in ckpt and isinstance(ckpt["state_dict"], dict):
+                    state = ckpt["state_dict"]
+                    ckpt_meta = ckpt.get("meta", {})
+                else:
+                    # top-level might already be a state_dict, but there may also be a meta key
+                    if "meta" in ckpt and isinstance(ckpt["meta"], dict):
+                        ckpt_meta = ckpt["meta"]
+
+            # merge meta priorities: explicit meta.json > checkpoint meta > {}
+            combined_meta = dict(ckpt_meta)
+            combined_meta.update(meta or {})
+            meta = combined_meta
+
+            # normalize keys 'module.' si vinieron de DataParallel
+            normalized = {}
+            if isinstance(state, dict):
+                for k, v in state.items():
+                    nk = k[len("module.") :] if k.startswith("module.") else k
+                    normalized[nk] = v
+                state = normalized
+            else:
+                # state may be a serialized model object; we will try to use it directly later
+                state = state
+
+            # Inferir input_size, hidden, num_layers desde state si es posible
+            inferred_input = None
+            inferred_hidden = None
+            inferred_layers = 1
+
+            if isinstance(state, dict):
+                ih_keys = sorted([k for k in state.keys() if k.startswith("lstm.weight_ih_l")])
+                if ih_keys:
+                    try:
+                        # deducir num_layers por la máxima lX encontrada
+                        max_idx = max(int(k.split("l")[-1]) for k in ih_keys)
+                        inferred_layers = max_idx + 1
+                    except Exception:
+                        inferred_layers = len(ih_keys)
+
+                if "lstm.weight_ih_l0" in state:
+                    w = state["lstm.weight_ih_l0"]
+                    shape = getattr(w, "shape", None)
+                    if shape and len(shape) == 2:
+                        inferred_input = int(shape[1])
+                        inferred_hidden = int(shape[0] // 4)
+
+                # fallback: tratar de inferir hidden desde heads si no hay lstm
+                if inferred_hidden is None:
+                    for cand in ("head_ret.0.weight", "head_ret.2.weight", "head_ret.weight"):
+                        if cand in state:
+                            w = state[cand]
+                            shape = getattr(w, "shape", None)
+                            if shape and len(shape) == 2:
+                                inferred_hidden = int(shape[1])
+                                break
+
+            # metadata override / fallback a self.feature_cols_used
+            input_size = None
+            if "input_size" in meta and meta.get("input_size") is not None:
+                try:
+                    input_size = int(meta.get("input_size"))
+                except Exception:
+                    input_size = None
+
+            if input_size is None:
+                feature_cols_meta = meta.get("feature_cols", None)
+                if isinstance(feature_cols_meta, (list, tuple)):
+                    input_size = len(feature_cols_meta)
+                elif getattr(self, "feature_cols_used", None):
+                    try:
+                        input_size = len(self.feature_cols_used)
+                    except Exception:
+                        input_size = None
+
+            if input_size is None and inferred_input is not None:
+                input_size = int(inferred_input)
+
+            hidden = None
+            if "hidden" in meta and meta.get("hidden") is not None:
+                try:
+                    hidden = int(meta.get("hidden"))
+                except Exception:
+                    hidden = None
+            if hidden is None and inferred_hidden is not None:
+                hidden = int(inferred_hidden)
+            if hidden is None:
+                # fallback razonable
+                hidden = int(getattr(self, "hidden", self.hidden.get() if hasattr(self, "hidden") else 64))
+
+            num_layers = None
+            if "num_layers" in meta and meta.get("num_layers") is not None:
+                try:
+                    num_layers = int(meta.get("num_layers"))
+                except Exception:
+                    num_layers = None
+            if num_layers is None and inferred_layers is not None:
+                num_layers = int(inferred_layers)
+            if num_layers is None:
+                num_layers = 2
+
+            # si no pudimos inferir input_size, avisar y usar 1 (intentar cargar strict=False después)
+            if input_size is None or input_size <= 0:
+                self._enqueue_log("Warning: no pude inferir input_size del checkpoint o meta. Intentaré reconstruir modelo con input_size=1 y cargar de forma no estricta.")
+                input_size = 1
+
+            # Construir instancia del modelo con fibo.LSTM2Head
+            try:
+                try:
+                    model = fibo.LSTM2Head(input_size=int(input_size), hidden_size=int(hidden), num_layers=int(num_layers))
+                except Exception as e_build:
+                    # intento fallback con num_layers=2 / input_size=1 si la primera falla
+                    self._enqueue_log(f"Advertencia: fallo al instanciar LSTM2Head con input={input_size}, hidden={hidden}, layers={num_layers}: {e_build}")
+                    try:
+                        model = fibo.LSTM2Head(input_size=int(input_size or 1), hidden_size=int(hidden or 64), num_layers=2)
+                        self._enqueue_log("Instanciado LSTM2Head con fallback params.")
+                    except Exception as e2:
+                        self._enqueue_log(f"No se pudo instanciar fibo.LSTM2Head con ningun fallback: {e2}")
+                        self._enqueue_log(traceback.format_exc())
+                        return
+            except Exception:
+                self._enqueue_log("Error inesperado al instanciar LSTM2Head.")
+                self._enqueue_log(traceback.format_exc())
+                return
+
+            # Intentar cargar state_dict en el modelo construido
+            try:
+                if isinstance(state, dict):
+                    try:
+                        model.load_state_dict(state)  # intento estricto primero
+                        self._enqueue_log("state_dict cargado con strict=True.")
+                    except Exception as e_strict:
+                        # buscar posibles contenedores alternativos en el checkpoint
+                        alt_keys = []
+                        for alt in ("state", "model_state", "model_state_dict", "state_dict"):
+                            if isinstance(ckpt, dict) and alt in ckpt and isinstance(ckpt[alt], dict):
+                                alt_keys.append(alt)
+                        loaded = False
+                        for k in alt_keys:
+                            try:
+                                model.load_state_dict(ckpt[k])
+                                self._enqueue_log(f"state_dict cargado desde checkpoint['{k}'].")
+                                loaded = True
+                                break
+                            except Exception:
+                                pass
+
+                        if not loaded:
+                            # cargar non-strict para tolerar cambios de arquitectura (se notificarán keys faltantes/inesperadas)
+                            try:
+                                res = model.load_state_dict(state, strict=False)
+                                # load_state_dict devuelve namedtuple con missing/unexpected en PyTorch
+                                missing = getattr(res, "missing_keys", None)
+                                unexpected = getattr(res, "unexpected_keys", None)
+                                self._enqueue_log("state_dict cargado con strict=False (posible incompatibilidades).")
+                                if missing:
+                                    self._enqueue_log(f"Missing keys: {missing}")
+                                if unexpected:
+                                    self._enqueue_log(f"Unexpected keys: {unexpected}")
+                            except Exception as e_nonstrict:
+                                self._enqueue_log(f"No se pudo cargar state_dict ni en strict=True ni en strict=False: {e_nonstrict}")
+                                self._enqueue_log(traceback.format_exc())
+                                return
+                else:
+                    # ckpt no es dict -> puede ser objeto serializado (modelo completo)
+                    try:
+                        model = state
+                        self._enqueue_log("Checkpoint contiene objeto modelo serializado; se usó tal cual.")
+                    except Exception:
+                        self._enqueue_log("Checkpoint no es state_dict ni objeto serializado reconocido.")
+                        return
+            except Exception as e_load:
+                self._enqueue_log(f"Error cargando state_dict: {e_load}")
+                self._enqueue_log(traceback.format_exc())
+                return
+
+            # mover modelo a dispositivo disponible
+            try:
+                device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                model.to(device)
+                model.eval()
+                self._enqueue_log(f"Modelo preparado en device {device} (input_size={input_size}, hidden={hidden}, num_layers={num_layers}).")
+            except Exception as e_dev:
+                self._enqueue_log(f"Fallo al mover modelo a device: {e_dev}")
+                self._enqueue_log(traceback.format_exc())
+
+            # Assign to self
+            self.model = model
+            # enriquecer meta retornado
+            meta_out = dict(meta or {})
+            meta_out.setdefault("input_size", int(input_size))
+            meta_out.setdefault("hidden", int(hidden))
+            meta_out.setdefault("num_layers", int(num_layers))
+            if "feature_cols" not in meta_out and getattr(self, "feature_cols_used", None):
+                meta_out["feature_cols"] = list(self.feature_cols_used)
+            self.model_meta = meta_out
+
+            self._enqueue_log(f"Modelo cargado desde {model_path} y metadata aplicada: {meta_out}")
+
+            # cargar scaler si existe
+            if scaler_path.exists():
+                if joblib is not None:
+                    try:
+                        scaler = joblib.load(str(scaler_path))
+                        self.model_scaler = scaler
+                        self._enqueue_log(f"Scaler cargado desde {scaler_path}.")
+                    except Exception as e:
+                        self._enqueue_log(f"Fallo al cargar scaler.pkl: {e}")
+                        self._enqueue_log(traceback.format_exc())
+                        self.model_scaler = None
+                else:
+                    self._enqueue_log("joblib no disponible; no se puede cargar scaler.pkl.")
+                    self.model_scaler = None
+            else:
+                self.model_scaler = None
+                self._enqueue_log("No se encontró scaler.pkl en artifacts.")
+
+        except Exception as e_outer:
+            self._enqueue_log(f"_load_model_from_artifacts fallo inesperado: {e_outer}")
+            try:
+                self._enqueue_log(traceback.format_exc())
+            except Exception:
+                pass
+
+
+    # --------------------------
+    # Internal helpers
+    # --------------------------
+    def _load_df_for_training(self) -> Optional[pd.DataFrame]:
+        p = Path(self.sqlite_path.get())
+        if not p.exists():
+            self._enqueue_log(f"SQLite not found: {p}")
+            return None
+        try:
+            import sqlite3
+            con = sqlite3.connect(str(p))
+            q = f"SELECT * FROM {self.table.get()} WHERE symbol = ? AND timeframe = ? ORDER BY ts ASC"
+            df = pd.read_sql_query(q, con, params=[self.symbol.get(), self.timeframe.get()])
+            con.close()
+            if df.empty:
+                return df
+            # normalize timestamp if necessary
+            if "timestamp" not in df.columns and "ts" in df.columns:
+                df["timestamp"] = pd.to_datetime(df["ts"], unit="s", utc=True)
+            return df
+        except Exception as e:
+            self._enqueue_log(f"Load sqlite failed: {e}")
+            self._enqueue_log(traceback.format_exc())
+            return None
+
+    def _build_sequences_internal(self, df_feats: pd.DataFrame, feature_cols: List[str], seq_len: int, horizon: int, dtype=np.float32):
+        df = df_feats.copy().reset_index(drop=True)
+        present = [c for c in feature_cols if c in df.columns]
+        if len(present) == 0:
+            raise RuntimeError("No feature cols present.")
+        for c in present:
+            if pd.api.types.is_datetime64_any_dtype(df[c]):
+                df[c] = pd.to_datetime(df[c]).astype("int64") / 1e9
+        # log close
+        df["__logc"] = np.log(df["close"].replace(0, np.nan))
+        df = df.dropna().reset_index(drop=True)
+        M = len(df)
+        min_rows = seq_len + horizon
+        if M < min_rows:
+            return np.zeros((0, seq_len, len(present)), dtype=dtype), np.zeros((0,), dtype=dtype)
+        N = M - seq_len - horizon + 1
+        F = len(present)
+        X = np.zeros((N, seq_len, F), dtype=dtype)
+        y = np.zeros((N,), dtype=dtype)
+        mat = df[present].astype(dtype).values
+        logc = df["__logc"].values
+        idx = 0
+        for i in range(N):
+            X[idx] = mat[i:i+seq_len, :]
+            y[idx] = logc[i+seq_len+horizon-1] - logc[i+seq_len-1]
+            idx += 1
+        return X, y
+
+    # --------------------------
+    # Backtest (simple) - placeholder
+    # --------------------------
+    def _start_backtest(self):
+        if self.backtest_thread and self.backtest_thread.is_alive():
+            self._enqueue_log("Backtest already running.")
+            return
+        t = threading.Thread(target=self._backtest_worker, daemon=True)
+        self.backtest_thread = t
+        t.start()
+        self._enqueue_log("Backtest thread started.")
+
+    def _backtest_worker(self):
+        try:
+            # very simple: run model over last portion and compute simple PnL as in earlier code
+            self._enqueue_log("Backtest: loading data/features...")
+            df = self._load_df_for_training()
+            if df is None or df.empty:
+                self._enqueue_log("No data for backtest.")
+                return
+            if fibo is None or not hasattr(fibo, "add_technical_features"):
+                self._enqueue_log("fiboevo not available for features.")
+                return
+            close = df["close"].astype(float).values
+            high = df["high"].astype(float).values
+            low = df["low"].astype(float).values
+            vol = df["volume"].astype(float).values if "volume" in df.columns else None
+            feats = fibo.add_technical_features(close, high=high, low=low, volume=vol)
+            for col in ("timestamp","close"):
+                if col in df.columns and col not in feats.columns:
+                    feats[col] = df[col].values
+            feats = feats.dropna().reset_index(drop=True)
+            # use internal builder and then model
+            seq_len = int(self.seq_len.get()); horizon = int(self.horizon.get())
+            feature_cols = [c for c in feats.columns if c not in ("timestamp","open","high","low","close","volume","symbol","timeframe","exchange")]
+            X, y = self._build_sequences_internal(feats, feature_cols, seq_len, horizon, dtype=np.float32)
+            if X.shape[0] == 0:
+                self._enqueue_log("No sequences for backtest.")
+                return
+            # load model from artifacts if not in memory
+            if self.model is None:
+                artifacts_dir = Path("artifacts")
+                model_path = artifacts_dir / "model_best.pt"
+                if model_path.exists() and fibo is not None:
+                    try:
+                        model = fibo.LSTM2Head(input_size=len(feature_cols), hidden_size=int(self.hidden.get()))
+                        import torch
+                        st = torch.load(str(model_path), map_location="cpu")
+                        model.load_state_dict(st)
+                        model.eval()
+                        self.model = model
+                        self._enqueue_log("Using artifacts model for backtest.")
+                    except Exception as e:
+                        self._enqueue_log(f"Could not load artifacts model: {e}")
+            model = self.model
+            if model is None:
+                self._enqueue_log("No model available for backtest.")
+                return
+            # simple inference (CPU)
+            import torch
+            device = torch.device("cpu")
+            model.to(device)
+            model.eval()
+            preds = []
+            with torch.no_grad():
+                for i in range(0, X.shape[0], 256):
+                    xb = torch.from_numpy(X[i:i+256]).float().to(device)
+                    out_r, out_v = model(xb)
+                    preds.extend(out_r.cpu().numpy().ravel().tolist())
+            preds = np.array(preds, dtype=np.float32)
+            # compute simple PnL using close series from feats
+            closes = feats["close"].values
+            N = len(preds)
+            pos_pct = 0.01
+            equity = 10000.0
+            pnl_list = []
+            trades = 0
+            wins = 0
+            for i in range(N):
+                pr = preds[i]; c0 = closes[i + seq_len - 1]
+                if pr > 0.0005:
+                    # buy
+                    future_idx = i + seq_len - 1 + horizon
+                    if future_idx < len(closes):
+                        c_future = closes[future_idx]
+                        ret = math.log(c_future) - math.log(c0)
+                        usd_pnl = equity * pos_pct * (math.exp(ret) - 1.0)
+                        pnl_list.append(usd_pnl); trades += 1
+                        if usd_pnl > 0: wins += 1
+            total_pnl = sum(pnl_list)
+            winrate = (wins / trades) if trades>0 else 0.0
+            self._enqueue_log(f"Backtest finished: trades={trades}, total_pnl={total_pnl:.2f}, winrate={winrate:.2%}")
+            self.bt_text.insert(END, f"Backtest results: trades={trades}, total_pnl={total_pnl:.2f}, winrate={winrate:.2%}\n")
+        except Exception as e:
+            self._enqueue_log(f"Backtest failed: {e}")
+            self._enqueue_log(traceback.format_exc())
+
+    # --------------------------
+    # Daemon control (unchanged minimal)
+    # --------------------------
+    def _start_daemon(self):
+        if TradingDaemon is None:
+            self._enqueue_log("TradingDaemon not available.")
+            return
+        if self.daemon:
+            self._enqueue_log("Daemon already running.")
+            return
+        try:
+            feat_cols = None
+            if self.feature_cols_manual.get().strip():
+                feat_cols = [c.strip() for c in self.feature_cols_manual.get().split(",") if c.strip()]
+            self.daemon = TradingDaemon(
+                sqlite_path=self.sqlite_path.get(),
+                sqlite_table=self.table.get(),
+                symbol=self.symbol.get(),
+                timeframe=self.timeframe.get(),
+                model_path="",
+                scaler_path=None,
+                meta_path=None,
+                ledger_path=None,
+                exchange_id=None,
+                api_key=None,
+                api_secret=None,
+                paper=True,
+                seq_len=self.seq_len.get(),
+                feature_cols=feat_cols,
+            )
+            self.daemon.start_loop()
+            self.btn_start.config(state=DISABLED); self.btn_stop.config(state=NORMAL)
+            self._enqueue_log("Daemon started.")
+        except Exception as e:
+            self._enqueue_log(f"Start daemon failed: {e}")
+            self._enqueue_log(traceback.format_exc())
+
+    def _stop_daemon(self):
+        if self.daemon:
+            self.daemon.stop(); self.daemon = None
+            self.btn_start.config(state=NORMAL); self.btn_stop.config(state=DISABLED)
+            self._enqueue_log("Daemon stopped.")
+
+# --------------------------
+# Run
+# --------------------------
+def main():
+    root = Tk()
+    app = TradingAppExtended(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as _e:
+        # capture traceback
+        _tb = traceback.format_exc()
+        # detect tkinter/display related failure (common message contains 'no display name and no $DISPLAY')
+        if "no display name and no $display" in _tb.lower() or "tkinter" in _tb.lower() or "tclerror" in _tb.lower():
+            # Headless fallback: report availability of fibo and run smoke tests (add_technical_features)
+            try:
+                # prefer existing 'fibo' variable, fallback to 'fiboevo' name or import
+                fibo_mod = globals().get("fibo", None)
+                if fibo_mod is None and "fiboevo" in globals():
+                    fibo_mod = globals().get("fiboevo")
+                if fibo_mod is None:
+                    try:
+                        import fiboevo as fibo_mod  # type: ignore
+                    except Exception:
+                        fibo_mod = None
+
+                log = logging.getLogger("trading_gui_extended")
+                log.warning("Tkinter / DISPLAY error detected. Entering headless mode.")
+                if fibo_mod is None:
+                    log.warning("fiboevo module is not available in this environment. Many features will be inactive.")
+                else:
+                    funcs = [name for name in ("add_technical_features", "create_sequences_from_df", "LSTM2Head") if hasattr(fibo_mod, name)]
+                    log.info("fiboevo: detected functions: %s", funcs or "(none)")
+                    if hasattr(fibo_mod, "add_technical_features"):
+                        try:
+                            close = pd.Series([1.0, 1.1, 1.2, 1.25, 1.3])
+                            feats = fibo_mod.add_technical_features(close, dropna_after=True)
+                            try:
+                                s = getattr(feats, "shape", None)
+                                log.info("add_technical_features smoke test OK, result shape=%s", s)
+                            except Exception:
+                                log.info("add_technical_features smoke test OK (no .shape attribute).")
+                        except Exception:
+                            log.exception("Error during add_technical_features smoke test.")
+                log.info("Headless mode completed. To use the GUI run in an environment with a display (set $DISPLAY).")
+            except Exception:
+                traceback.print_exc()
+                raise
+        else:
+            # Not a display/Tkinter issue — re-raise
+            raise
