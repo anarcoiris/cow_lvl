@@ -1,0 +1,584 @@
+Perfecto — he leído `fiboevo` a fondo y aquí tienes un análisis razonado **y** un plan de implementación concreto y reproducible para las mejoras que proponías (priorizadas), junto con parches de código listos para pegar. Además te indico **dónde** llamar a `diagnostics.py` (líneas precisas) para maximizar su utilidad.
+
+Voy a dividir la respuesta en:
+
+1. Resumen ejecutivo (rápido).
+2. Riesgos / puntos críticos detectados.
+3. Plan de implementación (paso a paso, prioridades).
+4. Parches concretos (fragmentos de código listos — `fiboevo.py`, `trading_daemon.py`, y la GUI `_load_model_from_artifacts`).
+5. Dónde invocar `diagnostics.py`.
+6. Qué probar y cómo validar.
+7. Items que **no** he cambiado y preguntas que quedan abiertas.
+
+---
+
+# 1) Resumen ejecutivo (rápido)
+
+* `fiboevo` es coherente con tus convenciones: **targets en log-returns**, `LSTM2Head` → `(ret, vol)`. Problema más probable: **desalineación entre `meta['feature_cols']`, el `scaler` guardado y el DataFrame `feats` en tiempo de inferencia** (orden distinto, columnas faltantes, scaler sin `feature_names_in_`).
+* Solución inmediata y segura: **(A)** forzar uso de `meta['feature_cols']` en inferencia cuando exista; **(B)** garantizar que `scaler.feature_names_in_` sea consistente (reconstruirlo desde meta si falta); **(C)** hacer determinista el orden de columnas saliente de `add_technical_features`.
+* También propongo añadir metadatos enriquecidos al salvar modelos y scalers (`trained_at`, `train_rows_end`, `scaler mean/var`) para facilitar chequeos automáticos.
+
+---
+
+# 2) Riesgos / puntos críticos detectados
+
+* `feature_cols` se detecta automáticamente en varios puntos (GUI, daemon, build_dataset) según columnas numéricas del DataFrame. Esto puede devolver **orden distinto** del utilizado en entrenamiento.
+* `scaler` guardado con `joblib` puede no tener `feature_names_in_` (o contener otro orden) — `fiboevo` intenta fijarlo en `build_dataset_for_training`, pero no hay garantías si el training pipeline no usó esa función exactamente o si el scaler fue modificado/guardado en otra sesión.
+* `add_technical_features` produce NaNs por rolling windows; si el `dropna()` no se aplica de manera consistente entre entrenamiento/inferencia, habrá desalineo temporal.
+* `load_model` ya hace bastante, pero no repara automáticamente `scaler.feature_names_in_` en ausencia de meta; y `save_model` ya intenta incluir meta, pero conviene estandarizar y enriquecer.
+
+---
+
+# 3) Plan de implementación (priorizado)
+
+1. **Fiboevo**:
+
+   * A1) Forzar orden determinista de columnas al final de `add_technical_features`.
+   * A2) Habilitar `save_scaler` / `load_scaler` para conservar o reconstruir `feature_names_in_`. Añadir helper `ensure_scaler_feature_names(scaler, feature_cols)`.
+   * A3) En `build_dataset_for_training` adjuntar `scaler.train_rows_end = train_rows_end` (o devolverlo) para que el training pipeline pueda guardarlo en meta.
+2. **TradingDaemon**:
+
+   * B1) En `iteration_once()` (y en cualquier método que prepare la entrada para `create_sequences_from_df` o `prepare_model_input`) prefiera `self.model_meta["feature_cols"]` si existe, y caiga a auto-detección solo si falla la validación.
+   * B2) Registrar advertencias si hay columnas de meta ausentes o tamaños incompatibles con `input_size`.
+3. **GUI (trading_gui_extended)**:
+
+   * C1) En `_load_model_from_artifacts()`, después de cargar `scaler`, reparar `scaler.feature_names_in_` desde `meta` si falta.
+   * C2) Tras cargar modelo + scaler invocar `diagnostics.check_model_vs_features(...)` (si existe diagnostics.py) para mostrar mismatches en la UI/log.
+4. **Diagnostics**:
+
+   * D1) Llamar a `diagnostics.py` en puntos clave: justo **después** de cargar modelo/scaler en GUI y daemon, y justo **después** de calcular `feats` en prepare/iteration.
+5. **Logging y tests**:
+
+   * E1) Añadir logs detallados en `load_model_and_scaler` (feature list, scaler names, shapes).
+   * E2) Pruebas simples: preparar un pequeño DataFrame de test (seq_len rows), pasar por `prepare_model_input` y `predict_with_model` para asegurar pipeline.
+
+---
+
+# 4) Parches concretos
+
+A continuación tienes los cambios sugeridos en forma de parches listos para pegar. Los he organizado por archivo.
+
+> **Nota**: los parches modifican funciones existentes (añaden helpers) y son conservadores en la API. Si usas control de versiones, aplícalos como commits. Si prefieres que inserte el archivo entero `fiboevo.py` modificado, dímelo y te lo doy completo; aquí dejo las secciones editadas para transparencia.
+
+---
+
+## 4.A `fiboevo.py` — cambios en `add_technical_features`, `save_scaler`, `load_scaler`, `build_dataset_for_training`, y helper
+
+### 4.A.1 Helper: `ensure_scaler_feature_names`
+
+Añade este helper cerca de funciones de save/load:
+
+```python
+# ----------------------------
+# Scaler helpers
+# ----------------------------
+def ensure_scaler_feature_names(scaler: Any, feature_cols: Sequence[str]) -> None:
+    """
+    Ensure scaler has attribute feature_names_in_ matching feature_cols.
+    This is non-destructive: if scaler already has feature_names_in_ it is left alone.
+    """
+    try:
+        if scaler is None:
+            return
+        if not hasattr(scaler, "feature_names_in_"):
+            try:
+                scaler.feature_names_in_ = np.array(list(feature_cols), dtype=object)
+            except Exception:
+                # fallback: try to set attribute directly even if scaler uses different internals
+                try:
+                    setattr(scaler, "feature_names_in_", np.array(list(feature_cols), dtype=object))
+                except Exception:
+                    pass
+    except Exception:
+        # don't crash the pipeline for a scaler metadata issue
+        LOGGER.exception("ensure_scaler_feature_names failed")
+```
+
+### 4.A.2 `add_technical_features` — deterministic ordering
+
+Al final de la función `add_technical_features(...)` — antes del `if dropna_after:` — añade el bloque que forzar orden:
+
+```python
+    # --- ensure deterministic column order (avoid surprises from pandas ops)
+    # build canonical order: base OHLCV/time then engineered features in consistent order
+    ordered_core = ["timestamp", "open", "high", "low", "close", "volume", "symbol", "timeframe"]
+    # features in the order we created them
+    ordered_feats = [
+        "log_close",
+        "ret_1", "log_ret_1", "ret_5", "log_ret_5",
+    ]
+    for L in [5, 10, 20, 50, window_long]:
+        ordered_feats += [f"sma_{L}", f"ema_{L}", f"ma_diff_{L}"]
+    ordered_feats += ["bb_m", "bb_std", "bb_up", "bb_dn", "bb_width"]
+    ordered_feats += ["rsi_14", "atr_14", "raw_vol_10", "raw_vol_30"]
+    fibs = [0.0, 0.236, 0.382, 0.5, 0.618, 0.786, 1.0]
+    for f in fibs:
+        name = f"fib_{int(f*1000)}"
+        ordered_feats += [name, f"dist_{name}"]
+    ordered_feats += ["td_buy_setup", "td_sell_setup", "vp_poc", "dist_vp"]
+
+    ordered_cols = [c for c in ordered_core if c in df.columns] + [c for c in ordered_feats if c in df.columns]
+    # append any other columns that might have been created externally to keep them (but after known ones)
+    remaining = [c for c in df.columns if c not in ordered_cols]
+    df = df.loc[:, ordered_cols + remaining]
+    # --- end deterministic ordering
+```
+
+(Coloca esto **antes** de `if dropna_after:`. Si `timestamp` u `open` no existen, el código los ignora.)
+
+### 4.A.3 `save_scaler` & `load_scaler` changes
+
+Reemplaza las funciones `save_scaler` y `load_scaler` por estas versiones mejoradas:
+
+```python
+def save_scaler(scaler: Any, path: Path, feature_cols: Optional[Sequence[str]] = None) -> None:
+    """
+    Save scaler with joblib and attach feature_names_in_ if possible.
+    Optionally accept feature_cols to set feature_names_in_ before saving.
+    """
+    if joblib is None:
+        raise RuntimeError("joblib no disponible")
+    path = Path(path)
+    os.makedirs(path.parent, exist_ok=True)
+    # set feature_names if provided
+    if feature_cols is not None:
+        try:
+            ensure_scaler_feature_names(scaler, feature_cols)
+        except Exception:
+            pass
+    joblib.dump(scaler, str(path))
+    LOGGER.info("Saved scaler -> %s", path)
+
+
+def load_scaler(path: Path, feature_cols: Optional[Sequence[str]] = None) -> Any:
+    """
+    Load scaler. If scaler lacks feature_names_in_ and feature_cols is provided,
+    set scaler.feature_names_in_ from feature_cols (best-effort).
+    """
+    if joblib is None:
+        raise RuntimeError("joblib no disponible")
+    path = Path(path)
+    if not path.exists():
+        raise FileNotFoundError(f"Scaler not found: {path}")
+    scaler = joblib.load(str(path))
+    if feature_cols is not None:
+        try:
+            ensure_scaler_feature_names(scaler, feature_cols)
+        except Exception:
+            pass
+    return scaler
+```
+
+> **Nota**: cambio menor en firma `save_scaler` y `load_scaler` para aceptar `feature_cols` opcional. Eso es backward-compatible: si llamas sin ese argumento, sigue funcionando.
+
+### 4.A.4 `build_dataset_for_training` — adicionar `train_rows_end` en `scaler` (metadato)
+
+Dentro de `build_dataset_for_training`, tras calcular `train_rows_end` y despues de `scaler.fit(...)`, añade:
+
+```python
+    # store train_rows_end as attribute for later meta saving
+    try:
+        scaler.train_rows_end = int(train_rows_end)
+    except Exception:
+        pass
+```
+
+(El resto de la función queda; ya se intenta `scaler.feature_names_in_ = ...` — lo dejamos.)
+
+---
+
+## 4.B `trading_daemon.py` — preferir `meta['feature_cols']` en inferencia
+
+En `TradingDaemon.iteration_once()` sustituye la parte de detección de `feature_cols` por el bloque siguiente. Busca la sección donde actualmente detectas `feature_cols` (está en tu posted code alrededor del comentario `# 3) detect feature_cols`) y reemplázala por:
+
+```python
+        # 3) detect feature_cols (prefer meta)
+        seq_len = int(self.seq_len)
+        horizon = int(self.model_meta.get("horizon", 1) if self.model_meta else 1)
+
+        # Preferred: use meta['feature_cols'] if present
+        feature_cols = None
+        if self.model_meta and isinstance(self.model_meta.get("feature_cols"), (list, tuple)):
+            # keep only those still present in feats
+            feature_cols = [c for c in self.model_meta["feature_cols"] if c in feats.columns]
+            if len(feature_cols) != len(self.model_meta.get("feature_cols")):
+                missing = [c for c in self.model_meta.get("feature_cols") if c not in feats.columns]
+                self._enqueue_log(f"Warning: some feature_cols from model.meta are missing in current feats: {missing}")
+                # fallback behaviour: continue with available ones (or choose to abort)
+                # Option: abort if too many missing
+                if len(feature_cols) < max(1, int(0.5 * len(self.model_meta.get("feature_cols")))):
+                    self._enqueue_log("Too many feature_cols missing compared to model.meta -> aborting iteration.")
+                    return
+        else:
+            # fallback: auto detect numeric columns excluding these
+            exclude = {"timestamp", "open", "high", "low", "close", "volume", "symbol", "timeframe", "exchange"}
+            numeric_cols = [c for c in feats.columns if c not in exclude and pd.api.types.is_numeric_dtype(feats[c])]
+            feature_cols = numeric_cols
+
+        if not feature_cols:
+            self._enqueue_log("No feature columns available after detection. Aborting iteration.")
+            return
+```
+
+Además, **justo después de** `self.model_scaler` está asignado (en `load_model_and_scaler`), añade los checks/asserctions que propusiste:
+
+```python
+        # quick checks after load
+        if self.model_meta and "feature_cols" in self.model_meta:
+            try:
+                meta_fc = list(self.model_meta["feature_cols"])
+                if int(self.model_meta.get("input_size", len(meta_fc))) != len(meta_fc):
+                    self._enqueue_log("Warning: meta.feature_cols length != input_size in model_meta.")
+            except Exception:
+                pass
+
+        # if scaler exists, ensure it has feature_names_in_ (best effort)
+        if self.model_scaler is not None:
+            try:
+                from fiboevo import ensure_scaler_feature_names
+                ensure_scaler_feature_names(self.model_scaler, self.model_meta.get("feature_cols", []))
+            except Exception:
+                # ignore; log if you want
+                self._enqueue_log("Warning: failed to ensure scaler feature names from meta.")
+```
+
+(El helper `ensure_scaler_feature_names` lo añadimos a `fiboevo` — lo he llamado desde aquí para centralizar comportamiento.)
+
+---
+
+## 4.C `trading_gui_extended.py` — reparar scaler feature names y run diagnostics
+
+En `_load_model_from_artifacts()` (tu versión amplia) — después de cargar `scaler` y asignarlo a `self.model_scaler`, añade:
+
+```python
+            # --- ensure scaler has feature_names_in_ if possible
+            try:
+                # prefer fibo helper
+                if self.model_scaler is not None:
+                    from fiboevo import ensure_scaler_feature_names
+                    ensure_scaler_feature_names(self.model_scaler, meta.get("feature_cols", []) if isinstance(meta, dict) else None)
+                    self._enqueue_log("Scaler metadata ensured from meta.json (if applicable).")
+            except Exception:
+                self._enqueue_log("Warning: could not ensure scaler.feature_names_in_ from meta.")
+```
+
+Y justo después de asignar `self.model` / `self.model_scaler`, llama a `diagnostics` si existe:
+
+```python
+            # Diagnostics call (if diagnostics.py available in path)
+            try:
+                import diagnostics
+                try:
+                    diagnostics.check_model_vs_features(self.model_meta, self.model_scaler, self.df_features.head(200) if getattr(self, "df_features", None) is not None else pd.DataFrame())
+                    self._enqueue_log("Diagnostics executed after loading artifacts (see logs).")
+                except Exception:
+                    # in headless or when df_features not present, call with empty df to at least check meta vs scaler
+                    diagnostics.check_model_vs_features(self.model_meta, self.model_scaler, pd.DataFrame())
+            except Exception:
+                # diagnostics optional
+                pass
+```
+
+> **Nota**: esta llamada a `diagnostics` intenta ser no intrusiva: si `diagnostics.py` no está, se ignora con `except`.
+
+---
+
+# 5) ¿Dónde invocar `diagnostics.py`?
+
+Recomiendo estas ubicaciones exactas:
+
+1. **En la GUI**: justo **al final** de `_load_model_from_artifacts()` (como en el snippet anterior). Allí `self.df_features` puede existir si ejecutaste Prepare; en su defecto `diagnostics` hará comprobaciones básicas contra `meta` y `scaler`.
+
+2. **En el Daemon**: en `load_model_and_scaler()` después de asignar `self.model` y `self.model_scaler`, añade:
+
+```python
+try:
+    import diagnostics
+    diagnostics.check_model_vs_features(self.model_meta, self.model_scaler, pd.DataFrame())  # or small sample df if available
+except Exception:
+    pass
+```
+
+3. **En Prepare worker** (GUI ` _training_worker_prepare_only`) **justo después** de `self.df_features = feats.copy()` y `self.df_features = self.df_features.dropna().reset_index(drop=True)`, añade:
+
+```python
+try:
+    import diagnostics
+    diagnostics.check_model_vs_features(getattr(self, "model_meta", {}), getattr(self, "scaler_used", None), self.df_features.head(200))
+except Exception:
+    pass
+```
+
+4. **En TradingDaemon.iteration_once**: justo **después** de `feats = feats.dropna().reset_index(drop=True)`, llamar a diagnostics with latest feats and model_meta.
+
+---
+
+# 6) Qué probar y cómo validar (pasos)
+
+1. **Unit test local** (sin daemon):
+
+   * Ejecuta `python -c "import fiboevo; print(fiboevo.add_technical_features([1,2,3,4,5,6,7,8,9,10], dropna_after=False).columns)"` para confirmar ordering.
+2. **Load model + scaler + diagnostics**:
+
+   * En GUI, pulsa `Load artifacts model` y revisa logs: debe mostrar `meta feature_cols len=...` y `scaler.feature_names_in_ len=...` o la advertencia si algo falta.
+3. **Inferencia smoke test**:
+
+   * En daemon (o script), carga model+scaler y ejecuta una `iteration_once()` con una pequeña DB de prueba para verificar que no aborta por mismatch y que la predicción se calcula.
+4. **Edge cases**:
+
+   * Forzar missing features (rename one feature in feats) y comprobar que la GUI / daemon lanza advertencias y decide si abortar o continuar (según el umbral que hayas elegido).
+
+---
+
+# 7) Items no cambiados y preguntas abiertas
+
+* He **propuesto** incluir `trained_at` y `train_rows_end` en el meta desde el training worker (GUI). **No** los añadí automáticamente en tu función de entrenamiento; para hacerlo hay que modificar la parte del training que escribe `meta_path.write_text(...)` para incluir también `scaler.train_rows_end` (ya sugerí cómo construir `meta` — debes reemplazar el bloque donde guardas meta en `_train_model_worker` por el meta enriquecido).
+* **Pregunta**: ¿quieres que el daemon **aborte** la iteración si faltan >50% de las features del meta, o que **continúe** con las disponibles? He puesto por defecto un abort si quedan menos del 50%. Si prefieres otra política dímelo y ajusto el código.
+* **Pregunta**: ¿quieres que `save_scaler` guarde explícitamente un sidecar `scaler_meta.json` con `feature_cols`, `train_rows_end`, mean/var? Eso facilita comprobaciones sin tocar `scaler` internals. Lo recomiendo; si quieres lo añado.
+
+---
+
+# 8) Resumen de cambios que te recomiendo aplicar ahora (lista corta)
+
+1. Insertar helper `ensure_scaler_feature_names` en `fiboevo`.
+2. Forzar orden determinista de columnas en `add_technical_features`.
+3. Mejorar `save_scaler` / `load_scaler` y setear `scaler.train_rows_end`.
+4. En `trading_daemon.iteration_once()` preferir `model_meta['feature_cols']`.
+5. En GUI `_load_model_from_artifacts()` asegurar `scaler.feature_names_in_` y llamar a `diagnostics`.
+6. Llamar `diagnostics.check_model_vs_features(...)` en los lugares indicados.
+
+---
+
+# 9) Parche mínimo lista de copia/pega
+
+Aquí te dejo de nuevo, comprimido, lo esencial que tienes que **pastear**:
+
+### (A) Helper — pegar al inicio o cerca de otras utilidades en `fiboevo.py`
+
+```python
+def ensure_scaler_feature_names(scaler: Any, feature_cols: Sequence[str]) -> None:
+    try:
+        if scaler is None:
+            return
+        if not hasattr(scaler, "feature_names_in_"):
+            try:
+                scaler.feature_names_in_ = np.array(list(feature_cols), dtype=object)
+            except Exception:
+                try:
+                    setattr(scaler, "feature_names_in_", np.array(list(feature_cols), dtype=object))
+                except Exception:
+                    pass
+    except Exception:
+        LOGGER.exception("ensure_scaler_feature_names failed")
+```
+
+### (B) Deterministic order — añadir en `add_technical_features` antes del `dropna_after`
+
+```python
+    ordered_core = ["timestamp", "open", "high", "low", "close", "volume", "symbol", "timeframe"]
+    ordered_feats = [
+        "log_close",
+        "ret_1", "log_ret_1", "ret_5", "log_ret_5",
+    ]
+    for L in [5, 10, 20, 50, window_long]:
+        ordered_feats += [f"sma_{L}", f"ema_{L}", f"ma_diff_{L}"]
+    ordered_feats += ["bb_m", "bb_std", "bb_up", "bb_dn", "bb_width"]
+    ordered_feats += ["rsi_14", "atr_14", "raw_vol_10", "raw_vol_30"]
+    fibs = [0.0, 0.236, 0.382, 0.5, 0.618, 0.786, 1.0]
+    for f in fibs:
+        name = f"fib_{int(f*1000)}"
+        ordered_feats += [name, f"dist_{name}"]
+    ordered_feats += ["td_buy_setup", "td_sell_setup", "vp_poc", "dist_vp"]
+
+    ordered_cols = [c for c in ordered_core if c in df.columns] + [c for c in ordered_feats if c in df.columns]
+    remaining = [c for c in df.columns if c not in ordered_cols]
+    df = df.loc[:, ordered_cols + remaining]
+```
+
+### (C) `save_scaler` / `load_scaler` — reemplazar por las versiones robustas (ver 4.A.3 más arriba)
+
+### (D) `build_dataset_for_training` — tras fit:
+
+```python
+    try:
+        scaler.train_rows_end = int(train_rows_end)
+    except Exception:
+        pass
+```
+
+### (E) `trading_daemon.iteration_once()` — sustitución de detección de `feature_cols` por el bloque preferente a meta (ver 4.B arriba).
+
+### (F) GUI `_load_model_from_artifacts()` — asegurar scaler feature names y llamada a diagnostics (ver 4.C arriba).
+
+---
+
+# 10) Qué haré si quieres que lo aplique yo
+
+Si quieres que aplique los cambios dentro de los archivos (editando y devolviéndote los archivos completos), dímelo y te doy:
+
+* una versión completa y coherente de `fiboevo.py` con las modificaciones ya integradas, **o**
+* un diff/patch en formato `git`/unified para que lo apliques.
+
+También puedo generar un `diagnostics.py` (si aún no lo tienes) con la función `check_model_vs_features(model_meta, scaler, feats_df)` estandarizada — lo creé antes en tu PDF generación, y puedo entregártelo en un fichero listo para usar.
+
+---
+
+# 11) Conclusión / recomendación inmediata
+
+Aplica primero los **cambios en `fiboevo`** (deterministic ordering + ensure_scaler_feature_names + save/load scaler robusto). Luego, añade el bloque de preferencia de `meta['feature_cols']` en `trading_daemon.iteration_once`. Después de eso, ejecuta `diagnostics.py` en los puntos señalados (GUI load-model y After compute-feats) y mira los logs: si aparecen *mismatches*, tendrás la evidencia exacta para decidir si rehacer training, regenerar scaler o rehacer `meta.json`.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pensó durante 18s
+
+Buena observación — gracias por pegar la versión que ya tienes. Ambas funciones hacen lo esencial (convertir arrays a torch.float32 y mover al device) pero tienen pequeñas diferencias en comportamiento, robustez y compatibilidad. Mi recomendación: unificarlas en una sola versión que combine lo mejor de las dos, mantenga compatibilidad hacia atrás y añada correcciones útiles (aceptar tensores ya existentes, no forzar movimiento si device is None, mensajes de error claros y manejo seguro de device).
+
+Abajo explico las diferencias clave, el porqué de la elección y te dejo la función recomendada lista para pegar (es un merge mejorado), más unas indicaciones rápidas de integración y tests.
+
+Comparación rápida (ventajas / desventajas)
+
+Tu versión actual (fiboevo):
+
+Convierte cualquier entrada con np.asarray(..., dtype=np.float32) → eficiente.
+
+Si device no es None intenta t.to(device) y, si falla, trata torch.device(device) → tolerante a strings.
+
+No trata el caso en el que arr ya es torch.Tensor (aunque funciona por np.asarray pero perdería grad, device, etc. y convertirá a CPU numpy).
+
+Firma: device: Optional[str] = None — preserva dispositivo original cuando no se pide mover.
+
+Mi versión propuesta inicialmente:
+
+Soporta explícitamente torch.Tensor (lo convierte a float32 y lo mueve).
+
+Asume device="cpu" por defecto — eso puede sorprender si antes nadie pasaba device (cambia comportamiento por defecto).
+
+Acepta Sequence u otros iterables.
+
+Lanza error claro si torch no está disponible.
+
+Conclusión: Mantener comportamiento por defecto de tu versión (no forzar a 'cpu') es preferible para compatibilidad. Pero debemos añadir soporte explícito para torch.Tensor y hacer la función más robusta (aceptar Sequence, manejar device tipo string o torch.device, y conservar grad/estructura razonable).
+
+Función recomendada (unificada — pegar en fp_utils.py o mantener en fiboevo.py y desde allí importar)
+from typing import Optional, Union, Sequence
+import numpy as np
+
+# asume que _HAS_TORCH y torch están definidos en el módulo (o importa aquí)
+try:
+    import torch
+    _HAS_TORCH = True
+except Exception:
+    torch = None  # type: ignore
+    _HAS_TORCH = False
+
+def to_tensor_float32(arr: Union[np.ndarray, Sequence[float], "torch.Tensor"],
+                       device: Optional[Union[str, "torch.device"]] = None):
+    """
+    Convierte `arr` a torch.Tensor dtype=torch.float32.
+
+    - Si `arr` ya es torch.Tensor: asegura dtype float32 y, si device no es None, mueve el tensor.
+      Si device es None, **mantiene** el device original del tensor.
+    - Si `arr` es numpy array o un iterable: crea tensor desde numpy.astype(np.float32).
+    - `device` puede ser None (no mover), 'cpu', 'cuda', 'cuda:0', o un torch.device.
+    - Lanza RuntimeError si torch no está instalado.
+
+    Retorna: torch.Tensor dtype torch.float32 en el device (si se especificó).
+    """
+    if not _HAS_TORCH or torch is None:
+        raise RuntimeError("PyTorch no disponible (instala 'torch')")
+
+    # Normalizar device: permitimos strings o torch.device; si device is None -> no move
+    dev = None
+    if device is not None:
+        if isinstance(device, torch.device):
+            dev = device
+        else:
+            try:
+                dev = torch.device(device)
+            except Exception:
+                # si no puede interpretarlo, dejaremos pasar y torch.to() fallará con mensaje claro
+                dev = device
+
+    # Si ya es tensor, forzamos dtype float32 y movemos solo si dev no es None
+    if isinstance(arr, torch.Tensor):
+        t = arr
+        # mantén grad y detached? aquí no detach para preservar comportamiento del usuario
+        if t.dtype != torch.float32:
+            t = t.to(dtype=torch.float32)
+        if dev is not None:
+            t = t.to(device=dev)
+        return t
+
+    # Si no es tensor: construir desde numpy
+    # np.asarray con dtype evita copia cuando ya es float32
+    a = np.asarray(arr, dtype=np.float32)
+    t = torch.from_numpy(a)
+    if dev is not None:
+        t = t.to(device=dev)
+    return t
+
+Por qué esta versión
+
+Compatibilidad: si device es None preserva el comportamiento previo (no mueve a CPU forzosamente). Esto evita cambios sorpresa en el resto del código.
+
+Soporta tensores ya existentes: evita pasar por numpy — conserva estructura y evita costosa ida y vuelta CPU<->GPU.
+
+Manejo claro de device: acepta torch.device o strings; si no puede crear torch.device dará error claro al usar to(device=...).
+
+No detaches invisiblemente: no hago detach() por ti; así se conserva requires_grad si el tensor lo traía (si quieres siempre detach, podemos añadir un flag detach=True).
+
+Integración (qué cambiar / dónde)
+
+Puedes reemplazar la función que ya tienes por esta. Es una sustitución compatible (mejorada).
+
+Alternativamente, dejar la función antigua en fiboevo.py y importar la nueva desde fp_utils con alias, p.e.:
+
+from fibopkg3.fp_utils import to_tensor_float32 as fp_to_tensor_float32
+
+
+y luego buscar y reemplazar los lugares donde conviertes arrays: xb = fp_to_tensor_float32(seq_x, device=device).
+
+Puntos concretos a revisar en tu códigobase (por los 5 ficheros que indicas):
+
+prepare_dataset.py: reemplazar torch.from_numpy(...astype(...)) por to_tensor_float32(..., device=device) para asegurar float32.
+
+fiboevo.py: si ya tiene to_tensor_float32, decidir si se elimina de ahí y se importa desde fp_utils (mejor para centralizar).
+
+trading_daemon.py: cuando uses el modelo para predicción asegúrate de pasar tensores con shape y dtype correctos: xb = to_tensor_float32(seq_x, device=device).unsqueeze(0) u opción equivalente.
+
+trading_gui_extended.py: si ofreces preview de tensores o hago transformaciones en hilo, usar la misma función para evitar inconsistencia de dtype.
+
+Tests mínimos que te recomiendo ejecutar tras el cambio
+
+Tensor input (mismo device):
+
+t = torch.randn(2,3, dtype=torch.float64, device='cpu')
+t2 = to_tensor_float32(t, device=None)
+assert t2.dtype == torch.float32
+assert t2.device == t.device
+
+
+Numpy input to CUDA (si tienes GPU):
+
+a = np.ones((4,5), dtype=np.float64)
+t = to_tensor_float32(a, device='cuda:0')  # si no GPU, usad 'cpu'
+assert t.dtype == torch.float32
+
+
+Sequence input:
+
+t = to_tensor_float32([1.0, 2.0, 3.0])
+assert t.dtype == torch.float32
+
+
+Backwards compatibility: tests de tu pipeline de entrenamiento y de inferencia en pequeño dataset sintético (usar simulate_ou) para verificar que no hay cambios de comportamiento.
+
+Recomendaciones finales
+
+Centraliza: mantén una sola implementación (en fp_utils.py) y importa desde los demás módulos. Evita duplicidad para facilitar futuros cambios.
+
+Documenta el comportamiento (device None ⇒ no mover; tensores no se detach() por defecto).
+
+Opcional: añade parámetros como detach: bool = False o copy: bool = True si prefieres controlar si el tensor retornado comparte memoria o no.

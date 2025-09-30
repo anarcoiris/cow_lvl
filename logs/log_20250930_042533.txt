@@ -1,0 +1,43 @@
+[2025-09-30 06:25:33] INFO root: init_logging: logfile=logs\log_20250930_042533.txt
+[2025-09-30 06:25:33] INFO __main__: Logging initialized
+[2025-09-30 06:39:13] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-09-30 06:39:13] INFO TradingDaemon: Daemon loop started.
+[2025-09-30 06:39:13] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:39:18] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:39:24] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:39:28] INFO TradingDaemon: Daemon stopped.
+[2025-09-30 06:49:32] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-09-30 06:49:32] INFO TradingDaemon: Daemon loop started.
+[2025-09-30 06:49:32] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:49:38] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:49:44] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:49:49] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:49:55] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 06:49:59] INFO TradingDaemon: Attempting to load model from C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\artifacts\model_best.pt
+[2025-09-30 06:49:59] INFO TradingDaemon: Loaded meta: artifacts\meta.json
+[2025-09-30 06:49:59] INFO TradingDaemon: Loaded model state_dict (strict=True).
+[2025-09-30 06:49:59] INFO TradingDaemon: Model prepared on CPU.
+[2025-09-30 06:49:59] INFO TradingDaemon: Loaded scaler from artifacts\scaler.pkl
+[2025-09-30 06:50:01] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:01] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:06] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:06] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:12] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:12] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:18] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:18] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:23] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:23] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:29] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:29] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:35] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:35] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:40] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:40] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:46] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:46] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:52] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:52] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:58] INFO TradingDaemon: Prediction computed: 0.000165
+[2025-09-30 06:50:58] INFO TradingDaemon: No trade (signal 0.000165 within threshold).
+[2025-09-30 06:50:58] INFO TradingDaemon: Daemon stopped.

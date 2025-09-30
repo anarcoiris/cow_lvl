@@ -1,0 +1,11 @@
+[2025-09-30 02:13:58] INFO root: init_logging: logfile=logs\log_20250930_001358.txt
+[2025-09-30 02:13:58] DEBUG root: Python executable: C:\Users\soyko\AppData\Local\Programs\Python\Python310\python.exe
+[2025-09-30 02:13:58] DEBUG root: CWD: C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5
+[2025-09-30 02:13:58] DEBUG root: sys.path: ['C:\\Users\\soyko\\Documents\\git2\\Market\\project assistant\\env.model_0.9\\0.9f\\fibopkg5', 'C:\\Users\\soyko\\AppData\\Local\\Programs\\Python\\Python310\\python310.zip', 'C:\\Users\\soyko\\AppData\\Local\\Programs\\Python\\Python310\\DLLs', 'C:\\Users\\soyko\\AppData\\Local\\Programs\\Python\\Python310\\lib', 'C:\\Users\\soyko\\AppData\\Local\\Programs\\Python\\Python310', 'C:\\Users\\soyko\\AppData\\Roaming\\Python\\Python310\\site-packages', 'C:\\Users\\soyko\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages']
+[2025-09-30 02:13:58] INFO __main__: Logging initialized
+[2025-09-30 02:16:03] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-09-30 02:16:03] INFO TradingDaemon: Daemon loop started.
+[2025-09-30 02:16:04] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 02:16:09] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 02:16:15] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 02:16:15] INFO TradingDaemon: Daemon stopped.

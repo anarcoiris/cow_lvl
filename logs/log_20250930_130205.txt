@@ -1,0 +1,11 @@
+[2025-09-30 15:02:05] INFO root: init_logging: logfile=logs\log_20250930_130205.txt
+[2025-09-30 15:02:05] INFO __main__: Logging initialized
+[2025-09-30 15:02:07] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 170, in <module>
+    import torch
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\torch\__init__.py", line 270, in <module>
+    _load_dll_libraries()
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\torch\__init__.py", line 246, in _load_dll_libraries
+    res = kernel32.LoadLibraryExW(dll, None, 0x00001100)
+KeyboardInterrupt

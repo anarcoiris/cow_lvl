@@ -1,0 +1,390 @@
+[2025-09-30 07:43:13] INFO root: init_logging: logfile=logs\log_20250930_054313.txt
+[2025-09-30 07:43:13] INFO __main__: Logging initialized
+[2025-09-30 07:43:17] INFO root: Config loaded from config\gui_config.json
+[2025-09-30 07:44:57] INFO root: Preview loaded: 200 rows.
+[2025-09-30 07:44:59] INFO root: Prepare: loading data from sqlite...
+[2025-09-30 07:44:59] INFO root: Prepare thread started.
+[2025-09-30 07:44:59] INFO root: Loaded 105442 rows from sqlite.
+[2025-09-30 07:45:08] INFO root: Computed features. Shape: (105442, 55)
+[2025-09-30 07:45:08] INFO root: dropna: before=105442, after=105342, removed=100
+[2025-09-30 07:45:08] INFO root: Feature cols selected (41): ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'ema_5', 'ma_diff_5', 'sma_10', 'ema_10', 'ma_diff_10', 'sma_20', 'ema_20', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14']...
+[2025-09-30 07:45:08] INFO root: Building sequences...
+[2025-09-30 07:45:10] INFO root: Sequences built: N=105200, seq_len=128, features=41
+[2025-09-30 07:45:17] INFO root: Scaler fitted and df_scaled prepared.
+[2025-09-30 07:45:17] INFO root: Preview raw (first 5 rows):
+   id   symbol timeframe          ts       open       high        low      close     volume  source     created_at     updated_at                 timestamp
+0   1  BTCUSDT        1m  1752231240  118117.79  118129.59  118090.00  118093.63    9.27987  influx  1759186315000  1759186315000 2025-07-11 10:54:00+00:00
+1   2  BTCUSDT        1m  1752231300  118093.63  118093.63  117980.00  117980.01  111.28787  influx  1759186315000  1759186315000 2025-07-11 10:55:00+00:00
+2   3  BTCUSDT        1m  1752231360  117980.00  118023.34  117980.00  118022.39    9.13797  influx  1759186315000  1759186315000 2025-07-11 10:56:00+00:00
+3   4  BTCUSDT        1m  1752231420  118022.38  118022.38  117946.72  117968.01   30.41224  influx  1759186315000  1759186315000 2025-07-11 10:57:00+00:00
+4   5  BTCUSDT        1m  1752231480  117968.01  117968.01  117964.71  117964.72    7.69926  influx  1759186315000  1759186315000 2025-07-11 10:58:00+00:00
+[2025-09-30 07:45:17] INFO root: Preview features (first 5 rows):
+       close       high        low  log_close     ret_1  log_ret_1     ret_5  log_ret_5       sma_5          ema_5  ma_diff_5      sma_10         ema_10  ma_diff_10       sma_20         ema_20  ma_diff_20       sma_50         ema_50  ma_diff_50       sma_50         ema_50  ma_diff_50         bb_m      bb_std          bb_up          bb_dn  bb_width     rsi_14     atr_14  raw_vol_10  raw_vol_30      fib_0  dist_fib_0       fib_236  dist_fib_236       fib_382  dist_fib_382     fib_500  dist_fib_500       fib_618  dist_fib_618       fib_786  dist_fib_786   fib_1000  dist_fib_1000  td_buy_setup  td_sell_setup    volume        vp_poc   dist_vp           timestamp       open   symbol timeframe
+0  117870.16  117902.31  117870.15  11.677339 -0.000026  -0.000026  0.001012   0.001011  117823.422  117841.224784     46.738  117814.545  117849.863338      55.615  117929.4420  117893.470114    -59.2820  117930.3404  117914.626299    -60.1804  117930.3404  117914.626299    -60.1804  117929.4420  137.827385  118205.096770  117653.787230  0.004675  36.103275  37.512857    0.000343    0.000393  117700.00    0.001444  117831.98064      0.000324  117913.62968     -0.000369  117979.620     -0.000929  118045.61032     -0.001489  118139.56264     -0.002286  118259.24      -0.003301             0              4  15.18356  117977.73925 -0.000913 2025-07-11 12:34:00  117873.18  BTCUSDT        1m
+1  117851.13  117873.18  117851.13  11.677177 -0.000161  -0.000161  0.000811   0.000810  117842.514  117844.526523      8.616  117810.858  117850.093640      40.272  117914.0810  117889.437722    -62.9510  117932.5504  117912.136248    -81.4204  117932.5504  117912.136248    -81.4204  117914.0810  127.722162  118169.525324  117658.636676  0.004333  31.773830  37.921429    0.000346    0.000393  117700.00    0.001282  117831.98064      0.000162  117913.62968     -0.000530  117979.620     -0.001090  118045.61032     -0.001650  118139.56264     -0.002447  118259.24      -0.003463             0              5  14.80387  117977.73925 -0.001074 2025-07-11 12:35:00  117870.16  BTCUSDT        1m
+2  117849.18  117851.14  117831.66  11.677161 -0.000017  -0.000017  0.000620   0.000620  117857.130  117846.077682     -7.950  117809.662  117849.927524      39.518  117898.6915  117885.603653    -49.5115  117935.3330  117909.667376    -86.1530  117935.3330  117909.667376    -86.1530  117898.6915  114.805649  118128.302798  117669.080202  0.003895  30.783770  38.277857    0.000339    0.000382  117700.00    0.001266  117831.98064      0.000146  117913.62968     -0.000547  117979.620     -0.001107  118045.61032     -0.001667  118139.56264     -0.002464  118259.24      -0.003480             0              6  17.55212  117721.50325  0.001083 2025-07-11 12:36:00  117851.14  BTCUSDT        1m
+3  117803.56  117856.14  117803.55  11.676774 -0.000387  -0.000387 -0.000326  -0.000326  117849.442  117831.905121    -45.882  117812.805  117841.497065      -9.245  117881.8130  117877.789972    -78.2530  117937.4040  117905.506302   -133.8440  117937.4040  117905.506302   -133.8440  117881.8130  101.307843  118084.428687  117679.197313  0.003438  28.389151  39.293571    0.000259    0.000384  117700.00    0.000879  117831.98064     -0.000241  117913.62968     -0.000934  117979.620     -0.001495  118045.61032     -0.002055  118139.56264     -0.002852  118259.24      -0.003868             1              0  14.99040  117721.50325  0.000697 2025-07-11 12:37:00  117849.18  BTCUSDT        1m
+4  117815.90  117815.90  117803.55  11.676879  0.000105   0.000105 -0.000486  -0.000486  117837.986  117826.570081    -22.086  117818.791  117836.843053      -2.891  117869.6410  117871.895689    -53.7410  117939.6104  117901.992329   -123.7104  117939.6104  117901.992329   -123.7104  117869.6410   93.151783  118055.944567  117683.337433  0.003161  38.214986  32.896429    0.000254    0.000384  117705.57    0.000936  117836.23612     -0.000173  117917.07194     -0.000859  117982.405     -0.001413  118047.73806     -0.001968  118140.75462     -0.002757  118259.24      -0.003763             2              0  11.32190  117721.50325  0.000801 2025-07-11 12:38:00  117803.56  BTCUSDT        1m
+[2025-09-30 07:45:17] INFO root: Preview scaled (first 5 rows):
+       close       high        low  log_close     ret_1  log_ret_1     ret_5  log_ret_5     sma_5     ema_5  ma_diff_5    sma_10    ema_10  ma_diff_10    sma_20    ema_20  ma_diff_20       sma_50         ema_50  ma_diff_50       sma_50         ema_50  ma_diff_50      bb_m    bb_std     bb_up     bb_dn  bb_width    rsi_14    atr_14  raw_vol_10  raw_vol_30     fib_0  dist_fib_0   fib_236  dist_fib_236   fib_382  dist_fib_382   fib_500  dist_fib_500   fib_618  dist_fib_618   fib_786  dist_fib_786  fib_1000  dist_fib_1000  td_buy_setup  td_sell_setup    volume    vp_poc   dist_vp           timestamp       open   symbol timeframe
+0  117870.16  117902.31  117870.15   0.674958 -0.057769  -0.057442  1.042931   1.040858  0.658036  0.663688   0.847110  0.655266  0.666480    0.659307  0.691594  0.680373   -0.476010  117930.3404  117914.626299    -60.1804  117930.3404  117914.626299    -60.1804  0.691594  1.106997  0.729895  0.652091  1.060145 -0.746734 -0.208576   -0.023672    0.115828  0.696722   -0.286487  0.703124     -0.446202  0.706879     -0.540851  0.709799     -0.598005  0.712616     -0.630427  0.716445     -0.638077  0.721017      -0.611107     -0.634022       0.564925  15.18356  0.706191 -0.376210 2025-07-11 12:34:00  117873.18  BTCUSDT        1m
+1  117851.13  117873.18  117851.13   0.669110 -0.368724  -0.367839  0.836075   0.834593  0.664061  0.664730   0.157803  0.654102  0.666552    0.478234  0.686745  0.679100   -0.505737  117932.5504  117912.136248    -81.4204  117932.5504  117912.136248    -81.4204  0.686745  0.935483  0.718710  0.653626  0.892853 -0.977943 -0.196176   -0.015289    0.113899  0.696722   -0.366872  0.703124     -0.541289  0.706879     -0.641203  0.709799     -0.698473  0.712616     -0.727205  0.716445     -0.725327  0.721017      -0.684477     -0.634022       0.865358  14.80387  0.706191 -0.438999 2025-07-11 12:35:00  117870.16  BTCUSDT        1m
+2  117849.18  117851.14  117831.66   0.668510 -0.036994  -0.036706  0.640421   0.639460  0.668674  0.665219  -0.141737  0.653725  0.666500    0.469336  0.681887  0.677889   -0.396849  117935.3330  117909.667376    -86.1530  117935.3330  117909.667376    -86.1530  0.681887  0.716254  0.705748  0.656931  0.678890 -1.030816 -0.185358   -0.041646    0.068666  0.696722   -0.375110  0.703124     -0.551034  0.706879     -0.651488  0.709799     -0.708770  0.712616     -0.737123  0.716445     -0.734269  0.721017      -0.691996     -0.634022       1.165790  17.55212  0.625630  0.399259 2025-07-11 12:36:00  117851.14  BTCUSDT        1m
+3  117803.56  117856.14  117803.55   0.654485 -0.885326  -0.883606 -0.333621  -0.332539  0.666248  0.660746  -0.827609  0.654717  0.663839   -0.106148  0.676558  0.675422   -0.629716  117937.4040  117905.506302   -133.8440  117937.4040  117905.506302   -133.8440  0.676558  0.487159  0.691952  0.660133  0.455248 -1.158698 -0.154531   -0.341869    0.079884  0.696722   -0.567927  0.703124     -0.779115  0.706879     -0.892197  0.709799     -0.949759  0.712616     -0.969261  0.716445     -0.943553  0.721017      -0.867986     -0.339583      -0.636803  14.99040  0.625630  0.248975 2025-07-11 12:37:00  117849.18  BTCUSDT        1m
+4  117815.90  117815.90  117803.55   0.658279  0.240695   0.240446 -0.497982  -0.496645  0.662632  0.659063  -0.397339  0.656606  0.662370   -0.031161  0.672716  0.673561   -0.431116  117939.6104  117901.992329   -123.7104  117939.6104  117901.992329   -123.7104  0.672716  0.348728  0.682995  0.661444  0.320108 -0.633960 -0.348684   -0.363515    0.079088  0.698489   -0.539326  0.704472     -0.738679  0.707969     -0.845219  0.710680     -0.899248  0.713287     -0.917259  0.716821     -0.892381  0.721017      -0.820368     -0.045145      -0.636803  11.32190  0.625630  0.289638 2025-07-11 12:38:00  117803.56  BTCUSDT        1m
+[2025-09-30 07:45:17] INFO root: Prepare stage finished successfully.
+[2025-09-30 07:45:38] INFO root: Config saved to config\gui_config.json
+[2025-09-30 07:46:33] INFO root: Preview loaded: 200 rows.
+[2025-09-30 07:47:50] INFO root: No daemon running: use 'Load artifacts model' to load artifacts/model_best.pt into the GUI.
+[2025-09-30 07:47:56] INFO root: meta.json leído: artifacts\meta.json
+[2025-09-30 07:47:56] INFO root: state_dict cargado con strict=True.
+[2025-09-30 07:47:56] INFO root: Modelo preparado en device cuda (input_size=41, hidden=96, num_layers=2).
+[2025-09-30 07:47:56] INFO root: Modelo cargado desde artifacts\model_best.pt y metadata aplicada: {'feature_cols': ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'ema_5', 'ma_diff_5', 'sma_10', 'ema_10', 'ma_diff_10', 'sma_20', 'ema_20', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10', 'raw_vol_30', 'fib_0', 'dist_fib_0', 'fib_236', 'dist_fib_236', 'fib_382', 'dist_fib_382', 'fib_500', 'dist_fib_500', 'fib_618', 'dist_fib_618', 'fib_786', 'dist_fib_786', 'fib_1000', 'dist_fib_1000', 'td_buy_setup', 'td_sell_setup', 'vp_poc', 'dist_vp'], 'seq_len': 128, 'horizon': 15, 'hidden': 96, 'input_size': 41, 'num_layers': 2}
+[2025-09-30 07:47:56] INFO root: Scaler cargado desde artifacts\scaler.pkl.
+[2025-09-30 07:50:42] INFO root: Status data fetched: 50 rows.
+[2025-09-30 07:50:47] INFO root: Status data fetched: 50 rows.
+[2025-09-30 07:51:57] INFO websocket: Websocket connected
+[2025-09-30 07:51:57] INFO root: WS open (callback)
+[2025-09-30 07:52:27] INFO root: WS closed: None None
+[2025-09-30 07:52:27] INFO root: Websocket closed by user.
+[2025-09-30 07:52:35] INFO websocket: Websocket connected
+[2025-09-30 07:52:35] INFO root: WS open (callback)
+[2025-09-30 07:52:40] INFO root: Refreshed model metadata from GUI state.
+[2025-09-30 07:52:52] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-09-30 07:52:52] INFO TradingDaemon: Daemon loop started.
+[2025-09-30 07:52:52] INFO root: Daemon started.
+[2025-09-30 07:52:52] INFO root: Background: loading model from C:/Users/soyko/Documents/git2/Market/project assistant/env.model_0.9/0.9f/fibopkg5/artifacts/model_best.pt ...
+[2025-09-30 07:52:52] INFO TradingDaemon: Attempting to load model from C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\artifacts\model_best.pt
+[2025-09-30 07:52:52] INFO TradingDaemon: Loaded meta: artifacts\meta.json
+[2025-09-30 07:52:52] INFO TradingDaemon: Loaded model state_dict (strict=True).
+[2025-09-30 07:52:52] INFO TradingDaemon: Model prepared on CPU.
+[2025-09-30 07:52:52] INFO TradingDaemon: Loaded scaler from artifacts\scaler.pkl
+[2025-09-30 07:52:52] INFO root: Model loaded (background).
+[2025-09-30 07:52:52] INFO TradingDaemon: Prediction computed: 0.000201
+[2025-09-30 07:52:52] INFO TradingDaemon: No trade (signal 0.000201 within threshold).
+[2025-09-30 07:52:58] INFO TradingDaemon: Prediction computed: 0.000201
+[2025-09-30 07:52:58] INFO TradingDaemon: No trade (signal 0.000201 within threshold).
+[2025-09-30 07:53:04] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:04] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:09] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:09] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:15] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:15] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:21] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:21] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:22] INFO root: Already connected.
+[2025-09-30 07:53:27] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:27] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:27] INFO root: WS closed: None None
+[2025-09-30 07:53:27] INFO root: Websocket closed by user.
+[2025-09-30 07:53:30] INFO root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Tue, 30 Sep 2025 05:53:30 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-09-30 07:53:30] ERROR websocket: Handshake status 404 Not Found -+-+- {'date': 'Tue, 30 Sep 2025 05:53:30 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path' - goodbye
+[2025-09-30 07:53:30] INFO root: WS closed: None None
+[2025-09-30 07:53:30] INFO root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Tue, 30 Sep 2025 05:53:30 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-09-30 07:53:32] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:32] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:38] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:38] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:44] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:44] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:49] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:49] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:53:55] INFO websocket: Websocket connected
+[2025-09-30 07:53:55] INFO root: WS open (callback)
+[2025-09-30 07:53:55] INFO TradingDaemon: Prediction computed: 0.000049
+[2025-09-30 07:53:55] INFO TradingDaemon: No trade (signal 0.000049 within threshold).
+[2025-09-30 07:54:01] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:01] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:01] INFO root: WS closed: None None
+[2025-09-30 07:54:01] INFO root: Websocket closed by user.
+[2025-09-30 07:54:04] INFO websocket: Websocket connected
+[2025-09-30 07:54:04] INFO root: WS open (callback)
+[2025-09-30 07:54:07] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:07] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:09] INFO root: Already connected.
+[2025-09-30 07:54:12] INFO root: WS closed: None None
+[2025-09-30 07:54:12] INFO root: Websocket closed by user.
+[2025-09-30 07:54:12] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:12] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:14] INFO websocket: Websocket connected
+[2025-09-30 07:54:14] INFO root: WS open (callback)
+[2025-09-30 07:54:18] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:18] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:24] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:24] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:29] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:29] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:32] INFO root: WS closed: None None
+[2025-09-30 07:54:32] INFO root: Websocket closed by user.
+[2025-09-30 07:54:34] INFO websocket: Websocket connected
+[2025-09-30 07:54:34] INFO root: WS open (callback)
+[2025-09-30 07:54:35] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:35] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:41] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:41] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:46] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:46] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:49] INFO root: WS closed: None None
+[2025-09-30 07:54:49] INFO root: Websocket closed by user.
+[2025-09-30 07:54:52] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:52] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:54:55] INFO websocket: Websocket connected
+[2025-09-30 07:54:55] INFO root: WS open (callback)
+[2025-09-30 07:54:58] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 07:54:58] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 07:55:03] INFO root: Prediction worker started (background).
+[2025-09-30 07:55:04] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:04] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:04] INFO root: Prediction computed: log=-0.000194 pct=-0.019438165437257737 vol=0.7426460981369019
+[2025-09-30 07:55:09] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:09] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:15] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:15] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:21] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:21] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:27] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:27] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:32] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:32] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:38] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:38] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:44] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:44] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:49] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:49] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:55:55] INFO TradingDaemon: Prediction computed: -0.000194
+[2025-09-30 07:55:55] INFO TradingDaemon: No trade (signal -0.000194 within threshold).
+[2025-09-30 07:56:01] INFO TradingDaemon: Prediction computed: -0.000193
+[2025-09-30 07:56:01] INFO TradingDaemon: No trade (signal -0.000193 within threshold).
+[2025-09-30 07:56:01] INFO root: Applied status intervals: inference=60.0s trade=60.0s refresh=60.0s
+[2025-09-30 07:56:01] INFO TradingDaemon: Configuration updated from dict.
+[2025-09-30 07:56:01] INFO root: Pushed refresh interval to daemon.poll_interval.
+[2025-09-30 07:56:20] INFO root: Status data fetched: 50 rows.
+[2025-09-30 07:57:06] INFO TradingDaemon: Prediction computed: -0.000137
+[2025-09-30 07:57:06] INFO TradingDaemon: No trade (signal -0.000137 within threshold).
+[2025-09-30 07:57:42] INFO root: WS closed: None None
+[2025-09-30 07:57:42] INFO root: Websocket closed by user.
+[2025-09-30 07:57:45] INFO websocket: Websocket connected
+[2025-09-30 07:57:45] INFO root: WS open (callback)
+[2025-09-30 07:58:12] INFO TradingDaemon: Prediction computed: -0.000032
+[2025-09-30 07:58:12] INFO TradingDaemon: No trade (signal -0.000032 within threshold).
+[2025-09-30 07:58:30] INFO root: WS closed: None None
+[2025-09-30 07:58:30] INFO root: Websocket closed by user.
+[2025-09-30 07:58:34] INFO root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Tue, 30 Sep 2025 05:58:34 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-09-30 07:58:34] ERROR websocket: Handshake status 404 Not Found -+-+- {'date': 'Tue, 30 Sep 2025 05:58:34 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path' - goodbye
+[2025-09-30 07:58:34] INFO root: WS closed: None None
+[2025-09-30 07:58:34] INFO root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Tue, 30 Sep 2025 05:58:34 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-09-30 07:59:17] INFO TradingDaemon: Prediction computed: 0.000054
+[2025-09-30 07:59:17] INFO TradingDaemon: No trade (signal 0.000054 within threshold).
+[2025-09-30 08:00:01] INFO websocket: Websocket connected
+[2025-09-30 08:00:01] INFO root: WS open (callback)
+[2025-09-30 08:00:23] INFO TradingDaemon: Prediction computed: 0.000047
+[2025-09-30 08:00:23] INFO TradingDaemon: No trade (signal 0.000047 within threshold).
+[2025-09-30 08:01:28] INFO TradingDaemon: Prediction computed: 0.000156
+[2025-09-30 08:01:28] INFO TradingDaemon: No trade (signal 0.000156 within threshold).
+[2025-09-30 08:02:33] INFO TradingDaemon: Prediction computed: 0.000228
+[2025-09-30 08:02:33] INFO TradingDaemon: No trade (signal 0.000228 within threshold).
+[2025-09-30 08:02:57] INFO root: WS closed: None None
+[2025-09-30 08:02:57] INFO root: Websocket closed by user.
+[2025-09-30 08:03:02] INFO websocket: Websocket connected
+[2025-09-30 08:03:02] INFO root: WS open (callback)
+[2025-09-30 08:03:39] INFO TradingDaemon: Prediction computed: -0.000111
+[2025-09-30 08:03:39] INFO TradingDaemon: No trade (signal -0.000111 within threshold).
+[2025-09-30 08:03:51] INFO root: WS closed: None None
+[2025-09-30 08:03:52] INFO root: Websocket closed by user.
+[2025-09-30 08:03:54] INFO websocket: Websocket connected
+[2025-09-30 08:03:54] INFO root: WS open (callback)
+[2025-09-30 08:04:44] INFO TradingDaemon: Prediction computed: -0.000097
+[2025-09-30 08:04:44] INFO TradingDaemon: No trade (signal -0.000097 within threshold).
+[2025-09-30 08:05:50] INFO TradingDaemon: Prediction computed: -0.000045
+[2025-09-30 08:05:50] INFO TradingDaemon: No trade (signal -0.000045 within threshold).
+[2025-09-30 08:06:55] INFO TradingDaemon: Prediction computed: -0.000038
+[2025-09-30 08:06:55] INFO TradingDaemon: No trade (signal -0.000038 within threshold).
+[2025-09-30 08:07:52] INFO root: WS closed: None None
+[2025-09-30 08:07:53] INFO root: Websocket closed by user.
+[2025-09-30 08:07:55] INFO websocket: Websocket connected
+[2025-09-30 08:07:55] INFO root: WS open (callback)
+[2025-09-30 08:08:00] INFO TradingDaemon: Prediction computed: -0.000103
+[2025-09-30 08:08:00] INFO TradingDaemon: No trade (signal -0.000103 within threshold).
+[2025-09-30 08:08:06] INFO root: Refreshed model metadata from daemon.
+[2025-09-30 08:08:22] INFO root: Already connected.
+[2025-09-30 08:08:26] INFO root: WS closed: None None
+[2025-09-30 08:08:27] INFO root: Websocket closed by user.
+[2025-09-30 08:08:28] INFO websocket: Websocket connected
+[2025-09-30 08:08:28] INFO root: WS open (callback)
+[2025-09-30 08:08:34] INFO root: WS closed: None None
+[2025-09-30 08:08:34] INFO root: Websocket closed by user.
+[2025-09-30 08:08:36] INFO websocket: Websocket connected
+[2025-09-30 08:08:36] INFO root: WS open (callback)
+[2025-09-30 08:08:57] INFO root: WS closed: None None
+[2025-09-30 08:08:57] INFO root: Websocket closed by user.
+[2025-09-30 08:08:59] INFO websocket: Websocket connected
+[2025-09-30 08:08:59] INFO root: WS open (callback)
+[2025-09-30 08:09:06] INFO TradingDaemon: Prediction computed: -0.000182
+[2025-09-30 08:09:06] INFO TradingDaemon: No trade (signal -0.000182 within threshold).
+[2025-09-30 08:09:53] INFO root: WS closed: None None
+[2025-09-30 08:09:54] INFO root: Websocket closed by user.
+[2025-09-30 08:09:55] INFO websocket: Websocket connected
+[2025-09-30 08:09:55] INFO root: WS open (callback)
+[2025-09-30 08:10:11] INFO TradingDaemon: Prediction computed: -0.000302
+[2025-09-30 08:10:11] INFO TradingDaemon: No trade (signal -0.000302 within threshold).
+[2025-09-30 08:10:15] INFO root: WS closed: None None
+[2025-09-30 08:10:15] INFO root: Websocket closed by user.
+[2025-09-30 08:10:17] INFO websocket: Websocket connected
+[2025-09-30 08:10:17] INFO root: WS open (callback)
+[2025-09-30 08:11:16] INFO TradingDaemon: Prediction computed: -0.000405
+[2025-09-30 08:11:16] INFO TradingDaemon: No trade (signal -0.000405 within threshold).
+[2025-09-30 08:12:22] INFO TradingDaemon: Prediction computed: -0.000365
+[2025-09-30 08:12:22] INFO TradingDaemon: No trade (signal -0.000365 within threshold).
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745520,"s":"BTCUSDT","a":3684196547,"p":"114000.00000000","q":"0.00005000","f":5267659571,"l":5267659571,"T":1759212745519,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745526,"s":"BTCUSDT","a":3684196548,"p":"113999.99000000","q":"1.00000000","f":5267659572,"l":5267659574,"T":1759212745525,"m":true,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745597,"s":"BTCUSDT","a":3684196549,"p":"114000.00000000","q":"0.04081000","f":5267659575,"l":5267659578,"T":1759212745597,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745679,"s":"BTCUSDT","a":3684196550,"p":"114000.00000000","q":"0.00017000","f":5267659579,"l":5267659579,"T":1759212745679,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745883,"s":"BTCUSDT","a":3684196551,"p":"114000.00000000","q":"0.56283000","f":5267659580,"l":5267659634,"T":1759212745882,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745883,"s":"BTCUSDT","a":3684196552,"p":"114000.01000000","q":"0.08056000","f":5267659635,"l":5267659642,"T":1759212745882,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745886,"s":"BTCUSDT","a":3684196553,"p":"114000.01000000","q":"0.04385000","f":5267659643,"l":5267659643,"T":1759212745885,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745888,"s":"BTCUSDT","a":3684196554,"p":"114000.01000000","q":"0.16444000","f":5267659644,"l":5267659644,"T":1759212745888,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745888,"s":"BTCUSDT","a":3684196555,"p":"114000.01000000","q":"0.50357000","f":5267659645,"l":5267659645,"T":1759212745888,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745889,"s":"BTCUSDT","a":3684196556,"p":"114000.01000000","q":"0.18833000","f":5267659646,"l":5267659646,"T":1759212745889,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745889,"s":"BTCUSDT","a":3684196557,"p":"114000.01000000","q":"0.69182000","f":5267659647,"l":5267659648,"T":1759212745889,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745892,"s":"BTCUSDT","a":3684196558,"p":"114000.01000000","q":"0.47938000","f":5267659649,"l":5267659649,"T":1759212745892,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745892,"s":"BTCUSDT","a":3684196559,"p":"114000.01000000","q":"0.10912000","f":5267659650,"l":5267659650,"T":1759212745892,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745893,"s":"BTCUSDT","a":3684196560,"p":"114000.01000000","q":"0.52588000","f":5267659651,"l":5267659651,"T":1759212745893,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745896,"s":"BTCUSDT","a":3684196561,"p":"114000.01000000","q":"0.11115000","f":5267659652,"l":5267659652,"T":1759212745895,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745896,"s":"BTCUSDT","a":3684196562,"p":"114000.01000000","q":"0.00877000","f":5267659653,"l":5267659653,"T":1759212745896,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745898,"s":"BTCUSDT","a":3684196563,"p":"114000.01000000","q":"0.00287000","f":5267659654,"l":5267659654,"T":1759212745897,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745907,"s":"BTCUSDT","a":3684196564,"p":"114000.01000000","q":"0.02631000","f":5267659655,"l":5267659655,"T":1759212745907,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196565,"p":"114000.01000000","q":"0.06690000","f":5267659656,"l":5267659688,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196566,"p":"114000.02000000","q":"0.00090000","f":5267659689,"l":5267659706,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196567,"p":"114000.03000000","q":"0.00010000","f":5267659707,"l":5267659707,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196568,"p":"114000.44000000","q":"0.00005000","f":5267659708,"l":5267659708,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196569,"p":"114000.50000000","q":"0.00005000","f":5267659709,"l":5267659709,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196570,"p":"114001.00000000","q":"0.00066000","f":5267659710,"l":5267659712,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196571,"p":"114001.01000000","q":"0.00010000","f":5267659713,"l":5267659713,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196572,"p":"114001.97000000","q":"0.00005000","f":5267659714,"l":5267659714,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196573,"p":"114002.00000000","q":"0.00066000","f":5267659715,"l":5267659717,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196574,"p":"114002.10000000","q":"0.00015000","f":5267659718,"l":5267659720,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196575,"p":"114003.00000000","q":"0.01076000","f":5267659721,"l":5267659726,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196576,"p":"114003.28000000","q":"0.00015000","f":5267659727,"l":5267659729,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196577,"p":"114004.00000000","q":"0.00066000","f":5267659730,"l":5267659732,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196578,"p":"114004.57000000","q":"0.00005000","f":5267659733,"l":5267659733,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196579,"p":"114004.84000000","q":"0.00062000","f":5267659734,"l":5267659734,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196580,"p":"114004.85000000","q":"0.00005000","f":5267659735,"l":5267659735,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196581,"p":"114005.00000000","q":"0.00066000","f":5267659736,"l":5267659738,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196582,"p":"114005.07000000","q":"0.00020000","f":5267659739,"l":5267659739,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196583,"p":"114005.08000000","q":"0.00021000","f":5267659740,"l":5267659740,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196584,"p":"114005.92000000","q":"0.00005000","f":5267659741,"l":5267659741,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196585,"p":"114005.95000000","q":"0.00010000","f":5267659742,"l":5267659743,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196586,"p":"114006.00000000","q":"0.00338000","f":5267659744,"l":5267659752,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196587,"p":"114006.04000000","q":"0.00315000","f":5267659753,"l":5267659756,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196588,"p":"114006.11000000","q":"0.00005000","f":5267659757,"l":5267659757,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196589,"p":"114007.00000000","q":"0.00205000","f":5267659758,"l":5267659764,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196590,"p":"114007.20000000","q":"0.00005000","f":5267659765,"l":5267659765,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745916,"s":"BTCUSDT","a":3684196591,"p":"114007.23000000","q":"0.00020000","f":5267659766,"l":5267659769,"T":1759212745915,"m":false,"M":true}
+[2025-09-30 08:12:25] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212745987,"s":"BTCUSDT","a":3684196592,"p":"114007.24000000","q":"0.04385000","f":5267659770,"l":5267659770,"T":1759212745986,"m":false,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746205,"s":"BTCUSDT","a":3684196593,"p":"114007.24000000","q":"0.00100000","f":5267659771,"l":5267659771,"T":1759212746205,"m":false,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746279,"s":"BTCUSDT","a":3684196594,"p":"114007.24000000","q":"0.00011000","f":5267659772,"l":5267659772,"T":1759212746278,"m":false,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746493,"s":"BTCUSDT","a":3684196595,"p":"114007.24000000","q":"0.00100000","f":5267659773,"l":5267659773,"T":1759212746492,"m":false,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746625,"s":"BTCUSDT","a":3684196596,"p":"114007.24000000","q":"0.00100000","f":5267659774,"l":5267659774,"T":1759212746625,"m":false,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746777,"s":"BTCUSDT","a":3684196597,"p":"114007.24000000","q":"0.00100000","f":5267659775,"l":5267659775,"T":1759212746777,"m":false,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746925,"s":"BTCUSDT","a":3684196598,"p":"114007.23000000","q":"0.00005000","f":5267659776,"l":5267659776,"T":1759212746925,"m":true,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746939,"s":"BTCUSDT","a":3684196599,"p":"114007.24000000","q":"0.00100000","f":5267659777,"l":5267659777,"T":1759212746939,"m":false,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212746945,"s":"BTCUSDT","a":3684196600,"p":"114007.23000000","q":"0.00443000","f":5267659778,"l":5267659778,"T":1759212746944,"m":true,"M":true}
+[2025-09-30 08:12:26] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747048,"s":"BTCUSDT","a":3684196601,"p":"114007.24000000","q":"0.00100000","f":5267659779,"l":5267659779,"T":1759212747048,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747222,"s":"BTCUSDT","a":3684196602,"p":"114007.24000000","q":"0.00100000","f":5267659780,"l":5267659780,"T":1759212747222,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747324,"s":"BTCUSDT","a":3684196603,"p":"114007.24000000","q":"0.00100000","f":5267659781,"l":5267659781,"T":1759212747324,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747392,"s":"BTCUSDT","a":3684196604,"p":"114007.24000000","q":"0.00100000","f":5267659782,"l":5267659782,"T":1759212747392,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747470,"s":"BTCUSDT","a":3684196605,"p":"114007.24000000","q":"0.00100000","f":5267659783,"l":5267659783,"T":1759212747470,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747590,"s":"BTCUSDT","a":3684196606,"p":"114007.24000000","q":"0.00100000","f":5267659784,"l":5267659784,"T":1759212747590,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747649,"s":"BTCUSDT","a":3684196607,"p":"114007.23000000","q":"0.00065000","f":5267659785,"l":5267659785,"T":1759212747648,"m":true,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747657,"s":"BTCUSDT","a":3684196608,"p":"114007.24000000","q":"0.00048000","f":5267659786,"l":5267659786,"T":1759212747656,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747711,"s":"BTCUSDT","a":3684196609,"p":"114007.24000000","q":"0.00100000","f":5267659787,"l":5267659787,"T":1759212747711,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212747895,"s":"BTCUSDT","a":3684196610,"p":"114007.24000000","q":"0.00100000","f":5267659788,"l":5267659788,"T":1759212747895,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748007,"s":"BTCUSDT","a":3684196611,"p":"114007.24000000","q":"0.00100000","f":5267659789,"l":5267659789,"T":1759212748007,"m":false,"M":true}
+[2025-09-30 08:12:27] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748097,"s":"BTCUSDT","a":3684196612,"p":"114007.23000000","q":"0.00091000","f":5267659790,"l":5267659790,"T":1759212748096,"m":true,"M":true}
+[2025-09-30 08:12:28] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748206,"s":"BTCUSDT","a":3684196613,"p":"114007.24000000","q":"0.00100000","f":5267659791,"l":5267659791,"T":1759212748205,"m":false,"M":true}
+[2025-09-30 08:12:28] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748309,"s":"BTCUSDT","a":3684196614,"p":"114007.24000000","q":"0.00100000","f":5267659792,"l":5267659792,"T":1759212748308,"m":false,"M":true}
+[2025-09-30 08:12:28] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748390,"s":"BTCUSDT","a":3684196615,"p":"114007.24000000","q":"0.00100000","f":5267659793,"l":5267659793,"T":1759212748389,"m":false,"M":true}
+[2025-09-30 08:12:28] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748452,"s":"BTCUSDT","a":3684196616,"p":"114007.24000000","q":"0.00100000","f":5267659794,"l":5267659794,"T":1759212748452,"m":false,"M":true}
+[2025-09-30 08:12:28] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748617,"s":"BTCUSDT","a":3684196617,"p":"114007.24000000","q":"0.00100000","f":5267659795,"l":5267659795,"T":1759212748617,"m":false,"M":true}
+[2025-09-30 08:12:28] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212748723,"s":"BTCUSDT","a":3684196618,"p":"114007.24000000","q":"0.00100000","f":5267659796,"l":5267659796,"T":1759212748722,"m":false,"M":true}
+[2025-09-30 08:12:33] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212753450,"s":"BTCUSDT","a":3684196663,"p":"114007.24000000","q":"0.00100000","f":5267659847,"l":5267659847,"T":1759212753450,"m":false,"M":true}
+[2025-09-30 08:12:33] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212753701,"s":"BTCUSDT","a":3684196664,"p":"114007.23000000","q":"0.00715000","f":5267659848,"l":5267659848,"T":1759212753701,"m":true,"M":true}
+[2025-09-30 08:12:33] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212753716,"s":"BTCUSDT","a":3684196665,"p":"114007.24000000","q":"0.00100000","f":5267659849,"l":5267659849,"T":1759212753716,"m":false,"M":true}
+[2025-09-30 08:12:33] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212753923,"s":"BTCUSDT","a":3684196666,"p":"114007.24000000","q":"0.00100000","f":5267659850,"l":5267659850,"T":1759212753923,"m":false,"M":true}
+[2025-09-30 08:12:33] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754068,"s":"BTCUSDT","a":3684196667,"p":"114007.24000000","q":"0.00009000","f":5267659851,"l":5267659851,"T":1759212754067,"m":false,"M":true}
+[2025-09-30 08:12:33] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754069,"s":"BTCUSDT","a":3684196668,"p":"114007.24000000","q":"0.00100000","f":5267659852,"l":5267659852,"T":1759212754068,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754158,"s":"BTCUSDT","a":3684196669,"p":"114007.24000000","q":"0.00100000","f":5267659853,"l":5267659853,"T":1759212754158,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754453,"s":"BTCUSDT","a":3684196670,"p":"114007.24000000","q":"0.00100000","f":5267659854,"l":5267659854,"T":1759212754452,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754726,"s":"BTCUSDT","a":3684196671,"p":"114007.24000000","q":"0.00100000","f":5267659855,"l":5267659855,"T":1759212754725,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754799,"s":"BTCUSDT","a":3684196672,"p":"114007.24000000","q":"0.00100000","f":5267659856,"l":5267659856,"T":1759212754799,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754884,"s":"BTCUSDT","a":3684196673,"p":"114007.24000000","q":"0.00006000","f":5267659857,"l":5267659857,"T":1759212754884,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754917,"s":"BTCUSDT","a":3684196674,"p":"114007.24000000","q":"0.00100000","f":5267659858,"l":5267659858,"T":1759212754916,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212754961,"s":"BTCUSDT","a":3684196675,"p":"114007.24000000","q":"0.00447000","f":5267659859,"l":5267659859,"T":1759212754961,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755049,"s":"BTCUSDT","a":3684196676,"p":"114007.24000000","q":"0.00100000","f":5267659860,"l":5267659860,"T":1759212755049,"m":false,"M":true}
+[2025-09-30 08:12:34] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755141,"s":"BTCUSDT","a":3684196677,"p":"114007.24000000","q":"0.00100000","f":5267659861,"l":5267659861,"T":1759212755141,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755235,"s":"BTCUSDT","a":3684196678,"p":"114007.24000000","q":"0.00100000","f":5267659862,"l":5267659862,"T":1759212755234,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755400,"s":"BTCUSDT","a":3684196679,"p":"114007.24000000","q":"0.00100000","f":5267659863,"l":5267659863,"T":1759212755400,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755471,"s":"BTCUSDT","a":3684196680,"p":"114007.24000000","q":"0.00100000","f":5267659864,"l":5267659864,"T":1759212755471,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755557,"s":"BTCUSDT","a":3684196681,"p":"114007.24000000","q":"0.00100000","f":5267659865,"l":5267659865,"T":1759212755557,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755704,"s":"BTCUSDT","a":3684196682,"p":"114007.24000000","q":"0.07981000","f":5267659866,"l":5267659866,"T":1759212755704,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755787,"s":"BTCUSDT","a":3684196683,"p":"114007.24000000","q":"0.00100000","f":5267659867,"l":5267659867,"T":1759212755786,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212755918,"s":"BTCUSDT","a":3684196684,"p":"114007.24000000","q":"0.00100000","f":5267659868,"l":5267659868,"T":1759212755917,"m":false,"M":true}
+[2025-09-30 08:12:35] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212756014,"s":"BTCUSDT","a":3684196685,"p":"114007.24000000","q":"0.00100000","f":5267659869,"l":5267659869,"T":1759212756014,"m":false,"M":true}
+[2025-09-30 08:12:36] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212756114,"s":"BTCUSDT","a":3684196686,"p":"114007.24000000","q":"0.00100000","f":5267659870,"l":5267659870,"T":1759212756113,"m":false,"M":true}
+[2025-09-30 08:12:36] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212756554,"s":"BTCUSDT","a":3684196687,"p":"114007.24000000","q":"0.00043000","f":5267659871,"l":5267659871,"T":1759212756554,"m":false,"M":true}
+[2025-09-30 08:12:37] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212757265,"s":"BTCUSDT","a":3684196688,"p":"114007.23000000","q":"1.00000000","f":5267659872,"l":5267659901,"T":1759212757264,"m":true,"M":true}
+[2025-09-30 08:12:37] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212757414,"s":"BTCUSDT","a":3684196689,"p":"114007.24000000","q":"0.00090000","f":5267659902,"l":5267659902,"T":1759212757414,"m":false,"M":true}
+[2025-09-30 08:12:37] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212757853,"s":"BTCUSDT","a":3684196690,"p":"114007.23000000","q":"0.00446000","f":5267659903,"l":5267659909,"T":1759212757853,"m":true,"M":true}
+[2025-09-30 08:12:37] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212757875,"s":"BTCUSDT","a":3684196691,"p":"114007.24000000","q":"0.00350000","f":5267659910,"l":5267659910,"T":1759212757874,"m":false,"M":true}
+[2025-09-30 08:12:38] INFO root: RAW WS MSG: {"e":"aggTrade","E":1759212758149,"s":"BTCUSDT","a":3684196692,"p":"114007.24000000","q":"0.00263000","f":5267659911,"l":5267659911,"T":1759212758149,"m":false,"M":true}
+[2025-09-30 08:13:27] INFO TradingDaemon: Prediction computed: -0.000229
+[2025-09-30 08:13:27] INFO TradingDaemon: No trade (signal -0.000229 within threshold).
+[2025-09-30 08:13:27] INFO root: WS closed: None None
+[2025-09-30 08:13:28] INFO root: Websocket closed by user.
+[2025-09-30 08:13:29] INFO websocket: Websocket connected
+[2025-09-30 08:13:29] INFO root: WS open (callback)
+[2025-09-30 08:13:39] INFO root: WS closed: None None
+[2025-09-30 08:13:39] INFO root: Websocket closed by user.
+[2025-09-30 08:13:41] INFO websocket: Websocket connected
+[2025-09-30 08:13:41] INFO root: WS open (callback)
+[2025-09-30 08:13:44] INFO root: RAW WS MSG: {"lastUpdateId":77066850783,"bids":[["113969.58000000","1.20066000"],["113969.57000000","0.45800000"],["113969.56000000","0.00010000"],["113969.55000000","0.00010000"],["113969.54000000","0.04010000"],["113969.53000000","0.00010000"],["113969.51000000","0.00014000"],["113969.45000000","0.00010000"],["113969.44000000","0.08020000"],["113969.41000000","0.00005000"],["113969.36000000","0.00010000"],["113969.35000000","0.76836000"],["113969.34000000","0.50015000"],["113969.00000000","0.00066000"],["113968.44000000","0.05974000"],["113968.41000000","0.09105000"],["113968.21000000","0.03450000"],["113968.00000000","0.17954000"],["113967.56000000","0.00005000"],["113967.54000000","0.00005000"]],"asks":[["113969.59000000","8.95958000"],["113969.60000000","0.00070000"],["113969.61000000","0.00015000"],["113969.67000000","0.00009000"],["113969.81000000","0.00010000"],["113970.32000000","0.00010000"],["113970.33000000","0.05504000"],["113970.34000000","0.00010000"],["113970.36000000","0.00005000"
+[2025-09-30 08:13:45] INFO root: RAW WS MSG: {"lastUpdateId":77066850863,"bids":[["113969.58000000","0.73390000"],["113969.57000000","0.48794000"],["113969.56000000","0.00010000"],["113969.55000000","0.00010000"],["113969.54000000","0.04010000"],["113969.53000000","0.00010000"],["113969.51000000","0.00014000"],["113969.45000000","0.00010000"],["113969.44000000","0.08025000"],["113969.41000000","0.00005000"],["113969.36000000","0.00010000"],["113969.35000000","0.76836000"],["113969.34000000","0.50015000"],["113969.00000000","0.00066000"],["113968.65000000","0.00174000"],["113968.44000000","0.05974000"],["113968.41000000","0.09105000"],["113968.21000000","0.03450000"],["113968.00000000","0.17954000"],["113967.56000000","0.00005000"]],"asks":[["113969.59000000","9.39826000"],["113969.60000000","0.00065000"],["113969.61000000","0.00015000"],["113969.67000000","0.00009000"],["113969.81000000","0.00010000"],["113970.32000000","0.00010000"],["113970.33000000","0.05504000"],["113970.34000000","0.00010000"],["113970.36000000","0.00005000"
+[2025-09-30 08:13:46] INFO root: RAW WS MSG: {"lastUpdateId":77066850956,"bids":[["113969.58000000","0.73844000"],["113969.57000000","0.48804000"],["113969.56000000","0.00010000"],["113969.55000000","0.00010000"],["113969.54000000","0.04010000"],["113969.53000000","0.00010000"],["113969.51000000","0.00014000"],["113969.45000000","0.00010000"],["113969.44000000","0.08030000"],["113969.41000000","0.00005000"],["113969.36000000","0.00010000"],["113969.35000000","0.76836000"],["113969.34000000","0.50015000"],["113969.00000000","0.00066000"],["113968.65000000","0.00174000"],["113968.44000000","0.05974000"],["113968.41000000","0.09105000"],["113968.21000000","0.03455000"],["113968.00000000","0.17954000"],["113967.88000000","0.00263000"]],"asks":[["113969.59000000","9.56199000"],["113969.60000000","0.00070000"],["113969.61000000","0.00015000"],["113969.67000000","0.00009000"],["113969.68000000","0.00010000"],["113969.69000000","0.25010000"],["113969.70000000","0.00010000"],["113969.81000000","0.00010000"],["113970.15000000","0.00176000"
+[2025-09-30 08:13:47] INFO root: RAW WS MSG: {"lastUpdateId":77066851652,"bids":[["113969.35000000","0.76155000"],["113969.34000000","0.00100000"],["113969.33000000","0.00025000"],["113969.30000000","0.00056000"],["113969.00000000","0.00066000"],["113968.99000000","0.00010000"],["113968.65000000","0.00179000"],["113968.45000000","0.00010000"],["113968.44000000","0.05979000"],["113968.41000000","0.00015000"],["113968.22000000","0.00010000"],["113968.21000000","0.03455000"],["113968.02000000","0.00010000"],["113968.01000000","0.45725000"],["113968.00000000","0.17959000"],["113967.88000000","0.00263000"],["113967.56000000","0.00005000"],["113967.54000000","0.00005000"],["113967.15000000","0.00005000"],["113967.06000000","0.00010000"]],"asks":[["113969.36000000","13.47092000"],["113969.37000000","0.00065000"],["113969.38000000","0.00010000"],["113969.45000000","0.08430000"],["113969.46000000","0.00010000"],["113969.58000000","0.62237000"],["113969.59000000","1.13598000"],["113969.60000000","0.00702000"],["113969.61000000","0.00005000
+[2025-09-30 08:13:48] INFO root: RAW WS MSG: {"lastUpdateId":77066851734,"bids":[["113969.35000000","0.86498000"],["113969.34000000","0.00100000"],["113969.33000000","0.00025000"],["113969.30000000","0.00056000"],["113969.29000000","0.00010000"],["113969.00000000","0.00066000"],["113968.65000000","0.00179000"],["113968.45000000","0.00010000"],["113968.44000000","0.05979000"],["113968.41000000","0.00015000"],["113968.29000000","0.00005000"],["113968.22000000","0.00010000"],["113968.21000000","0.03460000"],["113968.02000000","0.00010000"],["113968.01000000","0.45730000"],["113968.00000000","0.17959000"],["113967.88000000","0.00263000"],["113967.56000000","0.00005000"],["113967.54000000","0.00005000"],["113967.15000000","0.00005000"]],"asks":[["113969.36000000","13.22974000"],["113969.37000000","0.00065000"],["113969.38000000","0.00010000"],["113969.45000000","0.08430000"],["113969.46000000","0.00010000"],["113969.58000000","0.62237000"],["113969.59000000","0.79503000"],["113969.60000000","0.00702000"],["113969.61000000","0.00005000
+[2025-09-30 08:13:49] INFO root: RAW WS MSG: {"lastUpdateId":77066852020,"bids":[["113969.35000000","1.22138000"],["113969.34000000","0.00090000"],["113969.33000000","0.00025000"],["113969.30000000","0.00056000"],["113969.29000000","0.00010000"],["113969.00000000","0.00066000"],["113968.65000000","0.00179000"],["113968.45000000","0.00010000"],["113968.44000000","0.05974000"],["113968.41000000","0.00015000"],["113968.29000000","0.00005000"],["113968.22000000","0.00010000"],["113968.21000000","0.03455000"],["113968.03000000","0.00010000"],["113968.02000000","0.31634000"],["113968.01000000","0.45725000"],["113968.00000000","0.17954000"],["113967.88000000","0.00263000"],["113967.56000000","0.00005000"],["113967.54000000","0.00005000"]],"asks":[["113969.36000000","5.33427000"],["113969.37000000","0.00065000"],["113969.38000000","0.00010000"],["113969.44000000","0.00010000"],["113969.45000000","0.08430000"],["113969.46000000","0.00010000"],["113969.57000000","0.19438000"],["113969.58000000","0.46724000"],["113969.59000000","0.76702000"
+[2025-09-30 08:13:50] INFO root: RAW WS MSG: {"lastUpdateId":77066852101,"bids":[["113969.35000000","1.21368000"],["113969.34000000","0.00090000"],["113969.33000000","0.00025000"],["113969.30000000","0.00056000"],["113969.29000000","0.00010000"],["113969.28000000","0.00009000"],["113969.00000000","0.00066000"],["113968.65000000","0.00179000"],["113968.45000000","0.00010000"],["113968.44000000","0.05974000"],["113968.41000000","0.00015000"],["113968.29000000","0.00005000"],["113968.22000000","0.00010000"],["113968.21000000","0.03455000"],["113968.03000000","0.00010000"],["113968.02000000","0.31634000"],["113968.01000000","0.45725000"],["113968.00000000","0.17954000"],["113967.88000000","0.00263000"],["113967.56000000","0.00005000"]],"asks":[["113969.36000000","5.56228000"],["113969.37000000","0.00065000"],["113969.38000000","0.00010000"],["113969.44000000","0.00019000"],["113969.45000000","0.08430000"],["113969.46000000","0.00010000"],["113969.57000000","0.19438000"],["113969.58000000","0.46724000"],["113969.59000000","0.43144000"
+[2025-09-30 08:13:51] INFO root: RAW WS MSG: {"lastUpdateId":77066852165,"bids":[["113969.35000000","1.24030000"],["113969.34000000","0.00095000"],["113969.33000000","0.00025000"],["113969.30000000","0.00056000"],["113969.29000000","0.00010000"],["113969.28000000","0.00009000"],["113969.00000000","0.00066000"],["113968.65000000","0.00179000"],["113968.45000000","0.00010000"],["113968.44000000","0.05974000"],["113968.41000000","0.00015000"],["113968.29000000","0.00005000"],["113968.22000000","0.00010000"],["113968.21000000","0.03455000"],["113968.03000000","0.00010000"],["113968.02000000","0.31634000"],["113968.01000000","0.45725000"],["113968.00000000","0.17954000"],["113967.88000000","0.00263000"],["113967.56000000","0.00005000"]],"asks":[["113969.36000000","5.55621000"],["113969.37000000","0.00055000"],["113969.38000000","0.00010000"],["113969.44000000","0.00019000"],["113969.45000000","0.08430000"],["113969.46000000","0.00010000"],["113969.57000000","0.00010000"],["113969.58000000","0.46724000"],["113969.59000000","0.43144000"
+[2025-09-30 08:13:52] INFO root: RAW WS MSG: {"lastUpdateId":77066852222,"bids":[["113969.35000000","1.24829000"],["113969.34000000","0.00095000"],["113969.33000000","0.00025000"],["113969.30000000","0.00056000"],["113969.29000000","0.00010000"],["113969.28000000","0.00009000"],["113969.00000000","0.00066000"],["113968.65000000","0.00179000"],["113968.45000000","0.00010000"],["113968.44000000","0.05974000"],["113968.41000000","0.00015000"],["113968.29000000","0.00005000"],["113968.22000000","0.00010000"],["113968.21000000","0.03455000"],["113968.03000000","0.00010000"],["113968.02000000","0.31634000"],["113968.01000000","0.45725000"],["113968.00000000","0.17954000"],["113967.88000000","0.00263000"],["113967.56000000","0.00005000"]],"asks":[["113969.36000000","5.50172000"],["113969.37000000","0.00055000"],["113969.38000000","0.00010000"],["113969.44000000","0.00019000"],["113969.45000000","0.08430000"],["113969.46000000","0.00010000"],["113969.57000000","0.00010000"],["113969.58000000","0.46724000"],["113969.59000000","0.43144000"
+[2025-09-30 08:14:32] INFO TradingDaemon: Prediction computed: -0.000264
+[2025-09-30 08:14:32] INFO TradingDaemon: No trade (signal -0.000264 within threshold).
+[2025-09-30 08:15:38] INFO TradingDaemon: Prediction computed: -0.000065
+[2025-09-30 08:15:43] INFO TradingDaemon: No trade (signal -0.000065 within threshold).
+[2025-09-30 08:16:48] INFO TradingDaemon: Prediction computed: -0.000214
+[2025-09-30 08:16:48] INFO TradingDaemon: No trade (signal -0.000214 within threshold).
+[2025-09-30 08:17:53] INFO TradingDaemon: Prediction computed: -0.000143
+[2025-09-30 08:17:53] INFO TradingDaemon: No trade (signal -0.000143 within threshold).
+[2025-09-30 08:18:59] INFO TradingDaemon: Prediction computed: -0.000050
+[2025-09-30 08:18:59] INFO TradingDaemon: No trade (signal -0.000050 within threshold).
+[2025-09-30 08:20:04] INFO TradingDaemon: Prediction computed: 0.000041
+[2025-09-30 08:20:04] INFO TradingDaemon: No trade (signal 0.000041 within threshold).
+[2025-09-30 08:21:10] INFO TradingDaemon: Prediction computed: -0.000125
+[2025-09-30 08:21:10] INFO TradingDaemon: No trade (signal -0.000125 within threshold).
+[2025-09-30 08:22:15] INFO TradingDaemon: Prediction computed: 0.000086
+[2025-09-30 08:22:15] INFO TradingDaemon: No trade (signal 0.000086 within threshold).
+[2025-09-30 08:23:21] INFO TradingDaemon: Prediction computed: 0.000001
+[2025-09-30 08:23:21] INFO TradingDaemon: No trade (signal 0.000001 within threshold).
+[2025-09-30 08:24:26] INFO TradingDaemon: Prediction computed: -0.000050
+[2025-09-30 08:24:26] INFO TradingDaemon: No trade (signal -0.000050 within threshold).
+[2025-09-30 08:25:32] INFO TradingDaemon: Prediction computed: -0.000085
+[2025-09-30 08:25:32] INFO TradingDaemon: No trade (signal -0.000085 within threshold).
+[2025-09-30 08:25:52] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2480, in <module>
+    try:
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2476, in main
+    self._enqueue_log(traceback.format_exc())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

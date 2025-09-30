@@ -1,0 +1,223 @@
+[2025-09-30 08:26:01] INFO root: init_logging: logfile=logs\log_20250930_062601.txt
+[2025-09-30 08:26:01] INFO __main__: Logging initialized
+[2025-09-30 08:26:06] INFO root: Config loaded from config\gui_config.json
+[2025-09-30 08:26:20] INFO root: Preview loaded: 200 rows.
+[2025-09-30 08:26:23] INFO root: Preview loaded: 200 rows.
+[2025-09-30 08:26:25] INFO root: Prepare: loading data from sqlite...
+[2025-09-30 08:26:25] INFO root: Prepare thread started.
+[2025-09-30 08:26:26] INFO root: Loaded 105484 rows from sqlite.
+[2025-09-30 08:26:34] INFO root: Computed features. Shape: (105484, 55)
+[2025-09-30 08:26:34] INFO root: dropna: before=105484, after=105384, removed=100
+[2025-09-30 08:26:34] INFO root: Feature cols selected (41): ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'ema_5', 'ma_diff_5', 'sma_10', 'ema_10', 'ma_diff_10', 'sma_20', 'ema_20', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14']...
+[2025-09-30 08:26:34] INFO root: Building sequences...
+[2025-09-30 08:26:37] INFO root: Sequences built: N=105242, seq_len=128, features=41
+[2025-09-30 08:26:43] INFO root: Scaler fitted and df_scaled prepared.
+[2025-09-30 08:26:43] INFO root: Preview raw (first 5 rows):
+   id   symbol timeframe          ts       open       high        low      close     volume  source     created_at     updated_at                 timestamp
+0   1  BTCUSDT        1m  1752231240  118117.79  118129.59  118090.00  118093.63    9.27987  influx  1759186315000  1759186315000 2025-07-11 10:54:00+00:00
+1   2  BTCUSDT        1m  1752231300  118093.63  118093.63  117980.00  117980.01  111.28787  influx  1759186315000  1759186315000 2025-07-11 10:55:00+00:00
+2   3  BTCUSDT        1m  1752231360  117980.00  118023.34  117980.00  118022.39    9.13797  influx  1759186315000  1759186315000 2025-07-11 10:56:00+00:00
+3   4  BTCUSDT        1m  1752231420  118022.38  118022.38  117946.72  117968.01   30.41224  influx  1759186315000  1759186315000 2025-07-11 10:57:00+00:00
+4   5  BTCUSDT        1m  1752231480  117968.01  117968.01  117964.71  117964.72    7.69926  influx  1759186315000  1759186315000 2025-07-11 10:58:00+00:00
+[2025-09-30 08:26:43] INFO root: Preview features (first 5 rows):
+       close       high        low  log_close     ret_1  log_ret_1     ret_5  log_ret_5       sma_5          ema_5  ma_diff_5      sma_10         ema_10  ma_diff_10       sma_20         ema_20  ma_diff_20       sma_50         ema_50  ma_diff_50       sma_50         ema_50  ma_diff_50         bb_m      bb_std          bb_up          bb_dn  bb_width     rsi_14     atr_14  raw_vol_10  raw_vol_30      fib_0  dist_fib_0       fib_236  dist_fib_236       fib_382  dist_fib_382     fib_500  dist_fib_500       fib_618  dist_fib_618       fib_786  dist_fib_786   fib_1000  dist_fib_1000  td_buy_setup  td_sell_setup    volume        vp_poc   dist_vp           timestamp       open   symbol timeframe
+0  117870.16  117902.31  117870.15  11.677339 -0.000026  -0.000026  0.001012   0.001011  117823.422  117841.224784     46.738  117814.545  117849.863338      55.615  117929.4420  117893.470114    -59.2820  117930.3404  117914.626299    -60.1804  117930.3404  117914.626299    -60.1804  117929.4420  137.827385  118205.096770  117653.787230  0.004675  36.103275  37.512857    0.000343    0.000393  117700.00    0.001444  117831.98064      0.000324  117913.62968     -0.000369  117979.620     -0.000929  118045.61032     -0.001489  118139.56264     -0.002286  118259.24      -0.003301             0              4  15.18356  117977.73925 -0.000913 2025-07-11 12:34:00  117873.18  BTCUSDT        1m
+1  117851.13  117873.18  117851.13  11.677177 -0.000161  -0.000161  0.000811   0.000810  117842.514  117844.526523      8.616  117810.858  117850.093640      40.272  117914.0810  117889.437722    -62.9510  117932.5504  117912.136248    -81.4204  117932.5504  117912.136248    -81.4204  117914.0810  127.722162  118169.525324  117658.636676  0.004333  31.773830  37.921429    0.000346    0.000393  117700.00    0.001282  117831.98064      0.000162  117913.62968     -0.000530  117979.620     -0.001090  118045.61032     -0.001650  118139.56264     -0.002447  118259.24      -0.003463             0              5  14.80387  117977.73925 -0.001074 2025-07-11 12:35:00  117870.16  BTCUSDT        1m
+2  117849.18  117851.14  117831.66  11.677161 -0.000017  -0.000017  0.000620   0.000620  117857.130  117846.077682     -7.950  117809.662  117849.927524      39.518  117898.6915  117885.603653    -49.5115  117935.3330  117909.667376    -86.1530  117935.3330  117909.667376    -86.1530  117898.6915  114.805649  118128.302798  117669.080202  0.003895  30.783770  38.277857    0.000339    0.000382  117700.00    0.001266  117831.98064      0.000146  117913.62968     -0.000547  117979.620     -0.001107  118045.61032     -0.001667  118139.56264     -0.002464  118259.24      -0.003480             0              6  17.55212  117721.50325  0.001083 2025-07-11 12:36:00  117851.14  BTCUSDT        1m
+3  117803.56  117856.14  117803.55  11.676774 -0.000387  -0.000387 -0.000326  -0.000326  117849.442  117831.905121    -45.882  117812.805  117841.497065      -9.245  117881.8130  117877.789972    -78.2530  117937.4040  117905.506302   -133.8440  117937.4040  117905.506302   -133.8440  117881.8130  101.307843  118084.428687  117679.197313  0.003438  28.389151  39.293571    0.000259    0.000384  117700.00    0.000879  117831.98064     -0.000241  117913.62968     -0.000934  117979.620     -0.001495  118045.61032     -0.002055  118139.56264     -0.002852  118259.24      -0.003868             1              0  14.99040  117721.50325  0.000697 2025-07-11 12:37:00  117849.18  BTCUSDT        1m
+4  117815.90  117815.90  117803.55  11.676879  0.000105   0.000105 -0.000486  -0.000486  117837.986  117826.570081    -22.086  117818.791  117836.843053      -2.891  117869.6410  117871.895689    -53.7410  117939.6104  117901.992329   -123.7104  117939.6104  117901.992329   -123.7104  117869.6410   93.151783  118055.944567  117683.337433  0.003161  38.214986  32.896429    0.000254    0.000384  117705.57    0.000936  117836.23612     -0.000173  117917.07194     -0.000859  117982.405     -0.001413  118047.73806     -0.001968  118140.75462     -0.002757  118259.24      -0.003763             2              0  11.32190  117721.50325  0.000801 2025-07-11 12:38:00  117803.56  BTCUSDT        1m
+[2025-09-30 08:26:43] INFO root: Preview scaled (first 5 rows):
+       close       high        low  log_close     ret_1  log_ret_1     ret_5  log_ret_5     sma_5     ema_5  ma_diff_5    sma_10    ema_10  ma_diff_10    sma_20    ema_20  ma_diff_20       sma_50         ema_50  ma_diff_50       sma_50         ema_50  ma_diff_50      bb_m    bb_std     bb_up     bb_dn  bb_width    rsi_14    atr_14  raw_vol_10  raw_vol_30     fib_0  dist_fib_0   fib_236  dist_fib_236   fib_382  dist_fib_382   fib_500  dist_fib_500   fib_618  dist_fib_618   fib_786  dist_fib_786  fib_1000  dist_fib_1000  td_buy_setup  td_sell_setup    volume    vp_poc   dist_vp           timestamp       open   symbol timeframe
+0  117870.16  117902.31  117870.15   0.675354 -0.057812  -0.057485  1.042873   1.040800  0.658434  0.664085   0.847085  0.655664  0.666878    0.659222  0.691993  0.680772   -0.476183  117930.3404  117914.626299    -60.1804  117930.3404  117914.626299    -60.1804  0.691993  1.107087  0.730294  0.652491  1.060208 -0.746919 -0.208551   -0.023670    0.115834  0.697125   -0.286728  0.703526     -0.446432  0.707281     -0.541074  0.710201     -0.598223  0.713016     -0.630639  0.716845     -0.638271  0.721416      -0.611264     -0.633969       0.564600  15.18356  0.706601 -0.376614 2025-07-11 12:34:00  117873.18  BTCUSDT        1m
+1  117851.13  117873.18  117851.13   0.669505 -0.368784  -0.367899  0.836010   0.834529  0.664459  0.665127   0.157740  0.654500  0.666950    0.478143  0.687144  0.679499   -0.505911  117932.5504  117912.136248    -81.4204  117932.5504  117912.136248    -81.4204  0.687144  0.935554  0.719108  0.654026  0.892899 -0.978122 -0.196149   -0.015285    0.113904  0.697125   -0.367106  0.703526     -0.541512  0.707281     -0.641421  0.710201     -0.698691  0.713016     -0.727421  0.716845     -0.725529  0.721416      -0.684643     -0.633969       0.864966  14.80387  0.706601 -0.439374 2025-07-11 12:35:00  117870.16  BTCUSDT        1m
+2  117849.18  117851.14  117831.66   0.668906 -0.037036  -0.036748  0.640349   0.639389  0.669071  0.665616  -0.141817  0.654123  0.666898    0.469245  0.682286  0.678288   -0.397019  117935.3330  117909.667376    -86.1530  117935.3330  117909.667376    -86.1530  0.682286  0.716300  0.706146  0.657331  0.678912 -1.030994 -0.185330   -0.041646    0.068663  0.697125   -0.375344  0.703526     -0.551256  0.707281     -0.651706  0.710201     -0.708988  0.713016     -0.737340  0.716845     -0.734472  0.721416      -0.692164     -0.633969       1.165333  17.55212  0.626043  0.398483 2025-07-11 12:36:00  117851.14  BTCUSDT        1m
+3  117803.56  117856.14  117803.55   0.654880 -0.885415  -0.883695 -0.333723  -0.332641  0.666645  0.661144  -0.827726  0.655115  0.664237   -0.106260  0.676957  0.675821   -0.629893  117937.4040  117905.506302   -133.8440  117937.4040  117905.506302   -133.8440  0.676957  0.487179  0.692350  0.660533  0.455246 -1.158872 -0.154499   -0.341916    0.079883  0.697125   -0.568145  0.703526     -0.779320  0.707281     -0.892405  0.710201     -0.949977  0.713016     -0.969488  0.716845     -0.943775  0.721416      -0.868175     -0.339494      -0.636866  14.99040  0.626043  0.248271 2025-07-11 12:37:00  117849.18  BTCUSDT        1m
+4  117815.90  117815.90  117803.55   0.658675  0.240669   0.240420 -0.498089  -0.496753  0.663030  0.659460  -0.397432  0.657004  0.662768   -0.031269  0.673115  0.673960   -0.431288  117939.6104  117901.992329   -123.7104  117939.6104  117901.992329   -123.7104  0.673115  0.348732  0.683393  0.661843  0.320091 -0.634149 -0.348681   -0.363566    0.079087  0.698892   -0.539546  0.704874     -0.738887  0.708370     -0.845429  0.711081     -0.899466  0.713688     -0.917483  0.717221     -0.892599  0.721416      -0.820552     -0.045019      -0.636866  11.32190  0.626043  0.288914 2025-07-11 12:38:00  117803.56  BTCUSDT        1m
+[2025-09-30 08:26:43] INFO root: Prepare stage finished successfully.
+[2025-09-30 08:27:44] INFO root: meta.json leído: artifacts\meta.json
+[2025-09-30 08:27:44] INFO root: state_dict cargado con strict=True.
+[2025-09-30 08:27:44] INFO root: Modelo preparado en device cuda (input_size=41, hidden=96, num_layers=2).
+[2025-09-30 08:27:44] INFO root: Modelo cargado desde artifacts\model_best.pt y metadata aplicada: {'feature_cols': ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'ema_5', 'ma_diff_5', 'sma_10', 'ema_10', 'ma_diff_10', 'sma_20', 'ema_20', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10', 'raw_vol_30', 'fib_0', 'dist_fib_0', 'fib_236', 'dist_fib_236', 'fib_382', 'dist_fib_382', 'fib_500', 'dist_fib_500', 'fib_618', 'dist_fib_618', 'fib_786', 'dist_fib_786', 'fib_1000', 'dist_fib_1000', 'td_buy_setup', 'td_sell_setup', 'vp_poc', 'dist_vp'], 'seq_len': 128, 'horizon': 15, 'hidden': 96, 'input_size': 41, 'num_layers': 2}
+[2025-09-30 08:27:44] INFO root: Scaler cargado desde artifacts\scaler.pkl.
+[2025-09-30 08:29:44] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-09-30 08:29:44] INFO TradingDaemon: Daemon loop started.
+[2025-09-30 08:29:44] INFO root: Daemon started.
+[2025-09-30 08:29:44] INFO root: Background: loading model from C:/Users/soyko/Documents/git2/Market/project assistant/env.model_0.9/0.9f/fibopkg5/artifacts/model_best.pt ...
+[2025-09-30 08:29:44] INFO TradingDaemon: Attempting to load model from C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\artifacts\model_best.pt
+[2025-09-30 08:29:44] INFO TradingDaemon: Loaded meta: artifacts\meta.json
+[2025-09-30 08:29:44] INFO TradingDaemon: Loaded model state_dict (strict=True).
+[2025-09-30 08:29:44] INFO TradingDaemon: Model prepared on CPU.
+[2025-09-30 08:29:44] INFO TradingDaemon: Loaded scaler from artifacts\scaler.pkl
+[2025-09-30 08:29:44] INFO root: Model loaded (background).
+[2025-09-30 08:29:44] INFO TradingDaemon: Prediction computed: 0.000368
+[2025-09-30 08:29:44] INFO TradingDaemon: No trade (signal 0.000368 within threshold).
+[2025-09-30 08:29:50] INFO TradingDaemon: Prediction computed: 0.000368
+[2025-09-30 08:29:50] INFO TradingDaemon: No trade (signal 0.000368 within threshold).
+[2025-09-30 08:29:56] INFO TradingDaemon: Prediction computed: 0.000368
+[2025-09-30 08:29:56] INFO TradingDaemon: No trade (signal 0.000368 within threshold).
+[2025-09-30 08:30:02] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:02] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:07] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:07] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:08] INFO websocket: Websocket connected
+[2025-09-30 08:30:08] INFO root: WS open (callback)
+[2025-09-30 08:30:13] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:13] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:21] INFO root: WS closed: None None
+[2025-09-30 08:30:21] INFO root: Websocket closed by user.
+[2025-09-30 08:30:19] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:31] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:32] INFO websocket: Websocket connected
+[2025-09-30 08:30:32] INFO root: WS open (callback)
+[2025-09-30 08:30:37] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:37] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:42] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:42] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:48] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:48] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:54] INFO TradingDaemon: Prediction computed: 0.000381
+[2025-09-30 08:30:54] INFO TradingDaemon: No trade (signal 0.000381 within threshold).
+[2025-09-30 08:30:59] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:30:59] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:00] INFO root: WS closed: None None
+[2025-09-30 08:31:00] INFO root: Websocket closed by user.
+[2025-09-30 08:31:02] INFO websocket: Websocket connected
+[2025-09-30 08:31:02] INFO root: WS open (callback)
+[2025-09-30 08:31:05] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:05] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:11] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:11] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:17] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:17] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:22] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:22] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:28] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:28] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:31] INFO root: WS closed: None None
+[2025-09-30 08:31:32] INFO root: Websocket closed by user.
+[2025-09-30 08:31:32] INFO root: Websocket closed by user.
+[2025-09-30 08:31:34] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:34] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:34] INFO websocket: Websocket connected
+[2025-09-30 08:31:34] INFO root: WS open (callback)
+[2025-09-30 08:31:39] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:39] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:45] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:45] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:51] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:51] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:31:56] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 08:31:56] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 08:32:00] INFO root: Refreshed model metadata from daemon.
+[2025-09-30 08:32:01] INFO root: Status data fetched: 50 rows.
+[2025-09-30 08:32:02] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:02] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:04] INFO root: Prediction worker started (background).
+[2025-09-30 08:32:04] INFO root: Prediction computed: log=0.000417 pct=0.04175096361294095 vol=0.7402440309524536
+[2025-09-30 08:32:08] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:08] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:13] INFO root: WS closed: None None
+[2025-09-30 08:32:13] INFO root: Websocket closed by user.
+[2025-09-30 08:32:13] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:13] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:15] INFO websocket: Websocket connected
+[2025-09-30 08:32:15] INFO root: WS open (callback)
+[2025-09-30 08:32:19] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:19] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:25] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:25] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:31] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:31] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:36] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:36] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:42] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:42] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:48] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:48] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:32:54] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 08:32:54] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 08:33:00] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:00] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:05] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:05] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:11] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:13] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:19] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:19] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:25] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:25] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:31] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:31] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:37] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:37] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:43] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:43] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:48] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:48] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:33:54] INFO TradingDaemon: Prediction computed: 0.000395
+[2025-09-30 08:33:54] INFO TradingDaemon: No trade (signal 0.000395 within threshold).
+[2025-09-30 08:34:00] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:00] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:06] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:06] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:12] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:12] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:18] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:18] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:23] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:23] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:29] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:29] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:35] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:35] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:41] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:41] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:47] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:47] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:53] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:53] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:34:59] INFO TradingDaemon: Prediction computed: 0.000277
+[2025-09-30 08:34:59] INFO TradingDaemon: No trade (signal 0.000277 within threshold).
+[2025-09-30 08:35:04] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:04] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:10] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:10] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:16] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:16] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:22] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:22] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:28] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:28] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:34] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:34] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:39] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:39] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:45] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:45] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:51] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:51] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:35:57] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 08:35:57] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 08:36:03] INFO TradingDaemon: Prediction computed: 0.000319
+[2025-09-30 08:36:03] INFO TradingDaemon: No trade (signal 0.000319 within threshold).
+[2025-09-30 08:36:09] INFO TradingDaemon: Prediction computed: 0.000319
+[2025-09-30 08:36:09] INFO TradingDaemon: No trade (signal 0.000319 within threshold).
+[2025-09-30 08:36:14] INFO TradingDaemon: Prediction computed: 0.000319
+[2025-09-30 08:36:14] INFO TradingDaemon: No trade (signal 0.000319 within threshold).
+[2025-09-30 08:36:20] INFO TradingDaemon: Prediction computed: 0.000319
+[2025-09-30 08:36:20] INFO TradingDaemon: No trade (signal 0.000319 within threshold).
+[2025-09-30 08:36:26] INFO TradingDaemon: Prediction computed: 0.000319
+[2025-09-30 08:36:26] INFO TradingDaemon: No trade (signal 0.000319 within threshold).
+[2025-09-30 08:36:32] INFO TradingDaemon: Prediction computed: 0.000319
+[2025-09-30 08:36:32] INFO TradingDaemon: No trade (signal 0.000319 within threshold).
+[2025-09-30 08:36:38] INFO TradingDaemon: Prediction computed: 0.000319
+[2025-09-30 08:36:38] INFO TradingDaemon: No trade (signal 0.000319 within threshold).
+[2025-09-30 08:36:43] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2535, in <module>
+    return
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2531, in main
+    self._enqueue_log(f"Could not load artifacts model: {e}")
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

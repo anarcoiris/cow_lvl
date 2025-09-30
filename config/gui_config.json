@@ -1,0 +1,15 @@
+{
+  "sqlite_path": "C:/Users/soyko/Documents/git2/Market/project assistant/env.model_0.9/0.9f/fibopkg3/data_manager/exports/1m_influx30sept25.db",
+  "table": "ohlcv",
+  "symbol": "BTCUSDT",
+  "timeframe": "1m",
+  "seq_len": 64,
+  "horizon": 15,
+  "hidden": 96,
+  "epochs": 40,
+  "batch_size": 128,
+  "lr": 1e-06,
+  "val_frac": 0.1,
+  "dtype": "float32",
+  "feature_cols_manual": ""
+}

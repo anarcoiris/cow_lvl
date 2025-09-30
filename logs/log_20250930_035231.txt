@@ -1,0 +1,13 @@
+[2025-09-30 05:52:31] INFO root: init_logging: logfile=logs\log_20250930_035231.txt
+[2025-09-30 05:52:31] INFO __main__: Logging initialized
+[2025-09-30 05:52:38] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2367, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2362, in main
+    app = TradingAppExtended(root)
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 462, in __init__
+    self._build_ui()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 784, in _build_ui
+    self._init_ui_logging(parent_frame)  # parent_frame = frame que contiene el notebook
+AttributeError: 'TradingAppExtended' object has no attribute '_init_ui_logging'

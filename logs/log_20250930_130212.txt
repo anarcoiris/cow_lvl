@@ -1,0 +1,843 @@
+[2025-09-30 15:02:12] INFO root: init_logging: logfile=logs\log_20250930_130212.txt
+[2025-09-30 15:02:12] INFO __main__: Logging initialized
+[2025-09-30 15:02:21] INFO root: Config loaded from config\gui_config.json
+[2025-09-30 15:06:19] INFO root: Websocket URL empty.
+[2025-09-30 15:06:23] INFO root: Preview loaded: 200 rows.
+[2025-09-30 15:06:25] INFO root: Prepare: loading data from sqlite...
+[2025-09-30 15:06:25] INFO root: Prepare thread started.
+[2025-09-30 15:06:26] INFO root: Loaded 105668 rows from sqlite.
+[2025-09-30 15:06:34] INFO root: Preview loaded: 200 rows.
+[2025-09-30 15:06:35] INFO root: Computed features. Shape: (105668, 55)
+[2025-09-30 15:06:35] INFO root: dropna: before=105668, after=105568, removed=100
+[2025-09-30 15:06:35] INFO root: Feature cols selected (41): ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'ema_5', 'ma_diff_5', 'sma_10', 'ema_10', 'ma_diff_10', 'sma_20', 'ema_20', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14']...
+[2025-09-30 15:06:35] INFO root: Building sequences...
+[2025-09-30 15:06:37] INFO root: Sequences built: N=105490, seq_len=64, features=41
+[2025-09-30 15:06:40] INFO root: Scaler fitted and df_scaled prepared.
+[2025-09-30 15:06:40] INFO root: Preview raw (first 5 rows):
+   id   symbol timeframe          ts       open       high        low      close     volume  source     created_at     updated_at                 timestamp
+0   1  BTCUSDT        1m  1752231240  118117.79  118129.59  118090.00  118093.63    9.27987  influx  1759186315000  1759186315000 2025-07-11 10:54:00+00:00
+1   2  BTCUSDT        1m  1752231300  118093.63  118093.63  117980.00  117980.01  111.28787  influx  1759186315000  1759186315000 2025-07-11 10:55:00+00:00
+2   3  BTCUSDT        1m  1752231360  117980.00  118023.34  117980.00  118022.39    9.13797  influx  1759186315000  1759186315000 2025-07-11 10:56:00+00:00
+3   4  BTCUSDT        1m  1752231420  118022.38  118022.38  117946.72  117968.01   30.41224  influx  1759186315000  1759186315000 2025-07-11 10:57:00+00:00
+4   5  BTCUSDT        1m  1752231480  117968.01  117968.01  117964.71  117964.72    7.69926  influx  1759186315000  1759186315000 2025-07-11 10:58:00+00:00
+[2025-09-30 15:06:40] INFO root: Preview features (first 5 rows):
+       close       high        low  log_close     ret_1  log_ret_1     ret_5  log_ret_5       sma_5          ema_5  ma_diff_5      sma_10         ema_10  ma_diff_10       sma_20         ema_20  ma_diff_20       sma_50         ema_50  ma_diff_50       sma_50         ema_50  ma_diff_50         bb_m      bb_std          bb_up          bb_dn  bb_width     rsi_14     atr_14  raw_vol_10  raw_vol_30      fib_0  dist_fib_0       fib_236  dist_fib_236       fib_382  dist_fib_382     fib_500  dist_fib_500       fib_618  dist_fib_618       fib_786  dist_fib_786   fib_1000  dist_fib_1000  td_buy_setup  td_sell_setup    volume        vp_poc   dist_vp           timestamp       open   symbol timeframe
+0  117870.16  117902.31  117870.15  11.677339 -0.000026  -0.000026  0.001012   0.001011  117823.422  117841.224784     46.738  117814.545  117849.863338      55.615  117929.4420  117893.470114    -59.2820  117930.3404  117914.626299    -60.1804  117930.3404  117914.626299    -60.1804  117929.4420  137.827385  118205.096770  117653.787230  0.004675  36.103275  37.512857    0.000343    0.000393  117700.00    0.001444  117831.98064      0.000324  117913.62968     -0.000369  117979.620     -0.000929  118045.61032     -0.001489  118139.56264     -0.002286  118259.24      -0.003301             0              4  15.18356  117977.73925 -0.000913 2025-07-11 12:34:00  117873.18  BTCUSDT        1m
+1  117851.13  117873.18  117851.13  11.677177 -0.000161  -0.000161  0.000811   0.000810  117842.514  117844.526523      8.616  117810.858  117850.093640      40.272  117914.0810  117889.437722    -62.9510  117932.5504  117912.136248    -81.4204  117932.5504  117912.136248    -81.4204  117914.0810  127.722162  118169.525324  117658.636676  0.004333  31.773830  37.921429    0.000346    0.000393  117700.00    0.001282  117831.98064      0.000162  117913.62968     -0.000530  117979.620     -0.001090  118045.61032     -0.001650  118139.56264     -0.002447  118259.24      -0.003463             0              5  14.80387  117977.73925 -0.001074 2025-07-11 12:35:00  117870.16  BTCUSDT        1m
+2  117849.18  117851.14  117831.66  11.677161 -0.000017  -0.000017  0.000620   0.000620  117857.130  117846.077682     -7.950  117809.662  117849.927524      39.518  117898.6915  117885.603653    -49.5115  117935.3330  117909.667376    -86.1530  117935.3330  117909.667376    -86.1530  117898.6915  114.805649  118128.302798  117669.080202  0.003895  30.783770  38.277857    0.000339    0.000382  117700.00    0.001266  117831.98064      0.000146  117913.62968     -0.000547  117979.620     -0.001107  118045.61032     -0.001667  118139.56264     -0.002464  118259.24      -0.003480             0              6  17.55212  117721.50325  0.001083 2025-07-11 12:36:00  117851.14  BTCUSDT        1m
+3  117803.56  117856.14  117803.55  11.676774 -0.000387  -0.000387 -0.000326  -0.000326  117849.442  117831.905121    -45.882  117812.805  117841.497065      -9.245  117881.8130  117877.789972    -78.2530  117937.4040  117905.506302   -133.8440  117937.4040  117905.506302   -133.8440  117881.8130  101.307843  118084.428687  117679.197313  0.003438  28.389151  39.293571    0.000259    0.000384  117700.00    0.000879  117831.98064     -0.000241  117913.62968     -0.000934  117979.620     -0.001495  118045.61032     -0.002055  118139.56264     -0.002852  118259.24      -0.003868             1              0  14.99040  117721.50325  0.000697 2025-07-11 12:37:00  117849.18  BTCUSDT        1m
+4  117815.90  117815.90  117803.55  11.676879  0.000105   0.000105 -0.000486  -0.000486  117837.986  117826.570081    -22.086  117818.791  117836.843053      -2.891  117869.6410  117871.895689    -53.7410  117939.6104  117901.992329   -123.7104  117939.6104  117901.992329   -123.7104  117869.6410   93.151783  118055.944567  117683.337433  0.003161  38.214986  32.896429    0.000254    0.000384  117705.57    0.000936  117836.23612     -0.000173  117917.07194     -0.000859  117982.405     -0.001413  118047.73806     -0.001968  118140.75462     -0.002757  118259.24      -0.003763             2              0  11.32190  117721.50325  0.000801 2025-07-11 12:38:00  117803.56  BTCUSDT        1m
+[2025-09-30 15:06:40] INFO root: Preview scaled (first 5 rows):
+       close       high        low  log_close     ret_1  log_ret_1     ret_5  log_ret_5     sma_5     ema_5  ma_diff_5    sma_10    ema_10  ma_diff_10    sma_20    ema_20  ma_diff_20       sma_50         ema_50  ma_diff_50       sma_50         ema_50  ma_diff_50      bb_m    bb_std     bb_up     bb_dn  bb_width    rsi_14    atr_14  raw_vol_10  raw_vol_30     fib_0  dist_fib_0   fib_236  dist_fib_236   fib_382  dist_fib_382   fib_500  dist_fib_500   fib_618  dist_fib_618   fib_786  dist_fib_786  fib_1000  dist_fib_1000  td_buy_setup  td_sell_setup    volume    vp_poc   dist_vp           timestamp       open   symbol timeframe
+0  117870.16  117902.31  117870.15   0.677188 -0.057792  -0.057465  1.043332   1.041261  0.660272  0.665924   0.847359  0.657502  0.668718    0.659616  0.693837  0.682614   -0.476378  117930.3404  117914.626299    -60.1804  117930.3404  117914.626299    -60.1804  0.693837  1.108386  0.732138  0.654330  1.061467 -0.747192 -0.208207   -0.023616    0.116072  0.698959   -0.285989  0.705363     -0.445969  0.709120     -0.540898  0.712041     -0.598318  0.714857     -0.630991  0.718687     -0.638899  0.723257      -0.612086     -0.634002       0.564557  15.18356  0.708442 -0.376892 2025-07-11 12:34:00  117873.18  BTCUSDT        1m
+1  117851.13  117873.18  117851.13   0.671338 -0.368814  -0.367930  0.836391   0.834911  0.666298  0.666967   0.157831  0.656338  0.668790    0.478449  0.688987  0.681341   -0.506123  117932.5504  117912.136248    -81.4204  117932.5504  117912.136248    -81.4204  0.688987  0.936745  0.720952  0.655865  0.894048 -0.978501 -0.195804   -0.015228    0.114141  0.698959   -0.366392  0.705363     -0.541090  0.709120     -0.641302  0.712041     -0.698855  0.714857     -0.727848  0.718687     -0.726231  0.723257      -0.685529     -0.634002       0.864900  14.80387  0.708442 -0.439668 2025-07-11 12:35:00  117870.16  BTCUSDT        1m
+2  117849.18  117851.14  117831.66   0.670738 -0.037013  -0.036725  0.640656   0.639697  0.670912  0.667456  -0.141805  0.655961  0.668738    0.469546  0.684128  0.680130   -0.397165  117935.3330  117909.667376    -86.1530  117935.3330  117909.667376    -86.1530  0.684128  0.717353  0.707988  0.659171  0.679921 -1.031397 -0.184983   -0.041598    0.068876  0.698959   -0.374632  0.705363     -0.550839  0.709120     -0.651592  0.712041     -0.709158  0.714857     -0.737775  0.718687     -0.735182  0.723257      -0.693056     -0.634002       1.165244  17.55212  0.627873  0.398412 2025-07-11 12:36:00  117851.14  BTCUSDT        1m
+3  117803.56  117856.14  117803.55   0.656710 -0.885527  -0.883810 -0.333787  -0.332705  0.668485  0.662983  -0.827897  0.656953  0.666077   -0.106239  0.678799  0.677662   -0.630182  117937.4040  117905.506302   -133.8440  117937.4040  117905.506302   -133.8440  0.678799  0.488087  0.694190  0.662374  0.456108 -1.159335 -0.154148   -0.341961    0.080102  0.698959   -0.567492  0.705363     -0.779001  0.709120     -0.892428  0.712041     -0.950312  0.714857     -0.970103  0.718687     -0.944664  0.723257      -0.869220     -0.339318      -0.636817  14.99040  0.627873  0.248160 2025-07-11 12:37:00  117849.18  BTCUSDT        1m
+4  117815.90  117815.90  117803.55   0.660505  0.240736   0.240488 -0.498215  -0.496880  0.664869  0.661299  -0.397489  0.658842  0.664607   -0.031212  0.674956  0.675801   -0.431455  117939.6104  117901.992329   -123.7104  117939.6104  117901.992329   -123.7104  0.674956  0.349553  0.685232  0.663684  0.320864 -0.634370 -0.348352   -0.363618    0.079305  0.700726   -0.538884  0.706712     -0.738551  0.710209     -0.845425  0.712921     -0.899767  0.715529     -0.918058  0.719062     -0.893443  0.723257      -0.821555     -0.044635      -0.636817  11.32190  0.627873  0.288814 2025-07-11 12:38:00  117803.56  BTCUSDT        1m
+[2025-09-30 15:06:40] INFO root: Prepare stage finished successfully.
+[2025-09-30 15:09:09] INFO root: Refreshed model metadata from GUI state.
+[2025-09-30 15:09:31] INFO websocket: Websocket connected
+[2025-09-30 15:09:31] INFO root: WS open (callback)
+[2025-09-30 15:09:42] INFO root: Already connected.
+[2025-09-30 15:09:45] INFO root: WS closed: None None
+[2025-09-30 15:09:45] INFO root: Websocket closed by user.
+[2025-09-30 15:09:46] INFO websocket: Websocket connected
+[2025-09-30 15:09:46] INFO root: WS open (callback)
+[2025-09-30 15:09:59] INFO root: WS closed: None None
+[2025-09-30 15:09:59] INFO root: Websocket closed by user.
+[2025-09-30 15:10:00] INFO websocket: Websocket connected
+[2025-09-30 15:10:00] INFO root: WS open (callback)
+[2025-09-30 15:10:08] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-09-30 15:10:08] INFO TradingDaemon: Daemon loop started.
+[2025-09-30 15:10:08] INFO root: Daemon started.
+[2025-09-30 15:10:08] INFO root: Background: loading model from C:/Users/soyko/Documents/git2/Market/project assistant/env.model_0.9/0.9f/fibopkg5/artifacts/model_best.pt ...
+[2025-09-30 15:10:08] INFO TradingDaemon: Attempting to load model from C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\artifacts\model_best.pt
+[2025-09-30 15:10:08] INFO TradingDaemon: Loaded meta: artifacts\meta.json
+[2025-09-30 15:10:09] INFO TradingDaemon: Loaded model state_dict (strict=True).
+[2025-09-30 15:10:09] INFO TradingDaemon: Model prepared on CPU.
+[2025-09-30 15:10:09] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-09-30 15:10:09] INFO TradingDaemon: Loaded scaler from artifacts\scaler.pkl
+[2025-09-30 15:10:09] INFO root: Model loaded (background).
+[2025-09-30 15:10:14] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:14] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:20] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:20] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:22] INFO root: Prediction worker started (background).
+[2025-09-30 15:10:22] INFO root: Prediction computed: log=0.000498 pct=0.04983519111700918 vol=0.6587735414505005
+[2025-09-30 15:10:26] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:26] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:31] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:31] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:36] INFO root: Status data fetched: 50 rows.
+[2025-09-30 15:10:37] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:37] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:41] INFO root: Refreshed model metadata from daemon.
+[2025-09-30 15:10:43] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:43] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:43] INFO root: Status data fetched: 50 rows.
+[2025-09-30 15:10:44] INFO root: Prediction worker started (background).
+[2025-09-30 15:10:44] INFO root: Prediction computed: log=0.000498 pct=0.04983519111700918 vol=0.6587735414505005
+[2025-09-30 15:10:48] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:48] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:54] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:10:54] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:10:55] INFO root: Backtest: loading data/features...
+[2025-09-30 15:10:55] INFO root: Backtest thread started.
+[2025-09-30 15:11:04] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 15:11:04] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 15:11:04] INFO root: Backtest failed: could not broadcast input array from shape (64,53) into shape (64,47)
+[2025-09-30 15:11:04] INFO root: Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2513, in _backtest_worker
+    X, y = self._build_sequences_internal(feats, feature_cols, seq_len, horizon, dtype=np.float32)
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2473, in _build_sequences_internal
+    X[idx] = mat[i:i+seq_len, :]
+ValueError: could not broadcast input array from shape (64,53) into shape (64,47)
+
+[2025-09-30 15:11:10] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:10] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:16] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:16] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:21] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:21] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:27] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:27] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:33] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:33] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:38] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:38] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:44] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:44] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:50] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:50] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:11:55] INFO TradingDaemon: Prediction computed: 0.000948
+[2025-09-30 15:11:55] INFO TradingDaemon: Paper trade simulated: buy 0.00088423 @ 113092.47
+[2025-09-30 15:12:01] INFO TradingDaemon: Prediction computed: 0.001008
+[2025-09-30 15:12:01] INFO TradingDaemon: Paper trade simulated: buy 0.00088442 @ 113068.92
+[2025-09-30 15:12:03] INFO root: Applied status intervals: inference=60.0s trade=120.0s refresh=30.0s
+[2025-09-30 15:12:03] INFO TradingDaemon: Configuration updated from dict.
+[2025-09-30 15:12:03] INFO root: Pushed refresh interval to daemon.poll_interval.
+[2025-09-30 15:12:34] INFO TradingDaemon: Prediction computed: 0.001008
+[2025-09-30 15:12:34] INFO TradingDaemon: Paper trade simulated: buy 0.00088442 @ 113068.92
+[2025-09-30 15:13:06] INFO TradingDaemon: Prediction computed: 0.000688
+[2025-09-30 15:13:06] INFO TradingDaemon: Paper trade simulated: buy 0.00088450 @ 113057.88
+[2025-09-30 15:13:39] INFO TradingDaemon: Prediction computed: 0.000688
+[2025-09-30 15:13:39] INFO TradingDaemon: Paper trade simulated: buy 0.00088450 @ 113057.88
+[2025-09-30 15:14:12] INFO TradingDaemon: Prediction computed: 0.000307
+[2025-09-30 15:14:12] INFO TradingDaemon: No trade (signal 0.000307 within threshold).
+[2025-09-30 15:14:45] INFO TradingDaemon: Prediction computed: 0.000307
+[2025-09-30 15:14:45] INFO TradingDaemon: No trade (signal 0.000307 within threshold).
+[2025-09-30 15:15:18] INFO TradingDaemon: Prediction computed: 0.000707
+[2025-09-30 15:15:18] INFO TradingDaemon: Paper trade simulated: buy 0.00088464 @ 113040.43
+[2025-09-30 15:15:51] INFO TradingDaemon: Prediction computed: 0.000707
+[2025-09-30 15:15:51] INFO TradingDaemon: Paper trade simulated: buy 0.00088464 @ 113040.43
+[2025-09-30 15:16:23] INFO TradingDaemon: Prediction computed: 0.001085
+[2025-09-30 15:16:23] INFO TradingDaemon: Paper trade simulated: buy 0.00088458 @ 113047.50
+[2025-09-30 15:16:56] INFO TradingDaemon: Prediction computed: 0.001085
+[2025-09-30 15:16:56] INFO TradingDaemon: Paper trade simulated: buy 0.00088458 @ 113047.50
+[2025-09-30 15:17:29] INFO TradingDaemon: Prediction computed: 0.000919
+[2025-09-30 15:17:29] INFO TradingDaemon: Paper trade simulated: buy 0.00088455 @ 113052.21
+[2025-09-30 15:18:02] INFO TradingDaemon: Prediction computed: 0.000436
+[2025-09-30 15:18:02] INFO TradingDaemon: No trade (signal 0.000436 within threshold).
+[2025-09-30 15:18:35] INFO TradingDaemon: Prediction computed: 0.000436
+[2025-09-30 15:18:35] INFO TradingDaemon: No trade (signal 0.000436 within threshold).
+[2025-09-30 15:19:08] INFO TradingDaemon: Prediction computed: 0.000502
+[2025-09-30 15:19:08] INFO TradingDaemon: Paper trade simulated: buy 0.00088421 @ 113094.99
+[2025-09-30 15:19:41] INFO TradingDaemon: Prediction computed: 0.000502
+[2025-09-30 15:19:41] INFO TradingDaemon: Paper trade simulated: buy 0.00088421 @ 113094.99
+[2025-09-30 15:20:13] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 15:20:13] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 15:20:46] INFO TradingDaemon: Prediction computed: 0.000325
+[2025-09-30 15:20:46] INFO TradingDaemon: No trade (signal 0.000325 within threshold).
+[2025-09-30 15:21:19] INFO TradingDaemon: Prediction computed: 0.000143
+[2025-09-30 15:21:19] INFO TradingDaemon: No trade (signal 0.000143 within threshold).
+[2025-09-30 15:21:52] INFO TradingDaemon: Prediction computed: 0.000143
+[2025-09-30 15:21:52] INFO TradingDaemon: No trade (signal 0.000143 within threshold).
+[2025-09-30 15:22:25] INFO TradingDaemon: Prediction computed: 0.000182
+[2025-09-30 15:22:25] INFO TradingDaemon: No trade (signal 0.000182 within threshold).
+[2025-09-30 15:22:57] INFO TradingDaemon: Prediction computed: 0.000182
+[2025-09-30 15:22:57] INFO TradingDaemon: No trade (signal 0.000182 within threshold).
+[2025-09-30 15:23:30] INFO TradingDaemon: Prediction computed: 0.000285
+[2025-09-30 15:23:30] INFO TradingDaemon: No trade (signal 0.000285 within threshold).
+[2025-09-30 15:24:03] INFO TradingDaemon: Prediction computed: -0.000604
+[2025-09-30 15:24:03] INFO TradingDaemon: Paper trade simulated: sell 0.00088301 @ 113248.39
+[2025-09-30 15:24:35] INFO TradingDaemon: Prediction computed: -0.000604
+[2025-09-30 15:24:35] INFO TradingDaemon: Paper trade simulated: sell 0.00088301 @ 113248.39
+[2025-09-30 15:25:08] INFO TradingDaemon: Prediction computed: -0.000982
+[2025-09-30 15:25:08] INFO TradingDaemon: Paper trade simulated: sell 0.00088336 @ 113204.35
+[2025-09-30 15:25:41] INFO TradingDaemon: Prediction computed: -0.000982
+[2025-09-30 15:25:41] INFO TradingDaemon: Paper trade simulated: sell 0.00088336 @ 113204.35
+[2025-09-30 15:26:13] INFO TradingDaemon: Prediction computed: -0.001556
+[2025-09-30 15:26:13] INFO TradingDaemon: Paper trade simulated: sell 0.00088289 @ 113263.83
+[2025-09-30 15:26:46] INFO TradingDaemon: Prediction computed: -0.001556
+[2025-09-30 15:26:46] INFO TradingDaemon: Paper trade simulated: sell 0.00088289 @ 113263.83
+[2025-09-30 15:27:19] INFO TradingDaemon: Prediction computed: -0.001375
+[2025-09-30 15:27:19] INFO TradingDaemon: Paper trade simulated: sell 0.00088269 @ 113290.64
+[2025-09-30 15:27:26] INFO root: Prediction worker started (background).
+[2025-09-30 15:27:26] INFO root: Prediction computed: log=-0.001375 pct=-0.1374111845793391 vol=0.6563851237297058
+[2025-09-30 15:27:51] INFO TradingDaemon: Prediction computed: -0.001375
+[2025-09-30 15:27:51] INFO TradingDaemon: Paper trade simulated: sell 0.00088269 @ 113290.64
+[2025-09-30 15:28:24] INFO TradingDaemon: Prediction computed: -0.001226
+[2025-09-30 15:28:24] INFO TradingDaemon: Paper trade simulated: sell 0.00088271 @ 113287.13
+[2025-09-30 15:28:56] INFO TradingDaemon: Prediction computed: -0.001226
+[2025-09-30 15:28:56] INFO TradingDaemon: Paper trade simulated: sell 0.00088271 @ 113287.13
+[2025-09-30 15:29:29] INFO TradingDaemon: Prediction computed: -0.001139
+[2025-09-30 15:29:29] INFO TradingDaemon: Paper trade simulated: sell 0.00088273 @ 113284.44
+[2025-09-30 15:30:01] INFO TradingDaemon: Prediction computed: -0.001317
+[2025-09-30 15:30:01] INFO TradingDaemon: Paper trade simulated: sell 0.00088246 @ 113319.99
+[2025-09-30 15:30:34] INFO TradingDaemon: Prediction computed: -0.001317
+[2025-09-30 15:30:34] INFO TradingDaemon: Paper trade simulated: sell 0.00088246 @ 113319.99
+[2025-09-30 15:31:06] INFO TradingDaemon: Prediction computed: -0.001489
+[2025-09-30 15:31:06] INFO TradingDaemon: Paper trade simulated: sell 0.00088289 @ 113264.82
+[2025-09-30 15:31:39] INFO TradingDaemon: Prediction computed: -0.001489
+[2025-09-30 15:31:39] INFO TradingDaemon: Paper trade simulated: sell 0.00088289 @ 113264.82
+[2025-09-30 15:32:12] INFO TradingDaemon: Prediction computed: -0.001508
+[2025-09-30 15:32:12] INFO TradingDaemon: Paper trade simulated: sell 0.00088299 @ 113251.30
+[2025-09-30 15:32:44] INFO TradingDaemon: Prediction computed: -0.001508
+[2025-09-30 15:32:44] INFO TradingDaemon: Paper trade simulated: sell 0.00088299 @ 113251.30
+[2025-09-30 15:33:17] INFO TradingDaemon: Prediction computed: -0.001027
+[2025-09-30 15:33:17] INFO TradingDaemon: Paper trade simulated: sell 0.00088338 @ 113201.52
+[2025-09-30 15:33:49] INFO TradingDaemon: Prediction computed: -0.001027
+[2025-09-30 15:33:49] INFO TradingDaemon: Paper trade simulated: sell 0.00088338 @ 113201.52
+[2025-09-30 15:34:22] INFO TradingDaemon: Prediction computed: -0.000792
+[2025-09-30 15:34:22] INFO TradingDaemon: Paper trade simulated: sell 0.00088348 @ 113188.20
+[2025-09-30 15:34:54] INFO TradingDaemon: Prediction computed: -0.000792
+[2025-09-30 15:34:54] INFO TradingDaemon: Paper trade simulated: sell 0.00088348 @ 113188.20
+[2025-09-30 15:35:27] INFO TradingDaemon: Prediction computed: -0.000226
+[2025-09-30 15:35:27] INFO TradingDaemon: No trade (signal -0.000226 within threshold).
+[2025-09-30 15:35:59] INFO TradingDaemon: Prediction computed: -0.000226
+[2025-09-30 15:35:59] INFO TradingDaemon: No trade (signal -0.000226 within threshold).
+[2025-09-30 15:36:32] INFO TradingDaemon: Prediction computed: 0.000361
+[2025-09-30 15:36:32] INFO TradingDaemon: No trade (signal 0.000361 within threshold).
+[2025-09-30 15:37:05] INFO TradingDaemon: Prediction computed: 0.001067
+[2025-09-30 15:37:05] INFO TradingDaemon: Paper trade simulated: buy 0.00088277 @ 113279.24
+[2025-09-30 15:37:37] INFO TradingDaemon: Prediction computed: 0.001067
+[2025-09-30 15:37:37] INFO TradingDaemon: Paper trade simulated: buy 0.00088277 @ 113279.24
+[2025-09-30 15:38:10] INFO TradingDaemon: Prediction computed: 0.000631
+[2025-09-30 15:38:10] INFO TradingDaemon: Paper trade simulated: buy 0.00088318 @ 113227.28
+[2025-09-30 15:38:42] INFO TradingDaemon: Prediction computed: 0.000631
+[2025-09-30 15:38:42] INFO TradingDaemon: Paper trade simulated: buy 0.00088318 @ 113227.28
+[2025-09-30 15:39:15] INFO TradingDaemon: Prediction computed: 0.000310
+[2025-09-30 15:39:15] INFO TradingDaemon: No trade (signal 0.000310 within threshold).
+[2025-09-30 15:39:47] INFO TradingDaemon: Prediction computed: 0.000310
+[2025-09-30 15:39:47] INFO TradingDaemon: No trade (signal 0.000310 within threshold).
+[2025-09-30 15:40:20] INFO TradingDaemon: Prediction computed: -0.000030
+[2025-09-30 15:40:20] INFO TradingDaemon: No trade (signal -0.000030 within threshold).
+[2025-09-30 15:40:52] INFO TradingDaemon: Prediction computed: -0.000030
+[2025-09-30 15:40:52] INFO TradingDaemon: No trade (signal -0.000030 within threshold).
+[2025-09-30 15:41:25] INFO TradingDaemon: Prediction computed: -0.000053
+[2025-09-30 15:41:25] INFO TradingDaemon: No trade (signal -0.000053 within threshold).
+[2025-09-30 15:41:58] INFO TradingDaemon: Prediction computed: -0.000053
+[2025-09-30 15:41:58] INFO TradingDaemon: No trade (signal -0.000053 within threshold).
+[2025-09-30 15:42:30] INFO TradingDaemon: Prediction computed: -0.000065
+[2025-09-30 15:42:30] INFO TradingDaemon: No trade (signal -0.000065 within threshold).
+[2025-09-30 15:43:03] INFO TradingDaemon: Prediction computed: 0.000101
+[2025-09-30 15:43:03] INFO TradingDaemon: No trade (signal 0.000101 within threshold).
+[2025-09-30 15:43:35] INFO TradingDaemon: Prediction computed: 0.000101
+[2025-09-30 15:43:35] INFO TradingDaemon: No trade (signal 0.000101 within threshold).
+[2025-09-30 15:44:08] INFO TradingDaemon: Prediction computed: 0.000046
+[2025-09-30 15:44:08] INFO TradingDaemon: No trade (signal 0.000046 within threshold).
+[2025-09-30 15:44:40] INFO TradingDaemon: Prediction computed: 0.000046
+[2025-09-30 15:44:40] INFO TradingDaemon: No trade (signal 0.000046 within threshold).
+[2025-09-30 15:45:13] INFO TradingDaemon: Prediction computed: -0.000069
+[2025-09-30 15:45:13] INFO TradingDaemon: No trade (signal -0.000069 within threshold).
+[2025-09-30 15:45:45] INFO TradingDaemon: Prediction computed: -0.000069
+[2025-09-30 15:45:45] INFO TradingDaemon: No trade (signal -0.000069 within threshold).
+[2025-09-30 15:46:18] INFO TradingDaemon: Prediction computed: -0.000216
+[2025-09-30 15:46:18] INFO TradingDaemon: No trade (signal -0.000216 within threshold).
+[2025-09-30 15:46:50] INFO TradingDaemon: Prediction computed: -0.000216
+[2025-09-30 15:46:50] INFO TradingDaemon: No trade (signal -0.000216 within threshold).
+[2025-09-30 15:47:23] INFO TradingDaemon: Prediction computed: -0.000381
+[2025-09-30 15:47:23] INFO TradingDaemon: No trade (signal -0.000381 within threshold).
+[2025-09-30 15:47:55] INFO TradingDaemon: Prediction computed: -0.000381
+[2025-09-30 15:47:55] INFO TradingDaemon: No trade (signal -0.000381 within threshold).
+[2025-09-30 15:48:28] INFO TradingDaemon: Prediction computed: -0.000331
+[2025-09-30 15:48:28] INFO TradingDaemon: No trade (signal -0.000331 within threshold).
+[2025-09-30 15:49:01] INFO TradingDaemon: Prediction computed: -0.000331
+[2025-09-30 15:49:01] INFO TradingDaemon: No trade (signal -0.000331 within threshold).
+[2025-09-30 15:49:33] INFO TradingDaemon: Prediction computed: -0.000468
+[2025-09-30 15:49:33] INFO TradingDaemon: No trade (signal -0.000468 within threshold).
+[2025-09-30 15:50:06] INFO TradingDaemon: Prediction computed: -0.000748
+[2025-09-30 15:50:06] INFO TradingDaemon: Paper trade simulated: sell 0.00088138 @ 113459.01
+[2025-09-30 15:50:38] INFO TradingDaemon: Prediction computed: -0.000748
+[2025-09-30 15:50:38] INFO TradingDaemon: Paper trade simulated: sell 0.00088138 @ 113459.01
+[2025-09-30 15:51:11] INFO TradingDaemon: Prediction computed: -0.000290
+[2025-09-30 15:51:11] INFO TradingDaemon: No trade (signal -0.000290 within threshold).
+[2025-09-30 15:51:43] INFO TradingDaemon: Prediction computed: -0.000290
+[2025-09-30 15:51:43] INFO TradingDaemon: No trade (signal -0.000290 within threshold).
+[2025-09-30 15:52:16] INFO TradingDaemon: Prediction computed: -0.000346
+[2025-09-30 15:52:16] INFO TradingDaemon: No trade (signal -0.000346 within threshold).
+[2025-09-30 15:52:48] INFO TradingDaemon: Prediction computed: -0.000346
+[2025-09-30 15:52:48] INFO TradingDaemon: No trade (signal -0.000346 within threshold).
+[2025-09-30 15:53:21] INFO TradingDaemon: Prediction computed: 0.000013
+[2025-09-30 15:53:21] INFO TradingDaemon: No trade (signal 0.000013 within threshold).
+[2025-09-30 15:53:53] INFO TradingDaemon: Prediction computed: 0.000013
+[2025-09-30 15:53:53] INFO TradingDaemon: No trade (signal 0.000013 within threshold).
+[2025-09-30 15:54:26] INFO TradingDaemon: Prediction computed: -0.000489
+[2025-09-30 15:54:26] INFO TradingDaemon: No trade (signal -0.000489 within threshold).
+[2025-09-30 15:54:58] INFO TradingDaemon: Prediction computed: -0.000489
+[2025-09-30 15:54:58] INFO TradingDaemon: No trade (signal -0.000489 within threshold).
+[2025-09-30 15:55:31] INFO TradingDaemon: Prediction computed: -0.000571
+[2025-09-30 15:55:31] INFO TradingDaemon: Paper trade simulated: sell 0.00088309 @ 113239.28
+[2025-09-30 15:56:03] INFO TradingDaemon: Prediction computed: -0.000253
+[2025-09-30 15:56:03] INFO TradingDaemon: No trade (signal -0.000253 within threshold).
+[2025-09-30 15:56:36] INFO TradingDaemon: Prediction computed: -0.000253
+[2025-09-30 15:56:36] INFO TradingDaemon: No trade (signal -0.000253 within threshold).
+[2025-09-30 15:57:09] INFO TradingDaemon: Prediction computed: 0.000154
+[2025-09-30 15:57:09] INFO TradingDaemon: No trade (signal 0.000154 within threshold).
+[2025-09-30 15:57:41] INFO TradingDaemon: Prediction computed: 0.000154
+[2025-09-30 15:57:41] INFO TradingDaemon: No trade (signal 0.000154 within threshold).
+[2025-09-30 15:58:14] INFO TradingDaemon: Prediction computed: 0.000280
+[2025-09-30 15:58:14] INFO TradingDaemon: No trade (signal 0.000280 within threshold).
+[2025-09-30 15:58:46] INFO TradingDaemon: Prediction computed: 0.000280
+[2025-09-30 15:58:46] INFO TradingDaemon: No trade (signal 0.000280 within threshold).
+[2025-09-30 15:59:19] INFO TradingDaemon: Prediction computed: -0.000253
+[2025-09-30 15:59:19] INFO TradingDaemon: No trade (signal -0.000253 within threshold).
+[2025-09-30 15:59:51] INFO TradingDaemon: Prediction computed: -0.000253
+[2025-09-30 15:59:51] INFO TradingDaemon: No trade (signal -0.000253 within threshold).
+[2025-09-30 16:00:24] INFO TradingDaemon: Prediction computed: -0.000675
+[2025-09-30 16:00:24] INFO TradingDaemon: Paper trade simulated: sell 0.00088180 @ 113404.53
+[2025-09-30 16:00:56] INFO TradingDaemon: Prediction computed: -0.000675
+[2025-09-30 16:00:56] INFO TradingDaemon: Paper trade simulated: sell 0.00088180 @ 113404.53
+[2025-09-30 16:01:29] INFO TradingDaemon: Prediction computed: -0.000573
+[2025-09-30 16:01:29] INFO TradingDaemon: Paper trade simulated: sell 0.00088233 @ 113336.12
+[2025-09-30 16:02:01] INFO TradingDaemon: Prediction computed: -0.000638
+[2025-09-30 16:02:01] INFO TradingDaemon: Paper trade simulated: sell 0.00088198 @ 113381.20
+[2025-09-30 16:02:34] INFO TradingDaemon: Prediction computed: -0.000638
+[2025-09-30 16:02:34] INFO TradingDaemon: Paper trade simulated: sell 0.00088198 @ 113381.20
+[2025-09-30 16:03:07] INFO TradingDaemon: Prediction computed: -0.000674
+[2025-09-30 16:03:07] INFO TradingDaemon: Paper trade simulated: sell 0.00088265 @ 113294.84
+[2025-09-30 16:03:39] INFO TradingDaemon: Prediction computed: -0.000674
+[2025-09-30 16:03:39] INFO TradingDaemon: Paper trade simulated: sell 0.00088265 @ 113294.84
+[2025-09-30 16:04:12] INFO TradingDaemon: Prediction computed: -0.000962
+[2025-09-30 16:04:12] INFO TradingDaemon: Paper trade simulated: sell 0.00088275 @ 113282.26
+[2025-09-30 16:04:44] INFO TradingDaemon: Prediction computed: -0.000962
+[2025-09-30 16:04:44] INFO TradingDaemon: Paper trade simulated: sell 0.00088275 @ 113282.26
+[2025-09-30 16:05:17] INFO TradingDaemon: Prediction computed: -0.000768
+[2025-09-30 16:05:17] INFO TradingDaemon: Paper trade simulated: sell 0.00088359 @ 113175.27
+[2025-09-30 16:05:49] INFO TradingDaemon: Prediction computed: -0.000768
+[2025-09-30 16:05:49] INFO TradingDaemon: Paper trade simulated: sell 0.00088359 @ 113175.27
+[2025-09-30 16:06:22] INFO TradingDaemon: Prediction computed: 0.000080
+[2025-09-30 16:06:22] INFO TradingDaemon: No trade (signal 0.000080 within threshold).
+[2025-09-30 16:06:54] INFO TradingDaemon: Prediction computed: 0.000080
+[2025-09-30 16:06:54] INFO TradingDaemon: No trade (signal 0.000080 within threshold).
+[2025-09-30 16:07:27] INFO TradingDaemon: Prediction computed: 0.000046
+[2025-09-30 16:07:27] INFO TradingDaemon: No trade (signal 0.000046 within threshold).
+[2025-09-30 16:08:00] INFO TradingDaemon: Prediction computed: 0.000046
+[2025-09-30 16:08:00] INFO TradingDaemon: No trade (signal 0.000046 within threshold).
+[2025-09-30 16:08:32] INFO TradingDaemon: Prediction computed: -0.000447
+[2025-09-30 16:08:32] INFO TradingDaemon: No trade (signal -0.000447 within threshold).
+[2025-09-30 16:09:05] INFO TradingDaemon: Prediction computed: -0.000961
+[2025-09-30 16:09:05] INFO TradingDaemon: Paper trade simulated: sell 0.00088490 @ 113007.64
+[2025-09-30 16:09:37] INFO TradingDaemon: Prediction computed: -0.000961
+[2025-09-30 16:09:37] INFO TradingDaemon: Paper trade simulated: sell 0.00088490 @ 113007.64
+[2025-09-30 16:10:10] INFO TradingDaemon: Prediction computed: -0.001172
+[2025-09-30 16:10:10] INFO TradingDaemon: Paper trade simulated: sell 0.00088443 @ 113066.60
+[2025-09-30 16:10:42] INFO TradingDaemon: Prediction computed: -0.001172
+[2025-09-30 16:10:42] INFO TradingDaemon: Paper trade simulated: sell 0.00088443 @ 113066.60
+[2025-09-30 16:11:15] INFO TradingDaemon: Prediction computed: -0.001025
+[2025-09-30 16:11:15] INFO TradingDaemon: Paper trade simulated: sell 0.00088540 @ 112943.83
+[2025-09-30 16:11:47] INFO TradingDaemon: Prediction computed: -0.001025
+[2025-09-30 16:11:47] INFO TradingDaemon: Paper trade simulated: sell 0.00088540 @ 112943.83
+[2025-09-30 16:12:20] INFO TradingDaemon: Prediction computed: -0.001039
+[2025-09-30 16:12:20] INFO TradingDaemon: Paper trade simulated: sell 0.00088442 @ 113068.02
+[2025-09-30 16:12:53] INFO TradingDaemon: Prediction computed: -0.001039
+[2025-09-30 16:12:53] INFO TradingDaemon: Paper trade simulated: sell 0.00088442 @ 113068.02
+[2025-09-30 16:13:25] INFO TradingDaemon: Prediction computed: -0.000911
+[2025-09-30 16:13:25] INFO TradingDaemon: Paper trade simulated: sell 0.00088343 @ 113195.60
+[2025-09-30 16:13:58] INFO TradingDaemon: Prediction computed: -0.000911
+[2025-09-30 16:13:58] INFO TradingDaemon: Paper trade simulated: sell 0.00088343 @ 113195.60
+[2025-09-30 16:14:30] INFO TradingDaemon: Prediction computed: -0.000606
+[2025-09-30 16:14:30] INFO TradingDaemon: Paper trade simulated: sell 0.00088398 @ 113124.58
+[2025-09-30 16:15:03] INFO TradingDaemon: Prediction computed: -0.000592
+[2025-09-30 16:15:03] INFO TradingDaemon: Paper trade simulated: sell 0.00088389 @ 113135.93
+[2025-09-30 16:15:35] INFO TradingDaemon: Prediction computed: -0.000592
+[2025-09-30 16:15:35] INFO TradingDaemon: Paper trade simulated: sell 0.00088389 @ 113135.93
+[2025-09-30 16:16:08] INFO TradingDaemon: Prediction computed: -0.000361
+[2025-09-30 16:16:08] INFO TradingDaemon: No trade (signal -0.000361 within threshold).
+[2025-09-30 16:16:41] INFO TradingDaemon: Prediction computed: -0.000361
+[2025-09-30 16:16:41] INFO TradingDaemon: No trade (signal -0.000361 within threshold).
+[2025-09-30 16:17:13] INFO TradingDaemon: Prediction computed: -0.000306
+[2025-09-30 16:17:13] INFO TradingDaemon: No trade (signal -0.000306 within threshold).
+[2025-09-30 16:17:46] INFO TradingDaemon: Prediction computed: -0.000306
+[2025-09-30 16:17:46] INFO TradingDaemon: No trade (signal -0.000306 within threshold).
+[2025-09-30 16:18:18] INFO TradingDaemon: Prediction computed: -0.000168
+[2025-09-30 16:18:18] INFO TradingDaemon: No trade (signal -0.000168 within threshold).
+[2025-09-30 16:18:51] INFO TradingDaemon: Prediction computed: -0.000168
+[2025-09-30 16:18:51] INFO TradingDaemon: No trade (signal -0.000168 within threshold).
+[2025-09-30 16:19:23] INFO TradingDaemon: Prediction computed: -0.000070
+[2025-09-30 16:19:23] INFO TradingDaemon: No trade (signal -0.000070 within threshold).
+[2025-09-30 16:19:56] INFO TradingDaemon: Prediction computed: -0.000070
+[2025-09-30 16:19:56] INFO TradingDaemon: No trade (signal -0.000070 within threshold).
+[2025-09-30 16:20:28] INFO TradingDaemon: Prediction computed: -0.000155
+[2025-09-30 16:20:28] INFO TradingDaemon: No trade (signal -0.000155 within threshold).
+[2025-09-30 16:21:01] INFO TradingDaemon: Prediction computed: -0.000310
+[2025-09-30 16:21:01] INFO TradingDaemon: No trade (signal -0.000310 within threshold).
+[2025-09-30 16:21:34] INFO TradingDaemon: Prediction computed: -0.000310
+[2025-09-30 16:21:34] INFO TradingDaemon: No trade (signal -0.000310 within threshold).
+[2025-09-30 16:22:06] INFO TradingDaemon: Prediction computed: -0.002107
+[2025-09-30 16:22:06] INFO TradingDaemon: Paper trade simulated: sell 0.00088334 @ 113207.16
+[2025-09-30 16:22:39] INFO TradingDaemon: Prediction computed: -0.002107
+[2025-09-30 16:22:39] INFO TradingDaemon: Paper trade simulated: sell 0.00088334 @ 113207.16
+[2025-09-30 16:23:11] INFO TradingDaemon: Prediction computed: -0.002344
+[2025-09-30 16:23:11] INFO TradingDaemon: Paper trade simulated: sell 0.00088274 @ 113283.38
+[2025-09-30 16:23:44] INFO TradingDaemon: Prediction computed: -0.002344
+[2025-09-30 16:23:44] INFO TradingDaemon: Paper trade simulated: sell 0.00088274 @ 113283.38
+[2025-09-30 16:24:16] INFO TradingDaemon: Prediction computed: -0.002351
+[2025-09-30 16:24:16] INFO TradingDaemon: Paper trade simulated: sell 0.00088346 @ 113190.70
+[2025-09-30 16:24:49] INFO TradingDaemon: Prediction computed: -0.002351
+[2025-09-30 16:24:49] INFO TradingDaemon: Paper trade simulated: sell 0.00088346 @ 113190.70
+[2025-09-30 16:25:21] INFO TradingDaemon: Prediction computed: -0.001781
+[2025-09-30 16:25:21] INFO TradingDaemon: Paper trade simulated: sell 0.00088404 @ 113117.46
+[2025-09-30 16:25:54] INFO TradingDaemon: Prediction computed: -0.001781
+[2025-09-30 16:25:54] INFO TradingDaemon: Paper trade simulated: sell 0.00088404 @ 113117.46
+[2025-09-30 16:26:26] INFO TradingDaemon: Prediction computed: -0.001437
+[2025-09-30 16:26:26] INFO TradingDaemon: Paper trade simulated: sell 0.00088459 @ 113046.55
+[2025-09-30 16:26:59] INFO TradingDaemon: Prediction computed: -0.001437
+[2025-09-30 16:26:59] INFO TradingDaemon: Paper trade simulated: sell 0.00088459 @ 113046.55
+[2025-09-30 16:27:32] INFO TradingDaemon: Prediction computed: -0.001188
+[2025-09-30 16:27:32] INFO TradingDaemon: Paper trade simulated: sell 0.00088475 @ 113026.69
+[2025-09-30 16:28:04] INFO TradingDaemon: Prediction computed: -0.001020
+[2025-09-30 16:28:04] INFO TradingDaemon: Paper trade simulated: sell 0.00088477 @ 113023.93
+[2025-09-30 16:28:37] INFO TradingDaemon: Prediction computed: -0.001020
+[2025-09-30 16:28:37] INFO TradingDaemon: Paper trade simulated: sell 0.00088477 @ 113023.93
+[2025-09-30 16:29:09] INFO TradingDaemon: Prediction computed: 0.000127
+[2025-09-30 16:29:09] INFO TradingDaemon: No trade (signal 0.000127 within threshold).
+[2025-09-30 16:29:42] INFO TradingDaemon: Prediction computed: 0.000127
+[2025-09-30 16:29:42] INFO TradingDaemon: No trade (signal 0.000127 within threshold).
+[2025-09-30 16:30:14] INFO TradingDaemon: Prediction computed: -0.000328
+[2025-09-30 16:30:14] INFO TradingDaemon: No trade (signal -0.000328 within threshold).
+[2025-09-30 16:30:47] INFO TradingDaemon: Prediction computed: -0.000328
+[2025-09-30 16:30:47] INFO TradingDaemon: No trade (signal -0.000328 within threshold).
+[2025-09-30 16:31:19] INFO TradingDaemon: Prediction computed: -0.000552
+[2025-09-30 16:31:19] INFO TradingDaemon: Paper trade simulated: sell 0.00088386 @ 113140.00
+[2025-09-30 16:31:52] INFO TradingDaemon: Prediction computed: -0.000552
+[2025-09-30 16:31:52] INFO TradingDaemon: Paper trade simulated: sell 0.00088386 @ 113140.00
+[2025-09-30 16:32:25] INFO TradingDaemon: Prediction computed: -0.000796
+[2025-09-30 16:32:25] INFO TradingDaemon: Paper trade simulated: sell 0.00088348 @ 113189.18
+[2025-09-30 16:32:57] INFO TradingDaemon: Prediction computed: -0.000796
+[2025-09-30 16:32:57] INFO TradingDaemon: Paper trade simulated: sell 0.00088348 @ 113189.18
+[2025-09-30 16:33:30] INFO TradingDaemon: Prediction computed: -0.001061
+[2025-09-30 16:33:30] INFO TradingDaemon: Paper trade simulated: sell 0.00088340 @ 113199.07
+[2025-09-30 16:34:02] INFO TradingDaemon: Prediction computed: -0.001395
+[2025-09-30 16:34:02] INFO TradingDaemon: Paper trade simulated: sell 0.00088406 @ 113115.10
+[2025-09-30 16:34:35] INFO TradingDaemon: Prediction computed: -0.001395
+[2025-09-30 16:34:35] INFO TradingDaemon: Paper trade simulated: sell 0.00088406 @ 113115.10
+[2025-09-30 16:35:07] INFO TradingDaemon: Prediction computed: -0.001574
+[2025-09-30 16:35:07] INFO TradingDaemon: Paper trade simulated: sell 0.00088399 @ 113122.83
+[2025-09-30 16:35:40] INFO TradingDaemon: Prediction computed: -0.001574
+[2025-09-30 16:35:40] INFO TradingDaemon: Paper trade simulated: sell 0.00088399 @ 113122.83
+[2025-09-30 16:36:12] INFO TradingDaemon: Prediction computed: -0.001119
+[2025-09-30 16:36:12] INFO TradingDaemon: Paper trade simulated: sell 0.00088382 @ 113145.80
+[2025-09-30 16:36:45] INFO TradingDaemon: Prediction computed: -0.001119
+[2025-09-30 16:36:45] INFO TradingDaemon: Paper trade simulated: sell 0.00088382 @ 113145.80
+[2025-09-30 16:37:17] INFO TradingDaemon: Prediction computed: -0.000750
+[2025-09-30 16:37:17] INFO TradingDaemon: Paper trade simulated: sell 0.00088348 @ 113188.52
+[2025-09-30 16:37:50] INFO TradingDaemon: Prediction computed: -0.000750
+[2025-09-30 16:37:50] INFO TradingDaemon: Paper trade simulated: sell 0.00088348 @ 113188.52
+[2025-09-30 16:38:22] INFO TradingDaemon: Prediction computed: -0.000569
+[2025-09-30 16:38:22] INFO TradingDaemon: Paper trade simulated: sell 0.00088307 @ 113241.70
+[2025-09-30 16:38:55] INFO TradingDaemon: Prediction computed: -0.000569
+[2025-09-30 16:38:55] INFO TradingDaemon: Paper trade simulated: sell 0.00088307 @ 113241.70
+[2025-09-30 16:39:28] INFO TradingDaemon: Prediction computed: -0.000520
+[2025-09-30 16:39:28] INFO TradingDaemon: Paper trade simulated: sell 0.00088373 @ 113156.57
+[2025-09-30 16:40:00] INFO TradingDaemon: Prediction computed: -0.000520
+[2025-09-30 16:40:00] INFO TradingDaemon: Paper trade simulated: sell 0.00088373 @ 113156.57
+[2025-09-30 16:40:33] INFO TradingDaemon: Prediction computed: 0.000323
+[2025-09-30 16:40:33] INFO TradingDaemon: No trade (signal 0.000323 within threshold).
+[2025-09-30 16:41:05] INFO TradingDaemon: Prediction computed: 0.000969
+[2025-09-30 16:41:05] INFO TradingDaemon: Paper trade simulated: buy 0.00088392 @ 113132.14
+[2025-09-30 16:41:38] INFO TradingDaemon: Prediction computed: 0.000969
+[2025-09-30 16:41:38] INFO TradingDaemon: Paper trade simulated: buy 0.00088392 @ 113132.14
+[2025-09-30 16:42:10] INFO TradingDaemon: Prediction computed: 0.000977
+[2025-09-30 16:42:10] INFO TradingDaemon: Paper trade simulated: buy 0.00088330 @ 113212.08
+[2025-09-30 16:42:43] INFO TradingDaemon: Prediction computed: 0.000977
+[2025-09-30 16:42:43] INFO TradingDaemon: Paper trade simulated: buy 0.00088330 @ 113212.08
+[2025-09-30 16:43:15] INFO TradingDaemon: Prediction computed: -0.000404
+[2025-09-30 16:43:15] INFO TradingDaemon: No trade (signal -0.000404 within threshold).
+[2025-09-30 16:43:48] INFO TradingDaemon: Prediction computed: -0.000404
+[2025-09-30 16:43:48] INFO TradingDaemon: No trade (signal -0.000404 within threshold).
+[2025-09-30 16:44:21] INFO TradingDaemon: Prediction computed: -0.000843
+[2025-09-30 16:44:21] INFO TradingDaemon: Paper trade simulated: sell 0.00088338 @ 113201.83
+[2025-09-30 16:44:53] INFO TradingDaemon: Prediction computed: -0.000843
+[2025-09-30 16:44:53] INFO TradingDaemon: Paper trade simulated: sell 0.00088338 @ 113201.83
+[2025-09-30 16:45:26] INFO TradingDaemon: Prediction computed: -0.000513
+[2025-09-30 16:45:26] INFO TradingDaemon: Paper trade simulated: sell 0.00088321 @ 113223.17
+[2025-09-30 16:45:58] INFO TradingDaemon: Prediction computed: -0.000513
+[2025-09-30 16:45:58] INFO TradingDaemon: Paper trade simulated: sell 0.00088321 @ 113223.17
+[2025-09-30 16:46:31] INFO TradingDaemon: Prediction computed: 0.000370
+[2025-09-30 16:46:31] INFO TradingDaemon: No trade (signal 0.000370 within threshold).
+[2025-09-30 16:47:03] INFO TradingDaemon: Prediction computed: 0.000715
+[2025-09-30 16:47:03] INFO TradingDaemon: Paper trade simulated: buy 0.00088357 @ 113177.37
+[2025-09-30 16:47:36] INFO TradingDaemon: Prediction computed: 0.000715
+[2025-09-30 16:47:36] INFO TradingDaemon: Paper trade simulated: buy 0.00088357 @ 113177.37
+[2025-09-30 16:48:09] INFO TradingDaemon: Prediction computed: 0.000189
+[2025-09-30 16:48:09] INFO TradingDaemon: No trade (signal 0.000189 within threshold).
+[2025-09-30 16:48:41] INFO TradingDaemon: Prediction computed: 0.000189
+[2025-09-30 16:48:41] INFO TradingDaemon: No trade (signal 0.000189 within threshold).
+[2025-09-30 16:49:14] INFO TradingDaemon: Prediction computed: 0.000036
+[2025-09-30 16:49:14] INFO TradingDaemon: No trade (signal 0.000036 within threshold).
+[2025-09-30 16:49:46] INFO TradingDaemon: Prediction computed: 0.000036
+[2025-09-30 16:49:46] INFO TradingDaemon: No trade (signal 0.000036 within threshold).
+[2025-09-30 16:50:19] INFO TradingDaemon: Prediction computed: 0.000101
+[2025-09-30 16:50:19] INFO TradingDaemon: No trade (signal 0.000101 within threshold).
+[2025-09-30 16:50:51] INFO TradingDaemon: Prediction computed: 0.000101
+[2025-09-30 16:50:51] INFO TradingDaemon: No trade (signal 0.000101 within threshold).
+[2025-09-30 16:51:24] INFO TradingDaemon: Prediction computed: 0.000121
+[2025-09-30 16:51:24] INFO TradingDaemon: No trade (signal 0.000121 within threshold).
+[2025-09-30 16:51:56] INFO TradingDaemon: Prediction computed: 0.000121
+[2025-09-30 16:51:56] INFO TradingDaemon: No trade (signal 0.000121 within threshold).
+[2025-09-30 16:52:29] INFO TradingDaemon: Prediction computed: -0.000158
+[2025-09-30 16:52:29] INFO TradingDaemon: No trade (signal -0.000158 within threshold).
+[2025-09-30 16:53:01] INFO TradingDaemon: Prediction computed: -0.000579
+[2025-09-30 16:53:01] INFO TradingDaemon: Paper trade simulated: sell 0.00088163 @ 113426.87
+[2025-09-30 16:53:34] INFO TradingDaemon: Prediction computed: -0.000579
+[2025-09-30 16:53:34] INFO TradingDaemon: Paper trade simulated: sell 0.00088163 @ 113426.87
+[2025-09-30 16:54:07] INFO TradingDaemon: Prediction computed: -0.000288
+[2025-09-30 16:54:07] INFO TradingDaemon: No trade (signal -0.000288 within threshold).
+[2025-09-30 16:54:39] INFO TradingDaemon: Prediction computed: -0.000288
+[2025-09-30 16:54:39] INFO TradingDaemon: No trade (signal -0.000288 within threshold).
+[2025-09-30 16:55:12] INFO TradingDaemon: Prediction computed: 0.000102
+[2025-09-30 16:55:12] INFO TradingDaemon: No trade (signal 0.000102 within threshold).
+[2025-09-30 16:55:44] INFO TradingDaemon: Prediction computed: 0.000102
+[2025-09-30 16:55:44] INFO TradingDaemon: No trade (signal 0.000102 within threshold).
+[2025-09-30 16:56:17] INFO TradingDaemon: Prediction computed: 0.000378
+[2025-09-30 16:56:17] INFO TradingDaemon: No trade (signal 0.000378 within threshold).
+[2025-09-30 16:56:49] INFO TradingDaemon: Prediction computed: 0.000378
+[2025-09-30 16:56:49] INFO TradingDaemon: No trade (signal 0.000378 within threshold).
+[2025-09-30 16:57:22] INFO TradingDaemon: Prediction computed: 0.000079
+[2025-09-30 16:57:22] INFO TradingDaemon: No trade (signal 0.000079 within threshold).
+[2025-09-30 16:57:54] INFO TradingDaemon: Prediction computed: 0.000079
+[2025-09-30 16:57:54] INFO TradingDaemon: No trade (signal 0.000079 within threshold).
+[2025-09-30 16:58:27] INFO TradingDaemon: Prediction computed: -0.000030
+[2025-09-30 16:58:27] INFO TradingDaemon: No trade (signal -0.000030 within threshold).
+[2025-09-30 16:59:00] INFO TradingDaemon: Prediction computed: -0.000030
+[2025-09-30 16:59:00] INFO TradingDaemon: No trade (signal -0.000030 within threshold).
+[2025-09-30 16:59:32] INFO TradingDaemon: Prediction computed: 0.000038
+[2025-09-30 16:59:32] INFO TradingDaemon: No trade (signal 0.000038 within threshold).
+[2025-09-30 17:00:05] INFO TradingDaemon: Prediction computed: 0.000159
+[2025-09-30 17:00:05] INFO TradingDaemon: No trade (signal 0.000159 within threshold).
+[2025-09-30 17:16:46] INFO root: WS error: Connection to remote host was lost.
+[2025-09-30 17:16:46] INFO root: WS error: Connection to remote host was lost.
+[2025-09-30 17:16:46] ERROR websocket: Connection to remote host was lost. - goodbye
+[2025-09-30 17:16:46] INFO root: WS closed: None None
+[2025-09-30 17:16:57] INFO TradingDaemon: Prediction computed: 0.000159
+[2025-09-30 17:16:57] INFO TradingDaemon: No trade (signal 0.000159 within threshold).
+[2025-09-30 17:17:29] INFO TradingDaemon: Prediction computed: 0.000327
+[2025-09-30 17:17:29] INFO TradingDaemon: No trade (signal 0.000327 within threshold).
+[2025-09-30 17:18:02] INFO TradingDaemon: Prediction computed: 0.000161
+[2025-09-30 17:18:02] INFO TradingDaemon: No trade (signal 0.000161 within threshold).
+[2025-09-30 17:18:35] INFO TradingDaemon: Prediction computed: 0.000161
+[2025-09-30 17:18:35] INFO TradingDaemon: No trade (signal 0.000161 within threshold).
+[2025-09-30 17:19:07] INFO TradingDaemon: Prediction computed: 0.000053
+[2025-09-30 17:19:07] INFO TradingDaemon: No trade (signal 0.000053 within threshold).
+[2025-09-30 17:19:40] INFO TradingDaemon: Prediction computed: 0.000053
+[2025-09-30 17:19:40] INFO TradingDaemon: No trade (signal 0.000053 within threshold).
+[2025-09-30 17:20:13] INFO TradingDaemon: Prediction computed: -0.000959
+[2025-09-30 17:20:13] INFO TradingDaemon: Paper trade simulated: sell 0.00088400 @ 113122.62
+[2025-09-30 17:20:45] INFO TradingDaemon: Prediction computed: -0.000959
+[2025-09-30 17:20:45] INFO TradingDaemon: Paper trade simulated: sell 0.00088400 @ 113122.62
+[2025-09-30 17:21:18] INFO TradingDaemon: Prediction computed: -0.001524
+[2025-09-30 17:21:18] INFO TradingDaemon: Paper trade simulated: sell 0.00088431 @ 113081.95
+[2025-09-30 17:21:50] INFO TradingDaemon: Prediction computed: -0.001524
+[2025-09-30 17:21:50] INFO TradingDaemon: Paper trade simulated: sell 0.00088431 @ 113081.95
+[2025-09-30 17:22:23] INFO TradingDaemon: Prediction computed: -0.001081
+[2025-09-30 17:22:23] INFO TradingDaemon: Paper trade simulated: sell 0.00088429 @ 113084.69
+[2025-09-30 17:22:55] INFO TradingDaemon: Prediction computed: -0.001081
+[2025-09-30 17:22:55] INFO TradingDaemon: Paper trade simulated: sell 0.00088429 @ 113084.69
+[2025-09-30 17:23:28] INFO TradingDaemon: Prediction computed: -0.000901
+[2025-09-30 17:23:28] INFO TradingDaemon: Paper trade simulated: sell 0.00088421 @ 113095.49
+[2025-09-30 17:24:01] INFO TradingDaemon: Prediction computed: -0.000929
+[2025-09-30 17:24:01] INFO TradingDaemon: Paper trade simulated: sell 0.00088429 @ 113085.69
+[2025-09-30 17:24:33] INFO TradingDaemon: Prediction computed: -0.000929
+[2025-09-30 17:24:33] INFO TradingDaemon: Paper trade simulated: sell 0.00088429 @ 113085.69
+[2025-09-30 17:25:06] INFO TradingDaemon: Prediction computed: -0.001150
+[2025-09-30 17:25:06] INFO TradingDaemon: Paper trade simulated: sell 0.00088384 @ 113142.45
+[2025-09-30 17:25:38] INFO TradingDaemon: Prediction computed: -0.001150
+[2025-09-30 17:25:38] INFO TradingDaemon: Paper trade simulated: sell 0.00088384 @ 113142.45
+[2025-09-30 17:26:11] INFO TradingDaemon: Prediction computed: -0.001560
+[2025-09-30 17:26:11] INFO TradingDaemon: Paper trade simulated: sell 0.00088418 @ 113099.75
+[2025-09-30 17:26:43] INFO TradingDaemon: Prediction computed: -0.001560
+[2025-09-30 17:26:43] INFO TradingDaemon: Paper trade simulated: sell 0.00088418 @ 113099.75
+[2025-09-30 17:27:16] INFO TradingDaemon: Prediction computed: -0.001379
+[2025-09-30 17:27:16] INFO TradingDaemon: Paper trade simulated: sell 0.00088530 @ 112956.69
+[2025-09-30 17:27:49] INFO TradingDaemon: Prediction computed: -0.001379
+[2025-09-30 17:27:49] INFO TradingDaemon: Paper trade simulated: sell 0.00088530 @ 112956.69
+[2025-09-30 17:28:21] INFO TradingDaemon: Prediction computed: -0.001135
+[2025-09-30 17:28:21] INFO TradingDaemon: Paper trade simulated: sell 0.00088496 @ 112999.78
+[2025-09-30 17:28:54] INFO TradingDaemon: Prediction computed: -0.001135
+[2025-09-30 17:28:54] INFO TradingDaemon: Paper trade simulated: sell 0.00088496 @ 112999.78
+[2025-09-30 17:29:26] INFO TradingDaemon: Prediction computed: -0.000753
+[2025-09-30 17:29:26] INFO TradingDaemon: Paper trade simulated: sell 0.00088509 @ 112983.49
+[2025-09-30 17:29:59] INFO TradingDaemon: Prediction computed: -0.000753
+[2025-09-30 17:29:59] INFO TradingDaemon: Paper trade simulated: sell 0.00088509 @ 112983.49
+[2025-09-30 17:30:32] INFO TradingDaemon: Prediction computed: -0.000673
+[2025-09-30 17:30:32] INFO TradingDaemon: Paper trade simulated: sell 0.00088456 @ 113050.33
+[2025-09-30 17:31:04] INFO TradingDaemon: Prediction computed: -0.000487
+[2025-09-30 17:31:04] INFO TradingDaemon: No trade (signal -0.000487 within threshold).
+[2025-09-30 17:31:37] INFO TradingDaemon: Prediction computed: -0.000487
+[2025-09-30 17:31:37] INFO TradingDaemon: No trade (signal -0.000487 within threshold).
+[2025-09-30 17:32:09] INFO TradingDaemon: Prediction computed: -0.001042
+[2025-09-30 17:32:09] INFO TradingDaemon: Paper trade simulated: sell 0.00088355 @ 113179.90
+[2025-09-30 17:32:42] INFO TradingDaemon: Prediction computed: -0.001042
+[2025-09-30 17:32:42] INFO TradingDaemon: Paper trade simulated: sell 0.00088355 @ 113179.90
+[2025-09-30 17:33:14] INFO TradingDaemon: Prediction computed: -0.001056
+[2025-09-30 17:33:14] INFO TradingDaemon: Paper trade simulated: sell 0.00088341 @ 113197.20
+[2025-09-30 17:33:46] INFO TradingDaemon: Prediction computed: -0.001056
+[2025-09-30 17:33:46] INFO TradingDaemon: Paper trade simulated: sell 0.00088341 @ 113197.20
+[2025-09-30 17:34:19] INFO TradingDaemon: Prediction computed: -0.001167
+[2025-09-30 17:34:19] INFO TradingDaemon: Paper trade simulated: sell 0.00088360 @ 113173.56
+[2025-09-30 17:34:51] INFO TradingDaemon: Prediction computed: -0.001167
+[2025-09-30 17:34:51] INFO TradingDaemon: Paper trade simulated: sell 0.00088360 @ 113173.56
+[2025-09-30 17:35:24] INFO TradingDaemon: Prediction computed: -0.001745
+[2025-09-30 17:35:24] INFO TradingDaemon: Paper trade simulated: sell 0.00088305 @ 113244.21
+[2025-09-30 17:35:56] INFO TradingDaemon: Prediction computed: -0.001745
+[2025-09-30 17:35:56] INFO TradingDaemon: Paper trade simulated: sell 0.00088305 @ 113244.21
+[2025-09-30 17:36:29] INFO TradingDaemon: Prediction computed: -0.001883
+[2025-09-30 17:36:29] INFO TradingDaemon: Paper trade simulated: sell 0.00088407 @ 113113.07
+[2025-09-30 17:37:01] INFO TradingDaemon: Prediction computed: -0.001792
+[2025-09-30 17:37:01] INFO TradingDaemon: Paper trade simulated: sell 0.00088415 @ 113102.58
+[2025-09-30 17:37:34] INFO TradingDaemon: Prediction computed: -0.001792
+[2025-09-30 17:37:34] INFO TradingDaemon: Paper trade simulated: sell 0.00088415 @ 113102.58
+[2025-09-30 17:38:06] INFO TradingDaemon: Prediction computed: -0.001623
+[2025-09-30 17:38:06] INFO TradingDaemon: Paper trade simulated: sell 0.00088380 @ 113147.64
+[2025-09-30 17:38:39] INFO TradingDaemon: Prediction computed: -0.001623
+[2025-09-30 17:38:39] INFO TradingDaemon: Paper trade simulated: sell 0.00088380 @ 113147.64
+[2025-09-30 17:39:12] INFO TradingDaemon: Prediction computed: -0.001368
+[2025-09-30 17:39:12] INFO TradingDaemon: Paper trade simulated: sell 0.00088446 @ 113063.71
+[2025-09-30 17:39:44] INFO TradingDaemon: Prediction computed: -0.001368
+[2025-09-30 17:39:44] INFO TradingDaemon: Paper trade simulated: sell 0.00088446 @ 113063.71
+[2025-09-30 17:40:17] INFO TradingDaemon: Prediction computed: -0.001358
+[2025-09-30 17:40:17] INFO TradingDaemon: Paper trade simulated: sell 0.00088465 @ 113039.60
+[2025-09-30 17:40:49] INFO TradingDaemon: Prediction computed: -0.001358
+[2025-09-30 17:40:49] INFO TradingDaemon: Paper trade simulated: sell 0.00088465 @ 113039.60
+[2025-09-30 17:41:22] INFO TradingDaemon: Prediction computed: -0.000914
+[2025-09-30 17:41:22] INFO TradingDaemon: Paper trade simulated: sell 0.00088417 @ 113099.99
+[2025-09-30 17:41:54] INFO TradingDaemon: Prediction computed: -0.000914
+[2025-09-30 17:41:54] INFO TradingDaemon: Paper trade simulated: sell 0.00088417 @ 113099.99
+[2025-09-30 17:42:27] INFO TradingDaemon: Prediction computed: -0.000965
+[2025-09-30 17:42:27] INFO TradingDaemon: Paper trade simulated: sell 0.00088446 @ 113063.36
+[2025-09-30 17:43:00] INFO TradingDaemon: Prediction computed: -0.000965
+[2025-09-30 17:43:00] INFO TradingDaemon: Paper trade simulated: sell 0.00088446 @ 113063.36
+[2025-09-30 17:43:32] INFO TradingDaemon: Prediction computed: -0.001006
+[2025-09-30 17:43:32] INFO TradingDaemon: Paper trade simulated: sell 0.00088395 @ 113129.13
+[2025-09-30 17:44:05] INFO TradingDaemon: Prediction computed: -0.000905
+[2025-09-30 17:44:05] INFO TradingDaemon: Paper trade simulated: sell 0.00088451 @ 113056.90
+[2025-09-30 17:44:37] INFO TradingDaemon: Prediction computed: -0.000905
+[2025-09-30 17:44:37] INFO TradingDaemon: Paper trade simulated: sell 0.00088451 @ 113056.90
+[2025-09-30 17:45:10] INFO TradingDaemon: Prediction computed: -0.000716
+[2025-09-30 17:45:10] INFO TradingDaemon: Paper trade simulated: sell 0.00088448 @ 113060.82
+[2025-09-30 17:45:43] INFO TradingDaemon: Prediction computed: -0.000716
+[2025-09-30 17:45:43] INFO TradingDaemon: Paper trade simulated: sell 0.00088448 @ 113060.82
+[2025-09-30 17:46:15] INFO TradingDaemon: Prediction computed: -0.000287
+[2025-09-30 17:46:15] INFO TradingDaemon: No trade (signal -0.000287 within threshold).
+[2025-09-30 17:46:48] INFO TradingDaemon: Prediction computed: -0.000287
+[2025-09-30 17:46:48] INFO TradingDaemon: No trade (signal -0.000287 within threshold).
+[2025-09-30 17:47:20] INFO TradingDaemon: Prediction computed: 0.001075
+[2025-09-30 17:47:20] INFO TradingDaemon: Paper trade simulated: buy 0.00088478 @ 113023.01
+[2025-09-30 17:47:53] INFO TradingDaemon: Prediction computed: 0.001075
+[2025-09-30 17:47:53] INFO TradingDaemon: Paper trade simulated: buy 0.00088478 @ 113023.01
+[2025-09-30 17:48:25] INFO TradingDaemon: Prediction computed: 0.001559
+[2025-09-30 17:48:25] INFO TradingDaemon: Paper trade simulated: buy 0.00088478 @ 113021.99
+[2025-09-30 17:48:58] INFO TradingDaemon: Prediction computed: 0.001559
+[2025-09-30 17:48:58] INFO TradingDaemon: Paper trade simulated: buy 0.00088478 @ 113021.99
+[2025-09-30 17:49:31] INFO TradingDaemon: Prediction computed: 0.001132
+[2025-09-30 17:49:31] INFO TradingDaemon: Paper trade simulated: buy 0.00088479 @ 113021.40
+[2025-09-30 17:50:03] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 17:50:03] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 17:50:36] INFO TradingDaemon: Prediction computed: 0.000498
+[2025-09-30 17:50:36] INFO TradingDaemon: No trade (signal 0.000498 within threshold).
+[2025-09-30 17:51:08] INFO TradingDaemon: Prediction computed: -0.000370
+[2025-09-30 17:51:08] INFO TradingDaemon: No trade (signal -0.000370 within threshold).
+[2025-09-30 17:51:41] INFO TradingDaemon: Prediction computed: -0.000370
+[2025-09-30 17:51:41] INFO TradingDaemon: No trade (signal -0.000370 within threshold).
+[2025-09-30 17:52:13] INFO TradingDaemon: Prediction computed: -0.000210
+[2025-09-30 17:52:13] INFO TradingDaemon: No trade (signal -0.000210 within threshold).
+[2025-09-30 17:52:46] INFO TradingDaemon: Prediction computed: -0.000210
+[2025-09-30 17:52:46] INFO TradingDaemon: No trade (signal -0.000210 within threshold).
+[2025-09-30 17:53:19] INFO TradingDaemon: Prediction computed: -0.000243
+[2025-09-30 17:53:19] INFO TradingDaemon: No trade (signal -0.000243 within threshold).
+[2025-09-30 17:53:51] INFO TradingDaemon: Prediction computed: -0.000243
+[2025-09-30 17:53:51] INFO TradingDaemon: No trade (signal -0.000243 within threshold).
+[2025-09-30 17:54:24] INFO TradingDaemon: Prediction computed: -0.000020
+[2025-09-30 17:54:24] INFO TradingDaemon: No trade (signal -0.000020 within threshold).
+[2025-09-30 17:54:56] INFO TradingDaemon: Prediction computed: -0.000020
+[2025-09-30 17:54:56] INFO TradingDaemon: No trade (signal -0.000020 within threshold).
+[2025-09-30 17:55:29] INFO TradingDaemon: Prediction computed: 0.000009
+[2025-09-30 17:55:29] INFO TradingDaemon: No trade (signal 0.000009 within threshold).
+[2025-09-30 17:56:01] INFO TradingDaemon: Prediction computed: 0.000186
+[2025-09-30 17:56:01] INFO TradingDaemon: No trade (signal 0.000186 within threshold).
+[2025-09-30 17:56:34] INFO TradingDaemon: Prediction computed: 0.000186
+[2025-09-30 17:56:34] INFO TradingDaemon: No trade (signal 0.000186 within threshold).
+[2025-09-30 17:57:06] INFO TradingDaemon: Prediction computed: 0.000392
+[2025-09-30 17:57:06] INFO TradingDaemon: No trade (signal 0.000392 within threshold).
+[2025-09-30 17:57:39] INFO TradingDaemon: Prediction computed: 0.000392
+[2025-09-30 17:57:39] INFO TradingDaemon: No trade (signal 0.000392 within threshold).
+[2025-09-30 17:58:12] INFO TradingDaemon: Prediction computed: 0.000439
+[2025-09-30 17:58:12] INFO TradingDaemon: No trade (signal 0.000439 within threshold).
+[2025-09-30 17:58:44] INFO TradingDaemon: Prediction computed: 0.000439
+[2025-09-30 17:58:44] INFO TradingDaemon: No trade (signal 0.000439 within threshold).
+[2025-09-30 17:59:17] INFO TradingDaemon: Prediction computed: 0.000744
+[2025-09-30 17:59:17] INFO TradingDaemon: Paper trade simulated: buy 0.00088409 @ 113111.09
+[2025-09-30 17:59:49] INFO TradingDaemon: Prediction computed: 0.000744
+[2025-09-30 17:59:49] INFO TradingDaemon: Paper trade simulated: buy 0.00088409 @ 113111.09
+[2025-09-30 18:00:22] INFO TradingDaemon: Prediction computed: 0.000740
+[2025-09-30 18:00:22] INFO TradingDaemon: Paper trade simulated: buy 0.00088413 @ 113106.16
+[2025-09-30 18:00:54] INFO TradingDaemon: Prediction computed: 0.000740
+[2025-09-30 18:00:54] INFO TradingDaemon: Paper trade simulated: buy 0.00088413 @ 113106.16
+[2025-09-30 18:01:27] INFO TradingDaemon: Prediction computed: 0.000508
+[2025-09-30 18:01:27] INFO TradingDaemon: Paper trade simulated: buy 0.00088437 @ 113074.30
+[2025-09-30 18:02:00] INFO TradingDaemon: Prediction computed: 0.000508
+[2025-09-30 18:02:00] INFO TradingDaemon: Paper trade simulated: buy 0.00088437 @ 113074.30
+[2025-09-30 18:02:32] INFO TradingDaemon: Prediction computed: 0.000416
+[2025-09-30 18:02:32] INFO TradingDaemon: No trade (signal 0.000416 within threshold).
+[2025-09-30 18:03:05] INFO TradingDaemon: Prediction computed: -0.000316
+[2025-09-30 18:03:05] INFO TradingDaemon: No trade (signal -0.000316 within threshold).
+[2025-09-30 18:03:37] INFO TradingDaemon: Prediction computed: -0.000316
+[2025-09-30 18:03:37] INFO TradingDaemon: No trade (signal -0.000316 within threshold).
+[2025-09-30 18:04:10] INFO TradingDaemon: Prediction computed: -0.000602
+[2025-09-30 18:04:10] INFO TradingDaemon: Paper trade simulated: sell 0.00088388 @ 113136.93
+[2025-09-30 18:04:42] INFO TradingDaemon: Prediction computed: -0.000602
+[2025-09-30 18:04:42] INFO TradingDaemon: Paper trade simulated: sell 0.00088388 @ 113136.93
+[2025-09-30 18:05:15] INFO TradingDaemon: Prediction computed: -0.000474
+[2025-09-30 18:05:15] INFO TradingDaemon: No trade (signal -0.000474 within threshold).
+[2025-09-30 18:05:47] INFO TradingDaemon: Prediction computed: -0.000474
+[2025-09-30 18:05:47] INFO TradingDaemon: No trade (signal -0.000474 within threshold).
+[2025-09-30 18:06:21] INFO TradingDaemon: Prediction computed: -0.000073
+[2025-09-30 18:06:21] INFO TradingDaemon: No trade (signal -0.000073 within threshold).
+[2025-09-30 18:06:53] INFO TradingDaemon: Prediction computed: -0.000073
+[2025-09-30 18:06:53] INFO TradingDaemon: No trade (signal -0.000073 within threshold).
+[2025-09-30 18:07:26] INFO TradingDaemon: Prediction computed: -0.000055
+[2025-09-30 18:07:26] INFO TradingDaemon: No trade (signal -0.000055 within threshold).
+[2025-09-30 18:07:59] INFO TradingDaemon: Prediction computed: -0.000055
+[2025-09-30 18:07:59] INFO TradingDaemon: No trade (signal -0.000055 within threshold).
+[2025-09-30 18:08:31] INFO TradingDaemon: Prediction computed: -0.000099
+[2025-09-30 18:08:31] INFO TradingDaemon: No trade (signal -0.000099 within threshold).
+[2025-09-30 18:09:04] INFO TradingDaemon: Prediction computed: -0.000224
+[2025-09-30 18:09:04] INFO TradingDaemon: No trade (signal -0.000224 within threshold).
+[2025-09-30 18:09:36] INFO TradingDaemon: Prediction computed: -0.000224
+[2025-09-30 18:09:36] INFO TradingDaemon: No trade (signal -0.000224 within threshold).
+[2025-09-30 18:10:09] INFO TradingDaemon: Prediction computed: -0.000358
+[2025-09-30 18:10:09] INFO TradingDaemon: No trade (signal -0.000358 within threshold).
+[2025-09-30 18:10:41] INFO TradingDaemon: Prediction computed: -0.000358
+[2025-09-30 18:10:41] INFO TradingDaemon: No trade (signal -0.000358 within threshold).
+[2025-09-30 18:11:14] INFO TradingDaemon: Prediction computed: -0.000124
+[2025-09-30 18:11:14] INFO TradingDaemon: No trade (signal -0.000124 within threshold).
+[2025-09-30 18:11:46] INFO TradingDaemon: Prediction computed: -0.000124
+[2025-09-30 18:11:46] INFO TradingDaemon: No trade (signal -0.000124 within threshold).
+[2025-09-30 18:12:19] INFO TradingDaemon: Prediction computed: 0.000149
+[2025-09-30 18:12:19] INFO TradingDaemon: No trade (signal 0.000149 within threshold).
+[2025-09-30 18:12:52] INFO TradingDaemon: Prediction computed: 0.000149
+[2025-09-30 18:12:52] INFO TradingDaemon: No trade (signal 0.000149 within threshold).
+[2025-09-30 18:13:24] INFO TradingDaemon: Prediction computed: 0.000014
+[2025-09-30 18:13:24] INFO TradingDaemon: No trade (signal 0.000014 within threshold).
+[2025-09-30 18:13:57] INFO TradingDaemon: Prediction computed: 0.000014
+[2025-09-30 18:13:57] INFO TradingDaemon: No trade (signal 0.000014 within threshold).
+[2025-09-30 18:14:29] INFO TradingDaemon: Prediction computed: 0.000259
+[2025-09-30 18:14:29] INFO TradingDaemon: No trade (signal 0.000259 within threshold).
+[2025-09-30 18:15:02] INFO TradingDaemon: Prediction computed: 0.000562
+[2025-09-30 18:15:02] INFO TradingDaemon: Paper trade simulated: buy 0.00088441 @ 113069.39
+[2025-09-30 18:15:34] INFO TradingDaemon: Prediction computed: 0.000562
+[2025-09-30 18:15:34] INFO TradingDaemon: Paper trade simulated: buy 0.00088441 @ 113069.39
+[2025-09-30 18:16:07] INFO TradingDaemon: Prediction computed: 0.000851
+[2025-09-30 18:16:07] INFO TradingDaemon: Paper trade simulated: buy 0.00088426 @ 113089.35
+[2025-09-30 18:16:39] INFO TradingDaemon: Prediction computed: 0.000851
+[2025-09-30 18:16:39] INFO TradingDaemon: Paper trade simulated: buy 0.00088426 @ 113089.35
+[2025-09-30 18:17:12] INFO TradingDaemon: Prediction computed: 0.001135
+[2025-09-30 18:17:12] INFO TradingDaemon: Paper trade simulated: buy 0.00088451 @ 113057.39
+[2025-09-30 18:17:45] INFO TradingDaemon: Prediction computed: 0.001135
+[2025-09-30 18:17:45] INFO TradingDaemon: Paper trade simulated: buy 0.00088451 @ 113057.39
+[2025-09-30 18:18:17] INFO TradingDaemon: Prediction computed: 0.001085
+[2025-09-30 18:18:17] INFO TradingDaemon: Paper trade simulated: buy 0.00088460 @ 113045.55
+[2025-09-30 18:18:50] INFO TradingDaemon: Prediction computed: 0.001085
+[2025-09-30 18:18:50] INFO TradingDaemon: Paper trade simulated: buy 0.00088460 @ 113045.55
+[2025-09-30 18:19:22] INFO TradingDaemon: Prediction computed: 0.001020
+[2025-09-30 18:19:22] INFO TradingDaemon: Paper trade simulated: buy 0.00088429 @ 113085.45
+[2025-09-30 18:19:55] INFO TradingDaemon: Prediction computed: 0.001020
+[2025-09-30 18:19:55] INFO TradingDaemon: Paper trade simulated: buy 0.00088429 @ 113085.45
+[2025-09-30 18:20:27] INFO TradingDaemon: Prediction computed: 0.000953
+[2025-09-30 18:20:27] INFO TradingDaemon: Paper trade simulated: buy 0.00088400 @ 113122.59
+[2025-09-30 18:21:00] INFO TradingDaemon: Prediction computed: 0.000953
+[2025-09-30 18:21:00] INFO TradingDaemon: Paper trade simulated: buy 0.00088400 @ 113122.59
+[2025-09-30 18:21:32] INFO TradingDaemon: Prediction computed: 0.000703
+[2025-09-30 18:21:32] INFO TradingDaemon: Paper trade simulated: buy 0.00088417 @ 113100.48
+[2025-09-30 18:22:05] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 18:22:05] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 18:22:38] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 18:22:38] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 18:23:10] INFO TradingDaemon: Prediction computed: -0.000355
+[2025-09-30 18:23:10] INFO TradingDaemon: No trade (signal -0.000355 within threshold).
+[2025-09-30 18:23:43] INFO TradingDaemon: Prediction computed: -0.000355
+[2025-09-30 18:23:43] INFO TradingDaemon: No trade (signal -0.000355 within threshold).
+[2025-09-30 18:24:15] INFO TradingDaemon: Prediction computed: -0.000106
+[2025-09-30 18:24:15] INFO TradingDaemon: No trade (signal -0.000106 within threshold).
+[2025-09-30 18:24:48] INFO TradingDaemon: Prediction computed: -0.000106
+[2025-09-30 18:24:48] INFO TradingDaemon: No trade (signal -0.000106 within threshold).
+[2025-09-30 18:25:20] INFO TradingDaemon: Prediction computed: -0.000067
+[2025-09-30 18:25:20] INFO TradingDaemon: No trade (signal -0.000067 within threshold).
+[2025-09-30 18:25:53] INFO TradingDaemon: Prediction computed: -0.000067
+[2025-09-30 18:25:53] INFO TradingDaemon: No trade (signal -0.000067 within threshold).
+[2025-09-30 18:26:26] INFO TradingDaemon: Prediction computed: 0.000337
+[2025-09-30 18:26:26] INFO TradingDaemon: No trade (signal 0.000337 within threshold).
+[2025-09-30 18:26:58] INFO TradingDaemon: Prediction computed: 0.000337
+[2025-09-30 18:26:58] INFO TradingDaemon: No trade (signal 0.000337 within threshold).
+[2025-09-30 18:27:31] INFO TradingDaemon: Prediction computed: 0.000383
+[2025-09-30 18:27:31] INFO TradingDaemon: No trade (signal 0.000383 within threshold).
+[2025-09-30 18:28:03] INFO TradingDaemon: Prediction computed: 0.000313
+[2025-09-30 18:28:03] INFO TradingDaemon: No trade (signal 0.000313 within threshold).
+[2025-09-30 18:28:36] INFO TradingDaemon: Prediction computed: 0.000313
+[2025-09-30 18:28:36] INFO TradingDaemon: No trade (signal 0.000313 within threshold).
+[2025-09-30 18:29:08] INFO TradingDaemon: Prediction computed: 0.000342
+[2025-09-30 18:29:08] INFO TradingDaemon: No trade (signal 0.000342 within threshold).
+[2025-09-30 18:29:41] INFO TradingDaemon: Prediction computed: 0.000342
+[2025-09-30 18:29:41] INFO TradingDaemon: No trade (signal 0.000342 within threshold).
+[2025-09-30 18:30:14] INFO TradingDaemon: Prediction computed: 0.000153
+[2025-09-30 18:30:14] INFO TradingDaemon: No trade (signal 0.000153 within threshold).
+[2025-09-30 18:30:46] INFO TradingDaemon: Prediction computed: 0.000153
+[2025-09-30 18:30:46] INFO TradingDaemon: No trade (signal 0.000153 within threshold).
+[2025-09-30 18:31:19] INFO TradingDaemon: Prediction computed: 0.000434
+[2025-09-30 18:31:19] INFO TradingDaemon: No trade (signal 0.000434 within threshold).
+[2025-09-30 18:31:51] INFO TradingDaemon: Prediction computed: 0.000434
+[2025-09-30 18:31:51] INFO TradingDaemon: No trade (signal 0.000434 within threshold).
+[2025-09-30 18:32:24] INFO TradingDaemon: Prediction computed: 0.000454
+[2025-09-30 18:32:24] INFO TradingDaemon: No trade (signal 0.000454 within threshold).
+[2025-09-30 18:32:56] INFO TradingDaemon: Prediction computed: 0.000454
+[2025-09-30 18:32:56] INFO TradingDaemon: No trade (signal 0.000454 within threshold).
+[2025-09-30 18:33:29] INFO TradingDaemon: Prediction computed: 0.000435
+[2025-09-30 18:33:29] INFO TradingDaemon: No trade (signal 0.000435 within threshold).
+[2025-09-30 18:34:02] INFO TradingDaemon: Prediction computed: 0.000581
+[2025-09-30 18:34:02] INFO TradingDaemon: Paper trade simulated: buy 0.00088527 @ 112960.37
+[2025-09-30 18:34:34] INFO TradingDaemon: Prediction computed: 0.000581
+[2025-09-30 18:34:34] INFO TradingDaemon: Paper trade simulated: buy 0.00088527 @ 112960.37
+[2025-09-30 18:35:07] INFO TradingDaemon: Prediction computed: 0.000491
+[2025-09-30 18:35:07] INFO TradingDaemon: No trade (signal 0.000491 within threshold).
+[2025-09-30 18:35:39] INFO TradingDaemon: Prediction computed: 0.000491
+[2025-09-30 18:35:39] INFO TradingDaemon: No trade (signal 0.000491 within threshold).
+[2025-09-30 18:36:12] INFO TradingDaemon: Prediction computed: 0.000569
+[2025-09-30 18:36:12] INFO TradingDaemon: Paper trade simulated: buy 0.00088525 @ 112962.21
+[2025-09-30 18:36:44] INFO TradingDaemon: Prediction computed: 0.000569
+[2025-09-30 18:36:44] INFO TradingDaemon: Paper trade simulated: buy 0.00088525 @ 112962.21
+[2025-09-30 18:37:17] INFO TradingDaemon: Prediction computed: 0.000566
+[2025-09-30 18:37:17] INFO TradingDaemon: Paper trade simulated: buy 0.00088511 @ 112979.69
+[2025-09-30 18:37:50] INFO TradingDaemon: Prediction computed: 0.000566
+[2025-09-30 18:37:50] INFO TradingDaemon: Paper trade simulated: buy 0.00088511 @ 112979.69
+[2025-09-30 18:38:22] INFO TradingDaemon: Prediction computed: 0.000670
+[2025-09-30 18:38:22] INFO TradingDaemon: Paper trade simulated: buy 0.00088517 @ 112972.72
+[2025-09-30 18:38:55] INFO TradingDaemon: Prediction computed: 0.000670
+[2025-09-30 18:38:55] INFO TradingDaemon: Paper trade simulated: buy 0.00088517 @ 112972.72
+[2025-09-30 18:39:59] INFO TradingDaemon: Prediction computed: 0.000401
+[2025-09-30 18:39:59] INFO TradingDaemon: No trade (signal 0.000401 within threshold).
+[2025-09-30 18:40:09] INFO websocket: Websocket connected
+[2025-09-30 18:40:09] INFO root: WS open (callback)
+[2025-09-30 18:40:16] INFO root: Status data fetched: 50 rows.
+[2025-09-30 18:40:32] INFO TradingDaemon: Prediction computed: 0.000470
+[2025-09-30 18:40:32] INFO TradingDaemon: No trade (signal 0.000470 within threshold).
+[2025-09-30 18:41:05] INFO TradingDaemon: Prediction computed: 0.000580
+[2025-09-30 18:41:05] INFO TradingDaemon: Paper trade simulated: buy 0.00088547 @ 112934.01
+[2025-09-30 18:41:37] INFO TradingDaemon: Prediction computed: 0.000580
+[2025-09-30 18:41:37] INFO TradingDaemon: Paper trade simulated: buy 0.00088547 @ 112934.01
+[2025-09-30 18:42:10] INFO TradingDaemon: Prediction computed: 0.000488
+[2025-09-30 18:42:10] INFO TradingDaemon: No trade (signal 0.000488 within threshold).
+[2025-09-30 18:42:43] INFO TradingDaemon: Prediction computed: 0.000488
+[2025-09-30 18:42:43] INFO TradingDaemon: No trade (signal 0.000488 within threshold).
+[2025-09-30 18:43:16] INFO TradingDaemon: Prediction computed: -0.000108
+[2025-09-30 18:43:16] INFO TradingDaemon: No trade (signal -0.000108 within threshold).
