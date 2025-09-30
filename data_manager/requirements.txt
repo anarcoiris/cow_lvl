@@ -1,0 +1,7 @@
+
+aiosqlite
+pandas
+ccxt
+websockets
+influxdb-client
+aiokafka
