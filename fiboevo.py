@@ -1564,6 +1564,238 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--config", type=str, default="", help="Optional JSON config to override CLI")
     return p
 
+def temporal_split_indexes(n_total, seq_len, horizon, val_frac=0.2, test_frac=0.1):
+    """
+    Devuelve n_train_seq, n_val_seq, n_test_seq, train_rows_end_index
+    (train_rows_end is inclusive row index to use for scaler.fit)
+    """
+    n_sequences = n_total - seq_len - horizon + 1
+    if n_sequences <= 2:
+        raise ValueError("Not enough rows for splits with given seq_len/horizon")
+    n_test_seq = max(1, int(round(test_frac * n_sequences)))
+    n_val_seq = max(1, int(round(val_frac * n_sequences)))
+    n_train_seq = n_sequences - n_val_seq - n_test_seq
+    if n_train_seq <= 0:
+        # fallback: reduce val/test to ensure at least 1 train sequence
+        n_test_seq = max(1, n_test_seq // 2)
+        n_val_seq = max(1, n_val_seq // 2)
+        n_train_seq = n_sequences - n_val_seq - n_test_seq
+        if n_train_seq <= 0:
+            raise ValueError("val_frac/test_frac too large for data size")
+    # train_rows_end is the last raw-row index (inclusive) after which we consider val/test sequences
+    train_rows_end = seq_len + n_train_seq - 1
+    return n_train_seq, n_val_seq, n_test_seq, train_rows_end
+
+
+def main_last() -> None:
+    parser = build_arg_parser()
+    args = parser.parse_args()
+    setup_logging(0 if args.quiet else args.verbose)
+    seed_everything(args.seed)
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu") if torch is not None else None
+    LOGGER.info("Device: %s", device)
+
+    # ---------- load data ----------
+    try:
+        if args.use_influx:
+            close = load_data_from_influx(limit=args.limit or 20000)
+            noise = 0.001 * np.abs(np.random.randn(len(close)))
+            high = close * (1.0 + noise)
+            low = close * (1.0 - noise)
+        else:
+            raise RuntimeError("fallback to OU")
+    except Exception as e:
+        LOGGER.warning("Falling back to OU simulator: %s", e)
+        close, high, low = simulate_ou(steps=5000, seed=args.seed)
+
+    # ---------- features ----------
+    df = add_technical_features(close, high=high, low=low, volume=None)
+    # dropna BEFORE anything else
+    rows_before = len(df)
+    df = df.dropna().reset_index(drop=True)
+    LOGGER.info("Dropped %d rows due to NaNs", rows_before - len(df))
+
+    # filter out metadata columns if present
+    forbidden_meta = {"timestamp", "ts", "symbol", "created_at", "updated_at"}
+    feature_cols = [c for c in df.columns if c not in ["close", "high", "low", "volume"]]
+    feature_cols = [
+        c
+        for c in feature_cols
+        if (
+            (c.startswith("ret_")
+            or c.startswith("sma")
+            or c.startswith("ema")
+            or ("rsi" in c)
+            or ("atr" in c)
+            or ("raw_vol" in c)
+            or ("bb" in c)
+            or ("fib" in c)
+            or ("td" in c)
+            or ("vp" in c))
+            and (c.lower() not in forbidden_meta)
+        )
+    ]
+    feature_cols = [c for c in feature_cols if c not in forbidden_meta]
+    if not feature_cols:
+        raise RuntimeError("No feature columns selected")
+
+    # ---------- temporal split BEFORE scaler fit ----------
+    seq_len = int(args.seq_len)
+    horizon = int(args.horizon)
+    val_frac = float(args.val_frac) if hasattr(args, "val_frac") else 0.2
+    test_frac = 0.10  # can expose as arg if desired
+
+    n_total = len(df)
+    n_train_seq, n_val_seq, n_test_seq, train_rows_end = temporal_split_indexes(
+        n_total, seq_len, horizon, val_frac=val_frac, test_frac=test_frac
+    )
+    LOGGER.info("Temporal split (seq): train=%d, val=%d, test=%d, train_rows_end=%d", n_train_seq, n_val_seq, n_test_seq, train_rows_end)
+
+    # ---------- fit scaler ONLY on train rows ----------
+    scaler = StandardScaler()
+    scaler.fit(df[feature_cols].iloc[: train_rows_end + 1].values.astype(np.float64))
+    try:
+        scaler.feature_names_in_ = np.array(list(feature_cols), dtype=object)
+    except Exception:
+        pass
+    # transform whole df (scaler learned on train only)
+    df[feature_cols] = scaler.transform(df[feature_cols].values.astype(np.float64)).astype(np.float32)
+
+    # ---------- create sequences and split them temporally ----------
+    X_all, y_all, v_all = create_sequences_from_df(df, feature_cols, seq_len=seq_len, horizon=horizon)
+    # indices in X_all: 0..n_sequences-1
+    n_sequences = len(X_all)
+    assert n_sequences >= (n_train_seq + n_val_seq + n_test_seq)
+    Xtr = X_all[:n_train_seq]
+    ytr = y_all[:n_train_seq]
+    voltr = v_all[:n_train_seq]
+
+    Xv = X_all[n_train_seq : n_train_seq + n_val_seq]
+    yv = y_all[n_train_seq : n_train_seq + n_val_seq]
+    volv = v_all[n_train_seq : n_train_seq + n_val_seq]
+
+    Xt = X_all[n_train_seq + n_val_seq : n_train_seq + n_val_seq + n_test_seq]
+    yt = y_all[n_train_seq + n_val_seq : n_train_seq + n_val_seq + n_test_seq]
+    volt = v_all[n_train_seq + n_val_seq : n_train_seq + n_val_seq + n_test_seq]
+
+    # ---------- DataLoaders ----------
+    batch_size = int(args.batch_size or 256)
+    tr_ds = TensorDataset(torch.from_numpy(Xtr), torch.from_numpy(ytr), torch.from_numpy(voltr))
+    val_ds = TensorDataset(torch.from_numpy(Xv), torch.from_numpy(yv), torch.from_numpy(volv))
+    test_ds = TensorDataset(torch.from_numpy(Xt), torch.from_numpy(yt), torch.from_numpy(volt))
+
+    tr_loader = DataLoader(tr_ds, batch_size=batch_size, shuffle=True, drop_last=False)
+    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False)
+    test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False)
+
+    # ---------- model, optimizer, scheduler, early stopping ----------
+    model = LSTM2Head(input_size=Xtr.shape[2], hidden_size=int(args.hidden)).to(device)
+    opt = optim.Adam(model.parameters(), lr=float(args.lr), weight_decay=1e-6)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(opt, mode="min", factor=0.5, patience=5, verbose=True)
+    best_val = float("inf")
+    best_path = Path(args.save_model or "artifacts/best_model.pt")
+    patience = getattr(args, "patience", 12)
+    wait = 0
+
+    # mixed-precision optional
+    use_amp = True if (torch.cuda.is_available() and hasattr(torch.cuda, "amp")) else False
+    scaler_grad = torch.cuda.amp.GradScaler() if use_amp else None
+
+    LOGGER.info("Training model for %d epochs (amp=%s)", int(args.epochs), use_amp)
+    for e in range(int(args.epochs)):
+        model.train()
+        epoch_loss = 0.0
+        for xb, yb, vb in tr_loader:
+            xb = xb.to(device)
+            yb = yb.to(device)
+            vb = vb.to(device)
+            opt.zero_grad()
+            if use_amp:
+                with torch.cuda.amp.autocast():
+                    out_ret, out_vol = model(xb)
+                    loss = ((out_ret - yb) ** 2).mean() + 0.5 * ((out_vol - vb) ** 2).mean()
+                scaler_grad.scale(loss).backward()
+                # gradient clipping
+                scaler_grad.unscale_(opt)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+                scaler_grad.step(opt)
+                scaler_grad.update()
+            else:
+                out_ret, out_vol = model(xb)
+                loss = ((out_ret - yb) ** 2).mean() + 0.5 * ((out_vol - vb) ** 2).mean()
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+                opt.step()
+            epoch_loss += float(loss.detach().cpu().numpy()) * xb.shape[0]
+        epoch_loss /= max(1, len(tr_ds))
+
+        # validation
+        model.eval()
+        val_loss = 0.0
+        with torch.no_grad():
+            for xb, yb, vb in val_loader:
+                xb = xb.to(device); yb = yb.to(device); vb = vb.to(device)
+                out_ret, out_vol = model(xb)
+                l = ((out_ret - yb) ** 2).mean() + 0.5 * ((out_vol - vb) ** 2).mean()
+                val_loss += float(l.detach().cpu().numpy()) * xb.shape[0]
+        val_loss /= max(1, len(val_ds))
+
+        LOGGER.info("[Train] Epoch %d/%d train_loss=%.6g val_loss=%.6g", e + 1, args.epochs, epoch_loss, val_loss)
+        scheduler.step(val_loss)
+
+        # checkpointing + early stopping
+        if val_loss < best_val - 1e-12:
+            best_val = val_loss
+            wait = 0
+            os.makedirs(best_path.parent, exist_ok=True)
+            save_model(model, best_path, meta={"feature_cols": feature_cols, "seq_len": seq_len, "horizon": horizon, "input_size": Xtr.shape[2]}, path_meta=Path(str(best_path) + ".meta.json"))
+            try:
+                if joblib is not None:
+                    joblib.dump(scaler, str(Path("artifacts") / "scaler.pkl"))
+            except Exception:
+                LOGGER.warning("Could not save scaler")
+            LOGGER.info("Saved best model to %s (val_loss=%.6g)", best_path, best_val)
+        else:
+            wait += 1
+            if wait >= patience:
+                LOGGER.info("Early stopping triggered (wait=%d >= patience=%d)", wait, patience)
+                break
+
+    # ---------- final evaluation on test ----------
+    LOGGER.info("Loading best model for final evaluation")
+    model, meta = load_model(best_path) if Path(best_path).exists() else (model, {"feature_cols": feature_cols})
+    model.eval()
+    test_loss = 0.0
+    with torch.no_grad():
+        for xb, yb, vb in test_loader:
+            xb = xb.to(device); yb = yb.to(device); vb = vb.to(device)
+            out_ret, out_vol = model(xb)
+            l = ((out_ret - yb) ** 2).mean() + 0.5 * ((out_vol - vb) ** 2).mean()
+            test_loss += float(l.cpu().numpy()) * xb.shape[0]
+    test_loss /= max(1, len(test_ds))
+    LOGGER.info("Final test loss: %.6g", test_loss)
+
+    # ---------- backtest: use data strictly after train_rows_end (this is true because scaler fit on train only) ----------
+    # choose df_test window: rows from (train_rows_end + 1) onward (or last N rows if desired)
+    df_test = df.iloc[train_rows_end + 1 :].reset_index(drop=True)
+    summary, trades = backtest_market_maker(
+        df_test,
+        model,
+        feature_cols,
+        seq_len=seq_len,
+        horizon=horizon,
+        capital=1_000_000,
+        intraday_frac=0.10,
+        sigma_levels=(0.5, 1.0, 1.5, 2.0),
+        tp_sigma=0.5,
+        sl_sigma=1.0,
+        trend_weighting=True,
+        scaler=scaler,  # OK: scaler was fit on train only
+    )
+    LOGGER.info("Backtest summary: %s", summary)
+    print("Backtest summary:", json.dumps(summary, indent=2))
+
 
 def main_cli() -> None:
     parser = build_arg_parser()
