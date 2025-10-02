@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - market-net
+
+  kafka:
+    image: bitnami/kafka:3.4
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092
+      - KAFKA_BROKER_ID=1
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+    networks:
+      - market-net
+
+  influxdb:
+    image: influxdb:2.7
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=root
+      - DOCKER_INFLUXDB_INIT_PASSWORD=rootroot
+      - DOCKER_INFLUXDB_INIT_ORG=BreOrganization
+      - DOCKER_INFLUXDB_INIT_BUCKET=prices
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=yuN9aLa2Iz11B3rNswTTptNFDB9k8LtJvZmwihuIaWOMW07C3gx53D_wZ4uluL8blcLEFIswC5SvghyEinNBQA==
+    volumes:
+      - ./influxdb_vol:/var/lib/influxdb2
+    networks:
+      - market-net
+
+  app:
+    build: .
+    depends_on:
+      - kafka
+      - influxdb
+    networks:
+      - market-net
+    environment:
+      # Kafka
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_TOPIC=prices
+      - EXCHANGES=binance,kucoin,bybit,coinbase,kraken
+      - SYMBOLS=BTC/USDT,XMR/USDT,ETH/USDT
+      - TIMEFRAMES=1m,15m,30m,1h,4h,1D
+      - FETCH_INTERVAL=10
+      # Influx
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_TOKEN=yuN9aLa2Iz11B3rNswTTptNFDB9k8LtJvZmwihuIaWOMW07C3gx53D_wZ4uluL8blcLEFIswC5SvghyEinNBQA==
+      - INFLUXDB_ORG=BreOrganization
+      - INFLUXDB_BUCKET=prices
+    command: ["python", "main.py"]
+
+networks:
+  market-net:
+
+volumes:
+  influxdb-data:

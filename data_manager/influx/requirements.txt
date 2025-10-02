@@ -1,0 +1,19 @@
+# core pipeline
+ccxt>=4.5.6          # REST exchanges (no ccxt.pro)
+kafka-python>=2.2.15 # Kafka client (producer + consumer)
+influxdb-client>=1.49.0
+
+# websockets (async) — para conectar WS de exchanges nativos
+websockets>=15.0.1
+
+# data / util
+numpy
+pandas
+matplotlib
+
+# algoritmia / utilitarios
+#deap>=1.4.3
+#tqdm>=4.67.1
+
+# opcional / comentado (si en algún momento quieres ML)
+# torch>=2.2.0   # instalar solo si realmente lo necesitas (peso grande)
