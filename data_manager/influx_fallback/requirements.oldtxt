@@ -1,9 +1,0 @@
-ccxt
-kafka-python
-influxdb-client
-numpy
-pandas
-matplotlib
-deap
-tqdm
-#torch
