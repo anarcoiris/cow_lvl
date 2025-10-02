@@ -3,6 +3,14 @@ xlsxwriter
 ccxt
 joblib
 numpy
-pandas_ta
-scikit-learn
+#pandas_ta
+matplotlib
+tqdm
+
+# Opcionales (el código funciona aunque no estén instalados)
 torch
+scikit-learn
+deap
+influxdb-client
+websocket-client
+

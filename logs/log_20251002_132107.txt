@@ -1,0 +1,69 @@
+[2025-10-02 15:21:07] INFO root: init_logging: logfile=logs\log_20251002_132107.txt
+[2025-10-02 15:21:07] INFO __main__: Logging initialized
+[2025-10-02 15:21:09] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 15:21:09] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 633, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+[2025-10-02 15:21:10] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 633, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+
+[2025-10-02 15:22:19] INFO websocket: Websocket connected
+[2025-10-02 15:22:19] INFO root: WS open (callback)
+[2025-10-02 15:22:31] INFO root: Big trade sell 0.01569@119209.26
+[2025-10-02 15:22:31] INFO root: Big trade sell 0.00631@119209.26
+[2025-10-02 15:22:31] INFO root: Big trade sell 0.00419@119209.26
+[2025-10-02 15:22:31] INFO root: Big trade sell 0.0001@119209.26
+[2025-10-02 15:22:31] INFO root: Big trade buy 0.00013@119209.27
+[2025-10-02 15:22:32] INFO root: Big trade sell 0.00419@119209.26
+[2025-10-02 15:22:32] INFO root: Big trade buy 0.0016@119209.27
+[2025-10-02 15:22:32] INFO root: Big trade buy 0.00037@119209.27
+[2025-10-02 15:22:32] INFO root: Big trade sell 0.0001@119209.26
+[2025-10-02 15:22:56] INFO root: Big trade sell 0.00423@119218.08
+[2025-10-02 15:22:56] INFO root: Big trade sell 0.00419@119218.08
+[2025-10-02 15:23:06] INFO root: Big trade buy 1.06789@119218.09
+[2025-10-02 15:23:39] INFO root: Status data fetched: 50 rows.
+[2025-10-02 15:23:45] INFO root: Status data fetched: 50 rows.
+[2025-10-02 15:23:49] INFO root: Big trade buy 2.65974@119218.09
+[2025-10-02 15:24:10] INFO root: Warning: Torch not available in environment. Model load will fail unless torch is installed.
+[2025-10-02 15:24:10] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-10-02 15:24:10] INFO TradingDaemon: Daemon loop started.
+[2025-10-02 15:24:10] INFO root: Daemon started.
+[2025-10-02 15:24:10] INFO root: Background: loading model from C:/Users/aladin/Documents/github/cow-lvl/artifacts/model_best.pt ...
+[2025-10-02 15:24:10] INFO TradingDaemon: Attempting to load model from C:\Users\aladin\Documents\github\cow-lvl\artifacts\model_best.pt
+[2025-10-02 15:24:10] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:10] INFO TradingDaemon: Loaded meta: artifacts\meta.json
+[2025-10-02 15:24:10] INFO TradingDaemon: PyTorch not available: cannot load model state_dict. Aborting model load.
+[2025-10-02 15:24:10] INFO root: Background load finished: model still None (check logs).
+[2025-10-02 15:24:16] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:16] INFO root: Prepare: loading data from sqlite...
+[2025-10-02 15:24:16] INFO root: Prepare thread started.
+[2025-10-02 15:24:17] INFO root: Loaded 105944 rows from sqlite.
+[2025-10-02 15:24:17] INFO root: fiboevo.add_technical_features not available; abort.
+[2025-10-02 15:24:17] INFO root: Big trade buy 1.02483@119226.57
+[2025-10-02 15:24:21] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:27] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:33] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:38] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:40] INFO root: Big trade buy 2.40299@119280.0
+[2025-10-02 15:24:43] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:49] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:24:55] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:25:00] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:25:06] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:25:10] INFO root: Big trade sell 1.04872@119190.0
+[2025-10-02 15:25:11] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:25:17] INFO TradingDaemon: fiboevo.add_technical_features not available; skipping features/prediction.
+[2025-10-02 15:25:22] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 3112, in <module>
+    main()
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 3108, in main
+    root.mainloop()
+  File "C:\Users\aladin\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

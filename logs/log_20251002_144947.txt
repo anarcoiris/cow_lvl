@@ -1,0 +1,164 @@
+[2025-10-02 16:49:47] INFO root: init_logging: logfile=logs\log_20251002_144947.txt
+[2025-10-02 16:49:47] INFO __main__: Logging initialized
+[2025-10-02 16:49:57] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 16:49:57] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 960, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+[2025-10-02 16:49:57] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 960, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+
+[2025-10-02 16:50:57] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-10-02 16:50:57] INFO TradingDaemon: Daemon loop started.
+[2025-10-02 16:50:57] INFO root: Daemon started.
+[2025-10-02 16:50:57] INFO root: Background: loading model from C:/Users/aladin/Documents/github/cow-lvl/artifacts/model_best.pt ...
+[2025-10-02 16:50:57] INFO TradingDaemon: Attempting to load model from C:\Users\aladin\Documents\github\cow-lvl\artifacts\model_best.pt
+[2025-10-02 16:50:57] INFO TradingDaemon: Loaded meta: artifacts\meta.json
+[2025-10-02 16:50:57] INFO TradingDaemon: Loaded model state_dict (strict=True).
+[2025-10-02 16:50:57] INFO TradingDaemon: Model prepared on CPU.
+[2025-10-02 16:50:57] INFO TradingDaemon: Loaded scaler from artifacts\scaler.pkl
+[2025-10-02 16:50:57] INFO root: Model loaded (background).
+[2025-10-02 16:50:57] INFO TradingDaemon: Prediction computed: 0.000377
+[2025-10-02 16:50:57] INFO TradingDaemon: No trade (signal 0.000377 within threshold).
+[2025-10-02 16:51:03] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:03] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:09] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:09] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:14] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:14] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:20] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:20] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:26] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:26] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:32] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:32] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:37] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:37] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:43] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:43] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:48] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:48] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:54] INFO TradingDaemon: Prediction computed: -0.000648
+[2025-10-02 16:51:54] INFO TradingDaemon: Paper trade simulated: sell 0.00084256 @ 118685.83
+[2025-10-02 16:51:56] INFO root: Applied status intervals: inference=60.0s trade=60.0s refresh=60.0s
+[2025-10-02 16:51:56] INFO TradingDaemon: Configuration updated from dict.
+[2025-10-02 16:51:56] INFO root: Pushed refresh interval to daemon.poll_interval.
+[2025-10-02 16:51:58] INFO root: Applied status intervals: inference=60.0s trade=60.0s refresh=60.0s
+[2025-10-02 16:51:58] INFO TradingDaemon: Configuration updated from dict.
+[2025-10-02 16:51:58] INFO root: Pushed refresh interval to daemon.poll_interval.
+[2025-10-02 16:51:58] INFO root: Applied status intervals: inference=60.0s trade=60.0s refresh=60.0s
+[2025-10-02 16:51:58] INFO TradingDaemon: Configuration updated from dict.
+[2025-10-02 16:51:58] INFO root: Pushed refresh interval to daemon.poll_interval.
+[2025-10-02 16:52:04] INFO websocket: Websocket connected
+[2025-10-02 16:52:04] INFO root: WS open (callback)
+[2025-10-02 16:52:11] INFO root: Big trade sell 0.0009@118839.43
+[2025-10-02 16:52:11] INFO root: Big trade sell 0.00093@118839.43
+[2025-10-02 16:52:11] INFO root: Big trade sell 9e-05@118839.43
+[2025-10-02 16:52:11] INFO root: Big trade sell 0.00068@118839.43
+[2025-10-02 16:52:12] INFO root: Big trade sell 0.0006@118839.43
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.02224@118839.44
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.00115@118839.45
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.0002@118839.46
+[2025-10-02 16:52:12] INFO root: Big trade buy 5e-05@118839.8
+[2025-10-02 16:52:12] INFO root: Big trade buy 5e-05@118840.0
+[2025-10-02 16:52:12] INFO root: Big trade buy 5e-05@118841.19
+[2025-10-02 16:52:12] INFO root: Big trade buy 5e-05@118842.23
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.00211@118842.66
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.0002@118842.67
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.00066@118843.0
+[2025-10-02 16:52:12] INFO root: Big trade sell 0.00068@118843.32
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.00052@118843.33
+[2025-10-02 16:52:12] INFO root: Big trade buy 0.02066@118843.33
+[2025-10-02 16:52:12] INFO root: Big trade sell 0.00478@118843.32
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00274@118843.32
+[2025-10-02 16:52:13] INFO root: Big trade buy 0.00617@118843.33
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00029@118843.32
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.04208@118843.32
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.08415@118843.32
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.52576@118843.32
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00025@118843.31
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.27759@118843.3
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.0001@118843.29
+[2025-10-02 16:52:13] INFO root: Big trade sell 9e-05@118843.25
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00636@118843.0
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00015@118842.67
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.0001@118842.66
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00015@118842.23
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.02736@118840.0
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00125@118840.0
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.0007@118839.99
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.0001@118839.98
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118839.6
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00018@118839.43
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118839.42
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00049@118839.41
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00025@118839.4
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118839.22
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.0115@118839.21
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.0002@118839.06
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.01958@118839.05
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118839.04
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118838.47
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118837.18
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118836.52
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118835.88
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118835.24
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118835.22
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118835.2
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118835.01
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118834.91
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00019@118834.06
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118834.05
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118834.01
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00015@118834.0
+[2025-10-02 16:52:13] INFO root: Big trade sell 5e-05@118832.33
+[2025-10-02 16:52:13] INFO root: Big trade sell 0.00315@118831.43
+[2025-10-02 16:52:14] INFO root: Big trade sell 8e-05@118831.43
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00438@118831.43
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00235@118831.42
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00215@118831.41
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.0013@118831.4
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118830.81
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.0002@118830.53
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00864@118830.52
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00951@118830.52
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00337@118830.51
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.0001@118830.5
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00183@118829.93
+[2025-10-02 16:52:14] INFO root: Big trade sell 7e-05@118829.47
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00378@118829.44
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00019@118829.08
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00336@118828.74
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118828.03
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00017@118827.92
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00038@118827.53
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118827.51
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118827.18
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118826.9
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118826.8
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00088@118826.59
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.00042@118825.92
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118825.71
+[2025-10-02 16:52:14] INFO root: Big trade sell 0.0001@118825.7
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118825.7
+[2025-10-02 16:52:14] INFO root: Big trade sell 5e-05@118825.6
+[2025-10-02 16:52:58] INFO TradingDaemon: Prediction computed: -0.000449
+[2025-10-02 16:52:58] INFO TradingDaemon: No trade (signal -0.000449 within threshold).
+[2025-10-02 16:54:03] INFO TradingDaemon: Prediction computed: -0.000374
+[2025-10-02 16:54:03] INFO TradingDaemon: No trade (signal -0.000374 within threshold).
+[2025-10-02 16:55:09] INFO TradingDaemon: Prediction computed: -0.000712
+[2025-10-02 16:55:09] INFO TradingDaemon: Paper trade simulated: sell 0.00084143 @ 118845.48
+[2025-10-02 16:56:15] INFO TradingDaemon: Prediction computed: -0.000246
+[2025-10-02 16:56:15] INFO TradingDaemon: No trade (signal -0.000246 within threshold).
+[2025-10-02 16:57:21] INFO TradingDaemon: Prediction computed: -0.000135
+[2025-10-02 16:57:21] INFO TradingDaemon: No trade (signal -0.000135 within threshold).
+[2025-10-02 16:57:46] INFO root: Big trade buy 5.16331@118800.0
+[2025-10-02 16:58:26] INFO TradingDaemon: Prediction computed: -0.000386
+[2025-10-02 16:58:27] INFO TradingDaemon: No trade (signal -0.000386 within threshold).
+[2025-10-02 16:58:27] INFO root: Big trade sell 8.09592@118841.92
+[2025-10-02 16:59:32] INFO TradingDaemon: Prediction computed: -0.001122
+[2025-10-02 16:59:32] INFO TradingDaemon: Paper trade simulated: sell 0.00084137 @ 118854.10

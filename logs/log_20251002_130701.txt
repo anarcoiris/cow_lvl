@@ -1,0 +1,29 @@
+[2025-10-02 15:07:01] INFO root: init_logging: logfile=logs\log_20251002_130701.txt
+[2025-10-02 15:07:01] INFO __main__: Logging initialized
+[2025-10-02 15:07:03] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 15:07:03] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 632, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+[2025-10-02 15:07:03] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 632, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+
+[2025-10-02 15:07:13] INFO root: Preview loaded: 200 rows.
+[2025-10-02 15:07:19] INFO root: Preview loaded: 200 rows.
+[2025-10-02 15:07:20] INFO root: Preview loaded: 200 rows.
+[2025-10-02 15:07:20] INFO root: Preview loaded: 200 rows.
+[2025-10-02 15:07:20] INFO root: Preview loaded: 200 rows.
+[2025-10-02 15:07:21] INFO root: Preview loaded: 200 rows.
+[2025-10-02 15:21:05] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 3111, in <module>
+    try:
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 3107, in main
+    app = TradingAppExtended(root)
+  File "C:\Users\aladin\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

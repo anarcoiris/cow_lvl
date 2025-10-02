@@ -151,6 +151,11 @@ def init_logging(log_dir: str = "logs", app_name: str = "trading_gui", level: in
     root.debug("sys.path: %s", sys.path)
     return logfile
 
+# detectar display
+if os.name == "nt":   # Windows
+    os.environ["DISPLAY"] = ":0"
+
+
 # Example of use (call at very top, before heavy imports):
 LOGFILE = init_logging(log_dir="logs", app_name="trading_gui", level=logging.INFO)
 logging.getLogger(__name__).info("Logging initialized")
@@ -158,6 +163,12 @@ logging.getLogger(__name__).info("Logging initialized")
 import queue
 from typing import Optional, List, Dict, Any
 import math
+
+# al principio del archivo (junto a otros imports)
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt  # opcional para estilos o utilidades
+
 
 import numpy as np
 import pandas as pd
@@ -322,7 +333,8 @@ class TradingAppExtended:
     def __init__(self, root):
         self.root = root
         root.title(APP_TITLE)
-        root.geometry("1200x800")
+        root.geometry("800x600")
+        root.state("zoomed")
 
         # logging widget
         self.ui_log_queue = queue.Queue(maxsize=2000)
@@ -449,6 +461,380 @@ class TradingAppExtended:
     # --------------------------
     # UI building
     # --------------------------
+
+    def _open_forecast_window(self):
+        """Ventana forecast con SCROLLER global (scrolla todo: controles + plot)."""
+        import tkinter as tk
+        from tkinter import Toplevel, Frame, Label, Entry, Button, Checkbutton, Canvas, Scrollbar, StringVar, IntVar, DoubleVar, BooleanVar
+        from matplotlib.figure import Figure
+        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+        # si ya está abierta, la elevamos
+        if getattr(self, "_forecast_toplevel", None):
+            try:
+                self._forecast_toplevel.lift()
+                return
+            except Exception:
+                pass
+
+        top = Toplevel(self.root)
+        top.title("Forecast / Extend price")
+        top.geometry("1000x700")
+        self._forecast_toplevel = top
+
+        small_font = ("TkDefaultFont", 9)
+
+        # -----------------------
+        # SCROLLER GLOBAL (Canvas + Scrollbar)
+        # -----------------------
+        outer_canvas = Canvas(top, highlightthickness=0)
+        vscroll = Scrollbar(top, orient="vertical", command=outer_canvas.yview)
+        outer_canvas.configure(yscrollcommand=vscroll.set)
+
+        vscroll.pack(side="right", fill="y")
+        outer_canvas.pack(side="left", fill="both", expand=True)
+
+        # Frame interior que contendrá TODOS los widgets
+        inner = Frame(outer_canvas)
+        inner_id = outer_canvas.create_window((0, 0), window=inner, anchor="nw")
+
+        # Actualizar scrollregion cuando cambie el tamaño interno
+        def _on_inner_config(event):
+            outer_canvas.configure(scrollregion=outer_canvas.bbox("all"))
+        inner.bind("<Configure>", _on_inner_config)
+
+        # También ajustar el ancho del inner window al ancho del canvas para evitar clipping horizontal
+        def _on_outer_config(event):
+            try:
+                outer_canvas.itemconfig(inner_id, width=event.width)
+            except Exception:
+                pass
+        outer_canvas.bind("<Configure>", _on_outer_config)
+
+        # Scroll con rueda del ratón: Windows/macOS y Linux (Button-4/5)
+        def _on_mousewheel(event):
+            if event.num == 4:       # Linux wheel up
+                outer_canvas.yview_scroll(-1, "units")
+            elif event.num == 5:     # Linux wheel down
+                outer_canvas.yview_scroll(1, "units")
+            else:
+                # Windows/macOS: event.delta en múltiplos de 120
+                delta = int(-1 * (event.delta / 120))
+                outer_canvas.yview_scroll(delta, "units")
+
+        # Bind globalmente para que funcione la rueda cuando el puntero esté sobre la ventana
+        outer_canvas.bind_all("<MouseWheel>", _on_mousewheel)   # Win/mac
+        outer_canvas.bind_all("<Button-4>", _on_mousewheel)     # Linux up
+        outer_canvas.bind_all("<Button-5>", _on_mousewheel)     # Linux down
+
+        # -----------------------
+        # CONTENIDO: fila con CONTROLES (izq) y PLOT (derecha)
+        # -----------------------
+        content_row = Frame(inner)
+        content_row.pack(fill="both", expand=True, padx=6, pady=6)
+
+        # LEFT: panel de controles (ancho fijo para mayor consistencia)
+        ctrl = Frame(content_row, width=260)
+        ctrl.pack(side="left", fill="y", padx=(0,8))
+
+        pad_y = 4
+        Label(ctrl, text="Forecast steps (N):", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_steps_var = IntVar(value=30)
+        Entry(ctrl, textvariable=self._forecast_steps_var, width=8, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        Label(ctrl, text="Trajectories:", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_trajectories_var = IntVar(value=5)
+        Entry(ctrl, textvariable=self._forecast_trajectories_var, width=8, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        Label(ctrl, text="Seed (optional):", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_seed_var = StringVar(value="")
+        Entry(ctrl, textvariable=self._forecast_seed_var, width=12, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        Label(ctrl, text="Noise scale (std dev):", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_noise_var = DoubleVar(value=0.0)
+        Entry(ctrl, textvariable=self._forecast_noise_var, width=8, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        self._forecast_stochastic_var = BooleanVar(value=True)
+        Checkbutton(ctrl, text="Stochastic (add noise)", variable=self._forecast_stochastic_var, font=small_font).pack(anchor="w", pady=(6, pad_y))
+
+        Button(ctrl, text="Run forecast", command=self._run_forecast_thread, font=small_font, width=18).pack(anchor="w", pady=(8,4))
+        Button(ctrl, text="Clear forecast overlays", command=lambda: self._clear_forecast_plot(), font=small_font, width=18).pack(anchor="w", pady=(4,4))
+        Button(ctrl, text="Close", command=lambda: (setattr(self, "_forecast_toplevel", None), top.destroy()), font=small_font, width=18).pack(anchor="w", pady=(8,4))
+
+        # RIGHT: frame para el plot (dentro del mismo inner frame, por eso scrollea globalmente)
+        plot_frame = Frame(content_row)
+        plot_frame.pack(side="left", fill="both", expand=True)
+
+        # Matplotlib figure (ligeramente más compacta)
+        fig = Figure(figsize=(7, 4), dpi=100)
+        ax = fig.add_subplot(111)
+        ax.set_title("Price + forecast")
+        ax.set_xlabel("index / time")
+        ax.grid(True)
+
+        canvas = FigureCanvasTkAgg(fig, master=plot_frame)
+        canvas.get_tk_widget().pack(fill="both", expand=True)
+
+        # referencias para otros métodos
+        self._forecast_fig = fig
+        self._forecast_ax = ax
+        self._forecast_canvas = canvas
+        self._forecast_ctrl_canvas = outer_canvas  # si necesitas manipular el scroll externamente
+
+        # Pintamos el historial inicialmente
+        self._plot_history_on_forecast()
+
+
+
+    def _plot_history_on_forecast(self):
+        """Dibuja df_loaded en el canvas de forecast (llamar al abrir y después de cada forecast claro)."""
+        ax = getattr(self, "_forecast_ax", None)
+        fig = getattr(self, "_forecast_fig", None)
+        canvas = getattr(self, "_forecast_canvas", None)
+        if ax is None or fig is None or canvas is None:
+            return
+
+        ax.clear()
+        df = getattr(self, "df_loaded", None)
+        if df is None or df.empty:
+            ax.text(0.5, 0.5, "No df_loaded available", ha="center")
+            canvas.draw()
+            return
+
+        # intentar columna 'close' o 'price'
+        if "close" in df.columns:
+            series = pd.to_numeric(df["close"], errors="coerce")
+        elif "price" in df.columns:
+            series = pd.to_numeric(df["price"], errors="coerce")
+        else:
+            # elegir la última columna numérica
+            numcols = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])]
+            if not numcols:
+                ax.text(0.5,0.5,"No numeric column found in df_loaded", ha="center")
+                canvas.draw()
+                return
+            series = pd.to_numeric(df[numcols[-1]], errors="coerce")
+
+        series = series.dropna()
+        ax.plot(series.values, label="history")
+        ax.set_title(f"History (len={len(series)})")
+        ax.legend()
+        canvas.draw()
+
+    def _run_forecast_thread(self):
+        t = threading.Thread(target=self._run_forecast, daemon=True)
+        t.start()
+        self._enqueue_log("Forecast worker started (background).")
+
+    def _run_forecast(self):
+        """
+        Core loop: crea N pasos adelante por trajectory. Intenta reutilizar:
+          - self.model (puede ser PyTorch nn.Module) o modelo con .predict
+          - self.model_scaler / self.scaler_used para transformar
+          - self.model_meta['feature_cols'] o self.feature_cols_used para construir secuencia
+        NOTA: asume que el modelo devuelve retornos en forma 'pct change' (p.ej. 0.001 = 0.1%).
+        Si tus retornos son log-returns, sustituir price_next = last_price * np.exp(ret).
+        """
+        import numpy as _np
+        # params desde UI
+        N = int(getattr(self, "_forecast_steps_var", IntVar(value=30)).get())
+        n_traj = int(getattr(self, "_forecast_trajectories_var", IntVar(value=1)).get())
+        seed = getattr(self, "_forecast_seed_var", StringVar(value="")).get()
+        stochastic = bool(getattr(self, "_forecast_stochastic_var", BooleanVar(value=True)).get())
+        noise_scale = float(getattr(self, "_forecast_noise_var", DoubleVar(value=0.0)).get())
+
+        if seed != "":
+            try:
+                seed_i = int(seed)
+                _np.random.seed(seed_i)
+            except Exception:
+                # allow non-int seeds via hash
+                _np.random.seed(abs(hash(seed)) % (2**32 - 1))
+
+        df = getattr(self, "df_loaded", None)
+        if df is None or df.empty:
+            self._enqueue_log("No df_loaded available for forecast.")
+            return
+
+        # Detect last price
+        last_price = None
+        if "close" in df.columns:
+            last_price = float(pd.to_numeric(df["close"].iloc[-1], errors="coerce"))
+        elif "price" in df.columns:
+            last_price = float(pd.to_numeric(df["price"].iloc[-1], errors="coerce"))
+        else:
+            # fallback: attempt UI var
+            try:
+                last_price = float(self.last_price_var.get())
+            except Exception:
+                last_price = float(df.select_dtypes(include="number").iloc[-1, -1])
+
+        # Determine feature columns and seq_len
+        seq_len = int(getattr(self, "seq_len", IntVar(value=32)).get())
+        feature_cols = None
+        if getattr(self, "model_meta", None) and isinstance(self.model_meta, dict) and "feature_cols" in self.model_meta:
+            feature_cols = list(self.model_meta["feature_cols"])
+        elif getattr(self, "feature_cols_used", None):
+            feature_cols = list(self.feature_cols_used)
+        else:
+            # fallback: use numeric columns from df (exclude ts)
+            feature_cols = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])][-1:]
+        # Make sure we have at least one feature
+        if not feature_cols:
+            feature_cols = [df.select_dtypes(include="number").columns[-1]]
+
+        # Build last sequence (seq_len x n_features)
+        df_num = df.copy()
+        seq_src = df_num[feature_cols].astype(float).fillna(method="ffill").fillna(0.0)
+        if len(seq_src) < seq_len:
+            # pad by repeating first row
+            pad = pd.DataFrame([seq_src.iloc[0]] * (seq_len - len(seq_src)), columns=seq_src.columns)
+            seq_src = pd.concat([pad, seq_src], ignore_index=True)
+        seq0 = seq_src.iloc[-seq_len:].values.astype(float)  # shape (seq_len, n_features)
+
+        # scaler
+        scaler = getattr(self, "model_scaler", None) or getattr(self, "scaler_used", None)
+        uses_torch = (hasattr(self, "model") and torch is not None and isinstance(self.model, torch.nn.Module))
+
+        # prepare axes for plotting
+        ax = getattr(self, "_forecast_ax", None)
+        canvas = getattr(self, "_forecast_canvas", None)
+        if ax is None or canvas is None:
+            self._enqueue_log("Forecast plot canvas not found.")
+            return
+
+        # draw base history (so overlays are fresh)
+        self._plot_history_on_forecast()
+
+        trajectories = []
+        for t_i in range(n_traj):
+            seq = seq0.copy()
+            price = last_price
+            traj_prices = []
+            for step in range(N):
+                # scale
+                X_in = seq.copy()
+                if scaler is not None:
+                    try:
+                        X_in = scaler.transform(X_in)
+                    except Exception:
+                        # scaler may expect 2D (n_samples, n_features) - we supply seq shaped; many scalers use row-wise
+                        X_in = X_in
+
+                # prepare model input batch
+                y_pred = None
+                try:
+                    # Torch model path
+                    if uses_torch:
+                        # expects shape (batch, seq_len, n_features)
+                        xt = torch.tensor(X_in[None, :, :], dtype=torch.float32)
+                        device = next(self.model.parameters()).device if hasattr(self.model, "parameters") else torch.device("cpu")
+                        xt = xt.to(device)
+                        self.model.eval()
+                        with torch.no_grad():
+                            out = self.model(xt)
+                        # out may be tensor or tuple; try to extract scalar
+                        if isinstance(out, (tuple, list)):
+                            out = out[0]
+                        out = out.detach().cpu().numpy()
+                        # choose last output if shape (batch, steps, dim) or (batch, dim)
+                        if out.ndim == 3:
+                            y_pred = float(out[0, -1, 0])
+                        elif out.ndim == 2:
+                            y_pred = float(out[0, 0])
+                        else:
+                            y_pred = float(out)
+                    else:
+                        # sklearn-like predict
+                        model = getattr(self, "model", None)
+                        if model is None:
+                            raise RuntimeError("No model loaded (self.model is None).")
+                        # flatten input to 2D (1, seq_len * n_features) if necessary
+                        X_try = X_in[None, :, :]
+                        try:
+                            y_out = model.predict(X_try)
+                        except Exception:
+                            X_try2 = X_in.flatten()[None, :]
+                            y_out = model.predict(X_try2)
+                        if hasattr(y_out, "__len__"):
+                            y_pred = float(y_out[0])
+                        else:
+                            y_pred = float(y_out)
+                except Exception as e:
+                    # fallback: try a naive persistence (0 return)
+                    self._enqueue_log(f"Model predict failed at step {step}: {e}")
+                    y_pred = 0.0
+
+                # add stochastic noise if requested
+                if stochastic and (noise_scale is not None and noise_scale > 0.0):
+                    noise = _np.random.normal(scale=noise_scale)
+                    y_pred_noisy = y_pred + noise
+                else:
+                    y_pred_noisy = y_pred
+
+                # interpret prediction as pct-return by default (user may need to adapt)
+                price = price * np.exp(y_pred_noisy)
+                traj_prices.append(price)
+
+                # update seq: try to append either 'close' or 'ret' depending on feature_cols
+                # If 'close' in feature_cols -> append new close; elif any 'ret' substring in cols -> append return; else append ret to first feature
+                new_row = None
+                if any(c.lower() == "close" for c in feature_cols):
+                    # create a row matching feature_cols (copy last and replace close)
+                    last_row = seq[-1].copy()
+                    idx_close = feature_cols.index([c for c in feature_cols if c.lower() == "close"][0])
+                    last_row[idx_close] = price
+                    new_row = last_row
+                elif any("ret" in c.lower() or "return" in c.lower() for c in feature_cols):
+                    last_row = seq[-1].copy()
+                    # find first return-like column and set it
+                    for j, c in enumerate(feature_cols):
+                        if "ret" in c.lower() or "return" in c.lower():
+                            last_row[j] = float(y_pred_noisy)
+                            break
+                    new_row = last_row
+                else:
+                    # fallback: create new row by taking last and replacing first feature with predicted return
+                    last_row = seq[-1].copy()
+                    last_row[0] = float(y_pred_noisy)
+                    new_row = last_row
+
+                # roll the sequence
+                seq = _np.vstack([seq[1:], _np.array(new_row)])
+
+            trajectories.append(traj_prices)
+
+        # plot overlays
+        hist_len = 0
+        df_plot = getattr(self, "df_loaded", None)
+        if df_plot is not None:
+            if "close" in df_plot.columns:
+                hist_series = pd.to_numeric(df_plot["close"], errors="coerce").dropna()
+            elif "price" in df_plot.columns:
+                hist_series = pd.to_numeric(df_plot["price"], errors="coerce").dropna()
+            else:
+                hist_series = pd.to_numeric(df_plot.select_dtypes(include="number").iloc[:, -1], errors="coerce").dropna()
+            hist_len = len(hist_series)
+        else:
+            hist_series = None
+
+        colors = None
+        for i, traj in enumerate(trajectories):
+            x = list(range(hist_len, hist_len + len(traj)))
+            ax.plot(x, traj, linestyle="--", alpha=0.9, label=f"traj {i+1}")
+        ax.legend()
+        canvas.draw()
+        self._enqueue_log(f"Forecast finished: {len(trajectories)} trajectories x {N} steps.")
+
+
+    def _clear_forecast_plot(self):
+        ax = getattr(self, "_forecast_ax", None)
+        canvas = getattr(self, "_forecast_canvas", None)
+        if ax is None or canvas is None:
+            return
+        # redraw base history
+        self._plot_history_on_forecast()
+
 
     def _init_ui_logging(self, root_parent):
         """
