@@ -1,0 +1,248 @@
+[2025-10-02 23:09:28] INFO root: init_logging: logfile=logs\log_20251002_210928.txt
+[2025-10-02 23:09:28] INFO __main__: Logging initialized
+[2025-10-02 23:09:36] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 23:10:07] INFO websocket: Websocket connected
+[2025-10-02 23:10:07] INFO root: WS open (callback)
+[2025-10-02 23:22:10] INFO root: Preview loaded: 200 rows.
+[2025-10-02 23:22:16] INFO root: Preview loaded: 200 rows.
+[2025-10-02 23:22:40] INFO root: No dataframe available for preview: scaled
+[2025-10-02 23:22:45] INFO root: Prepare: loading data from sqlite...
+[2025-10-02 23:22:45] INFO root: Prepare thread started.
+[2025-10-02 23:22:46] INFO root: Loaded 108841 rows from sqlite.
+[2025-10-02 23:22:46] INFO root: Computed features. Shape: (108841, 47)
+[2025-10-02 23:22:46] INFO root: dropna: before=108841, after=108792, removed=49
+[2025-10-02 23:22:46] INFO root: Feature cols selected (39): ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10']...
+[2025-10-02 23:22:46] INFO root: Building sequences...
+[2025-10-02 23:22:54] INFO root: Sequences built: N=108645, seq_len=128, features=39
+[2025-10-02 23:23:03] INFO root: Scaler fitted and df_scaled prepared.
+[2025-10-02 23:23:03] INFO root: Preview raw (first 5 rows):
+   id   symbol timeframe          ts       open       high        low      close     volume  source     created_at     updated_at                 timestamp
+0   1  BTCUSDT        1m  1752231240  118117.79  118129.59  118090.00  118093.63    9.27987  influx  1759186315000  1759381981000 2025-07-11 10:54:00+00:00
+1   2  BTCUSDT        1m  1752231300  118093.63  118093.63  117980.00  117980.01  111.28787  influx  1759186315000  1759381981000 2025-07-11 10:55:00+00:00
+2   3  BTCUSDT        1m  1752231360  117980.00  118023.34  117980.00  118022.39    9.13797  influx  1759186315000  1759381981000 2025-07-11 10:56:00+00:00
+3   4  BTCUSDT        1m  1752231420  118022.38  118022.38  117946.72  117968.01   30.41224  influx  1759186315000  1759381981000 2025-07-11 10:57:00+00:00
+4   5  BTCUSDT        1m  1752231480  117968.01  117968.01  117964.71  117964.72    7.69926  influx  1759186315000  1759381981000 2025-07-11 10:58:00+00:00
+[2025-10-02 23:23:03] INFO root: Preview features (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5          sma_5         sma_20         sma_50          ema_5         ema_20         ema_50  ma_diff_20           bb_m     bb_std          bb_up          bb_dn  bb_width     rsi_14     atr_14  raw_vol_10  raw_vol_30      fib_r_236  dist_fib_r_236      fib_r_382  dist_fib_r_382      fib_r_500  dist_fib_r_500      fib_r_618  dist_fib_r_618      fib_r_786  dist_fib_r_786   fibext_1272  dist_fibext_1272    fibext_1618  dist_fibext_1618    fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250  11.676602 -0.000158  -0.000158  0.000130   0.000130  117794.093750  117726.835938  117817.375000  117788.960938  117759.851562  117815.523438   56.574001  117726.835938  62.577103  117851.992188  117601.679688  0.002126  74.286270  28.154285    0.000165    0.000244  117712.117188        0.130470  117791.898438       -0.015530  117856.375000       -0.133530  117920.851562       -0.251530  118012.656250       -0.419530  118278.21875         -0.905530  118467.281250         -1.251530  118676.023438         -1.633530             1              0   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750  11.676430 -0.000173  -0.000173 -0.000181  -0.000181  117789.820312  117732.296875  117810.757812  117780.312500  117760.156250  117813.460938   30.714001  117732.296875  60.602898  117853.500000  117611.093750  0.002059  63.416958  25.852142    0.000176    0.000238  117707.632812        0.104987  117784.640625       -0.041013  117846.882812       -0.159013  117909.117188       -0.277013  117997.726562       -0.445013  118254.06250         -0.931013  118436.554688         -1.277013  118638.039062         -1.659013             2              0   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750  11.676239 -0.000190  -0.000190 -0.000493  -0.000493  117778.210938  117738.859375  117805.968750  117767.085938  117758.296875  117810.609375    1.772500  117738.859375  53.255333  117845.367188  117632.343750  0.001809  59.572964  27.683571    0.000189    0.000234  117707.632812        0.062555  117784.640625       -0.083445  117846.882812       -0.201445  117909.117188       -0.319445  117997.726562       -0.487445  118254.06250         -0.973445  118436.554688         -1.319445  118638.039062         -1.701445             3              0  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875  11.675980 -0.000260  -0.000260 -0.000781  -0.000781  117759.820312  117743.359375  117799.726562  117748.070312  117753.703125  117806.664062  -33.310501  117743.359375  45.987026  117835.335938  117651.382812  0.001562  48.687981  24.362858    0.000138    0.000239  117707.632812        0.004577  117784.640625       -0.141423  117846.882812       -0.259423  117909.117188       -0.377423  117997.726562       -0.545423  118254.06250         -1.031423  118436.554688         -1.377423  118638.039062         -1.759423             4              0   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000  11.675895 -0.000085  -0.000085 -0.000866  -0.000866  117739.421875  117744.781250  117794.367188  117732.054688  117748.585938  117802.476562  -44.774502  117744.781250  44.045681  117832.875000  117656.695312  0.001496  39.702305  22.860714    0.000137    0.000233  117707.632812       -0.014458  117784.640625       -0.160458  117846.882812       -0.278458  117909.117188       -0.396458  117997.726562       -0.564458  118254.06250         -1.050458  118436.554688         -1.396458  118638.039062         -1.778458             5              0  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-02 23:23:03] INFO root: Preview scaled (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5     sma_5    sma_20    sma_50     ema_5    ema_20    ema_50  ma_diff_20      bb_m    bb_std     bb_up     bb_dn  bb_width    rsi_14    atr_14  raw_vol_10  raw_vol_30  fib_r_236  dist_fib_r_236  fib_r_382  dist_fib_r_382  fib_r_500  dist_fib_r_500  fib_r_618  dist_fib_r_618  fib_r_786  dist_fib_r_786  fibext_1272  dist_fibext_1272  fibext_1618  dist_fibext_1618  fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250   0.678602 -0.362732  -0.361871  0.135624   0.135841  0.679226  0.658064  0.686881  0.677637  0.668633  0.686622    0.464676  0.658064 -0.167288  0.649305  0.665990 -0.184061  1.294261 -0.490929   -0.701399   -0.502593   0.695617       -0.444573   0.698864       -0.444573   0.701375       -0.444573   0.703785       -0.444573   0.707046       -0.444573     0.715327         -0.444573     0.720190         -0.444574     0.724587         -0.444573     -0.339851      -0.637492   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750   0.672338 -0.397965  -0.397046 -0.185763  -0.184942  0.677875  0.659791  0.684788  0.674903  0.668730  0.685970    0.253903  0.659791 -0.201112  0.649780  0.668974 -0.217205  0.712848 -0.561451   -0.657611   -0.526317   0.694194       -0.524139   0.696564       -0.524139   0.698370       -0.524139   0.700076       -0.524139   0.702336       -0.524139     0.707762         -0.524139     0.710631         -0.524139     0.712869         -0.524139     -0.044944      -0.637492   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750   0.665416 -0.436735  -0.435751 -0.508211  -0.506884  0.674206  0.661865  0.683273  0.670723  0.668142  0.685067    0.018014  0.661865 -0.326999  0.647219  0.675710 -0.340430  0.507228 -0.505348   -0.611359   -0.543991   0.694194       -0.656623   0.696564       -0.656623   0.698370       -0.656623   0.700076       -0.656623   0.702336       -0.656623     0.707762         -0.656623     0.710631         -0.656623     0.712869         -0.656623      0.249963      -0.637492  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875   0.656003 -0.597124  -0.595879 -0.805983  -0.804277  0.668393  0.663288  0.681298  0.664712  0.666689  0.683819   -0.267932  0.663288 -0.451528  0.644060  0.681745 -0.462298 -0.075022 -0.607072   -0.803363   -0.523627   0.694194       -0.837649   0.696564       -0.837649   0.698370       -0.837649   0.700076       -0.837649   0.702336       -0.837649     0.707762         -0.837649     0.710631         -0.837649     0.712869         -0.837649      0.544869      -0.637492   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000   0.652923 -0.195628  -0.195057 -0.894150  -0.892350  0.661946  0.663738  0.679603  0.659650  0.665071  0.682493   -0.361370  0.663738 -0.484790  0.643285  0.683429 -0.494849 -0.555677 -0.653087   -0.809859   -0.549424   0.694194       -0.897083   0.696564       -0.897083   0.698370       -0.897083   0.700076       -0.897083   0.702336       -0.897083     0.707762         -0.897083     0.710631         -0.897083     0.712869         -0.897083      0.839776      -0.637492  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-02 23:23:03] INFO root: Prepare stage finished successfully.
+[2025-10-02 23:33:08] INFO root: Training thread started.
+[2025-10-02 23:33:20] INFO root: Applied scaler to sequences for training.
+[2025-10-02 23:33:21] INFO root: Using device: cuda
+[2025-10-02 23:33:40] INFO root: [Train] Epoch 1/120 train_loss=0.001403 val_loss=0.001417
+[2025-10-02 23:33:40] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:33:47] INFO root: [Train] Epoch 2/120 train_loss=0.001122 val_loss=0.001147
+[2025-10-02 23:33:47] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:33:54] INFO root: [Train] Epoch 3/120 train_loss=0.000884 val_loss=0.000916
+[2025-10-02 23:33:54] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:01] INFO root: [Train] Epoch 4/120 train_loss=0.000686 val_loss=0.000719
+[2025-10-02 23:34:01] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:07] INFO root: [Train] Epoch 5/120 train_loss=0.000522 val_loss=0.000553
+[2025-10-02 23:34:07] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:14] INFO root: [Train] Epoch 6/120 train_loss=0.000389 val_loss=0.000416
+[2025-10-02 23:34:14] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:21] INFO root: [Train] Epoch 7/120 train_loss=0.000285 val_loss=0.000306
+[2025-10-02 23:34:21] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:28] INFO root: [Train] Epoch 8/120 train_loss=0.000206 val_loss=0.000220
+[2025-10-02 23:34:28] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:35] INFO root: [Train] Epoch 9/120 train_loss=0.000148 val_loss=0.000157
+[2025-10-02 23:34:35] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:42] INFO root: [Train] Epoch 10/120 train_loss=0.000106 val_loss=0.000112
+[2025-10-02 23:34:42] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:49] INFO root: [Train] Epoch 11/120 train_loss=0.000078 val_loss=0.000082
+[2025-10-02 23:34:49] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:34:56] INFO root: [Train] Epoch 12/120 train_loss=0.000059 val_loss=0.000062
+[2025-10-02 23:34:56] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:03] INFO root: [Train] Epoch 13/120 train_loss=0.000047 val_loss=0.000049
+[2025-10-02 23:35:03] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:10] INFO root: [Train] Epoch 14/120 train_loss=0.000038 val_loss=0.000040
+[2025-10-02 23:35:10] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:17] INFO root: [Train] Epoch 15/120 train_loss=0.000031 val_loss=0.000032
+[2025-10-02 23:35:17] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:24] INFO root: [Train] Epoch 16/120 train_loss=0.000026 val_loss=0.000026
+[2025-10-02 23:35:24] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:30] INFO root: [Train] Epoch 17/120 train_loss=0.000023 val_loss=0.000022
+[2025-10-02 23:35:30] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:37] INFO root: [Train] Epoch 18/120 train_loss=0.000020 val_loss=0.000018
+[2025-10-02 23:35:37] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:44] INFO root: [Train] Epoch 19/120 train_loss=0.000018 val_loss=0.000015
+[2025-10-02 23:35:44] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:51] INFO root: [Train] Epoch 20/120 train_loss=0.000016 val_loss=0.000013
+[2025-10-02 23:35:51] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:35:58] INFO root: [Train] Epoch 21/120 train_loss=0.000015 val_loss=0.000011
+[2025-10-02 23:35:58] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:05] INFO root: [Train] Epoch 22/120 train_loss=0.000014 val_loss=0.000010
+[2025-10-02 23:36:05] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:12] INFO root: [Train] Epoch 23/120 train_loss=0.000013 val_loss=0.000009
+[2025-10-02 23:36:12] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:19] INFO root: [Train] Epoch 24/120 train_loss=0.000012 val_loss=0.000009
+[2025-10-02 23:36:19] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:26] INFO root: [Train] Epoch 25/120 train_loss=0.000011 val_loss=0.000008
+[2025-10-02 23:36:26] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:33] INFO root: [Train] Epoch 26/120 train_loss=0.000011 val_loss=0.000008
+[2025-10-02 23:36:33] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:40] INFO root: [Train] Epoch 27/120 train_loss=0.000010 val_loss=0.000007
+[2025-10-02 23:36:40] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:47] INFO root: [Train] Epoch 28/120 train_loss=0.000010 val_loss=0.000007
+[2025-10-02 23:36:47] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:36:55] INFO root: [Train] Epoch 29/120 train_loss=0.000010 val_loss=0.000007
+[2025-10-02 23:36:55] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:02] INFO root: [Train] Epoch 30/120 train_loss=0.000009 val_loss=0.000006
+[2025-10-02 23:37:02] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:09] INFO root: [Train] Epoch 31/120 train_loss=0.000009 val_loss=0.000006
+[2025-10-02 23:37:09] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:17] INFO root: [Train] Epoch 32/120 train_loss=0.000008 val_loss=0.000006
+[2025-10-02 23:37:17] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:24] INFO root: [Train] Epoch 33/120 train_loss=0.000008 val_loss=0.000006
+[2025-10-02 23:37:24] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:31] INFO root: [Train] Epoch 34/120 train_loss=0.000008 val_loss=0.000005
+[2025-10-02 23:37:31] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:39] INFO root: [Train] Epoch 35/120 train_loss=0.000008 val_loss=0.000005
+[2025-10-02 23:37:39] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:46] INFO root: [Train] Epoch 36/120 train_loss=0.000007 val_loss=0.000005
+[2025-10-02 23:37:46] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:37:53] INFO root: [Train] Epoch 37/120 train_loss=0.000007 val_loss=0.000005
+[2025-10-02 23:37:53] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:00] INFO root: [Train] Epoch 38/120 train_loss=0.000007 val_loss=0.000005
+[2025-10-02 23:38:00] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:07] INFO root: [Train] Epoch 39/120 train_loss=0.000007 val_loss=0.000005
+[2025-10-02 23:38:07] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:14] INFO root: [Train] Epoch 40/120 train_loss=0.000007 val_loss=0.000005
+[2025-10-02 23:38:14] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:21] INFO root: [Train] Epoch 41/120 train_loss=0.000007 val_loss=0.000004
+[2025-10-02 23:38:21] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:28] INFO root: [Train] Epoch 42/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:38:28] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:35] INFO root: [Train] Epoch 43/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:38:35] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:43] INFO root: [Train] Epoch 44/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:38:43] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:50] INFO root: [Train] Epoch 45/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:38:50] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:38:57] INFO root: [Train] Epoch 46/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:38:57] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:04] INFO root: [Train] Epoch 47/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:04] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:11] INFO root: [Train] Epoch 48/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:11] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:18] INFO root: [Train] Epoch 49/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:18] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:25] INFO root: [Train] Epoch 50/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:25] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:32] INFO root: [Train] Epoch 51/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:32] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:39] INFO root: [Train] Epoch 52/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:39] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:46] INFO root: [Train] Epoch 53/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:46] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:39:53] INFO root: [Train] Epoch 54/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:39:53] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:01] INFO root: [Train] Epoch 55/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:40:01] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:08] INFO root: [Train] Epoch 56/120 train_loss=0.000006 val_loss=0.000004
+[2025-10-02 23:40:08] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:15] INFO root: [Train] Epoch 57/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:40:15] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:22] INFO root: [Train] Epoch 58/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:40:22] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:29] INFO root: [Train] Epoch 59/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:40:36] INFO root: [Train] Epoch 60/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:40:36] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:43] INFO root: [Train] Epoch 61/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:40:43] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:50] INFO root: [Train] Epoch 62/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:40:50] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:40:57] INFO root: [Train] Epoch 63/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:40:57] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:05] INFO root: [Train] Epoch 64/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:05] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:12] INFO root: [Train] Epoch 65/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:12] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:19] INFO root: [Train] Epoch 66/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:19] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:26] INFO root: [Train] Epoch 67/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:26] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:33] INFO root: [Train] Epoch 68/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:33] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:40] INFO root: [Train] Epoch 69/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:40] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:47] INFO root: [Train] Epoch 70/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:47] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:41:54] INFO root: [Train] Epoch 71/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:41:54] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:42:02] INFO root: [Train] Epoch 72/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:09] INFO root: [Train] Epoch 73/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:09] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:42:16] INFO root: [Train] Epoch 74/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:16] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:42:23] INFO root: [Train] Epoch 75/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:23] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:42:30] INFO root: [Train] Epoch 76/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:30] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:42:37] INFO root: [Train] Epoch 77/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:37] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:42:44] INFO root: [Train] Epoch 78/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:51] INFO root: [Train] Epoch 79/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:59] INFO root: [Train] Epoch 80/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:42:59] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:43:06] INFO root: [Train] Epoch 81/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:43:13] INFO root: [Train] Epoch 82/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:43:13] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:43:20] INFO root: [Train] Epoch 83/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:43:20] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:43:27] INFO root: [Train] Epoch 84/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:43:34] INFO root: [Train] Epoch 85/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:43:41] INFO root: [Train] Epoch 86/120 train_loss=0.000005 val_loss=0.000004
+[2025-10-02 23:43:49] INFO root: [Train] Epoch 87/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:43:56] INFO root: [Train] Epoch 88/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:43:56] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:44:03] INFO root: [Train] Epoch 89/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:44:10] INFO root: [Train] Epoch 90/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:44:18] INFO root: [Train] Epoch 91/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:44:18] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:44:25] INFO root: [Train] Epoch 92/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:44:25] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:44:32] INFO root: [Train] Epoch 93/120 train_loss=0.000005 val_loss=0.000003
+[2025-10-02 23:44:40] INFO root: [Train] Epoch 94/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:44:40] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:44:47] INFO root: [Train] Epoch 95/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:44:47] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:44:56] INFO root: [Train] Epoch 96/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:44:56] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:45:03] INFO root: [Train] Epoch 97/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:10] INFO root: [Train] Epoch 98/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:10] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:45:17] INFO root: [Train] Epoch 99/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:17] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:45:25] INFO root: [Train] Epoch 100/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:33] INFO root: [Train] Epoch 101/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:33] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:45:40] INFO root: [Train] Epoch 102/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:40] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:45:48] INFO root: [Train] Epoch 103/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:48] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:45:56] INFO root: [Train] Epoch 104/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:45:56] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:46:03] INFO root: [Train] Epoch 105/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:46:21] INFO root: [Train] Epoch 106/120 train_loss=0.000004 val_loss=0.000003
+[2025-10-02 23:46:23] INFO root: Saved best model & artifacts to artifacts
+[2025-10-02 23:46:28] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\cow_lvl\tradeapp.py", line 3753, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\cow_lvl\tradeapp.py", line 3749, in main
+    root.mainloop()
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
