@@ -1,0 +1,288 @@
+[2025-10-02 03:29:32] INFO root: init_logging: logfile=logs\log_20251002_012932.txt
+[2025-10-02 03:29:32] INFO __main__: Logging initialized
+[2025-10-02 03:29:35] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 03:29:47] INFO websocket: Websocket connected
+[2025-10-02 03:29:47] INFO root: WS open (callback)
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1014, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1029, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview2"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:25] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1014, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1029, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview2"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:26] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1014, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1029, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview2"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:27] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:28] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:28] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1014, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview"
+[2025-10-02 03:41:28] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1029, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame2.!treeview2"
+[2025-10-02 03:41:28] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:28] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:28] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 872, in _process_ws_queue
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel.!frame2.!frame.!treeview"
+[2025-10-02 03:41:28] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 3111, in <module>
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 3107, in main
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

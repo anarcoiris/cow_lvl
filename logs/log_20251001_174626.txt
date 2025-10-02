@@ -1,0 +1,15 @@
+[2025-10-01 19:46:26] INFO root: init_logging: logfile=logs\log_20251001_174626.txt
+[2025-10-01 19:46:26] INFO __main__: Logging initialized
+[2025-10-01 19:46:32] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2899, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2894, in main
+    app = TradingAppExtended(root)
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 415, in __init__
+    self._build_ui()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 699, in _build_ui
+    self._build_train_tab()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 719, in _build_train_tab
+    self._add_labeled_entry(left, "seq_len", self.seq_len)
+AttributeError: 'TradingAppExtended' object has no attribute '_add_labeled_entry'

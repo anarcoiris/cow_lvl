@@ -1,0 +1,188 @@
+[2025-10-01 19:48:58] INFO root: init_logging: logfile=logs\log_20251001_174858.txt
+[2025-10-01 19:48:58] INFO __main__: Logging initialized
+[2025-10-01 19:49:01] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 604, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+[2025-10-01 19:49:01] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 604, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+
+[2025-10-01 19:49:31] INFO websocket: Websocket connected
+[2025-10-01 19:49:31] INFO root: WS open (callback)
+[2025-10-01 19:49:48] INFO root: Big trade sell 5.025@116967.5
+[2025-10-01 19:50:00] INFO root: Big trade sell 9.8@116973.9
+[2025-10-01 19:50:01] INFO root: Big trade sell 7.068@116967.6
+[2025-10-01 19:50:02] INFO root: Big trade buy 6.693@116950.1
+[2025-10-01 19:50:12] INFO root: Big trade sell 5.003@116964.5
+[2025-10-01 19:50:13] INFO root: Big trade buy 9.043@116964.6
+[2025-10-01 19:50:21] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=30m, paper=True, ledger=artifacts\ledger.csv).
+[2025-10-01 19:50:21] INFO TradingDaemon: Daemon loop started.
+[2025-10-01 19:50:21] INFO root: Daemon started.
+[2025-10-01 19:50:21] INFO TradingDaemon: No data available from sqlite.
+[2025-10-01 19:50:22] INFO root: Big trade sell 8.82@116964.5
+[2025-10-01 19:50:25] INFO root: Big trade buy 22.44@116964.5
+[2025-10-01 19:50:26] INFO TradingDaemon: No data available from sqlite.
+[2025-10-01 19:50:32] INFO TradingDaemon: No data available from sqlite.
+[2025-10-01 19:50:37] INFO TradingDaemon: No data available from sqlite.
+[2025-10-01 19:50:37] INFO root: Big trade buy 6.458@116970.0
+[2025-10-01 19:50:42] INFO root: Applied status intervals: inference=60.0s trade=300.0s refresh=120.0s
+[2025-10-01 19:50:42] INFO TradingDaemon: Configuration updated from dict.
+[2025-10-01 19:50:42] INFO root: Pushed refresh interval to daemon.poll_interval.
+[2025-10-01 19:50:43] INFO root: Big trade buy 102.995@116980.0
+[2025-10-01 19:50:49] INFO root: Big trade buy 6.757@116995.0
+[2025-10-01 19:50:52] INFO root: Status data fetched: 0 rows.
+[2025-10-01 19:50:52] INFO root: Big trade sell 9.882@116994.9
+[2025-10-01 19:50:53] INFO root: Big trade sell 11.837@116985.5
+[2025-10-01 19:50:55] INFO root: Refreshed model metadata from GUI state.
+[2025-10-01 19:50:59] INFO root: No rows found for selection.
+[2025-10-01 19:51:04] INFO root: Big trade sell 8.162@116973.7
+[2025-10-01 19:51:12] INFO TradingDaemon: Daemon stopped.
+[2025-10-01 19:51:12] INFO root: Daemon stopped.
+[2025-10-01 19:51:14] INFO root: No rows found for selection.
+[2025-10-01 19:51:17] INFO root: Big trade sell 10.01@116960.0
+[2025-10-01 19:51:17] INFO root: Big trade sell 20.41@116950.0
+[2025-10-01 19:51:23] INFO root: Big trade buy 8.812@116921.1
+[2025-10-01 19:51:29] INFO root: Big trade sell 5.025@116900.0
+[2025-10-01 19:51:30] INFO root: Preview loaded: 200 rows.
+[2025-10-01 19:51:33] INFO root: Big trade buy 10.268@116849.8
+[2025-10-01 19:51:33] INFO root: Big trade buy 9.448@116854.0
+[2025-10-01 19:51:35] INFO root: Big trade sell 13.862@116861.5
+[2025-10-01 19:51:36] INFO root: Preview loaded: 200 rows.
+[2025-10-01 19:51:40] INFO root: Refreshed model metadata from GUI state.
+[2025-10-01 19:51:40] INFO root: Status data fetched: 50 rows.
+[2025-10-01 19:51:41] INFO root: Big trade sell 8.766@116855.9
+[2025-10-01 19:51:41] INFO root: Big trade sell 6.211@116855.2
+[2025-10-01 19:51:47] INFO root: Status data fetched: 50 rows.
+[2025-10-01 19:51:50] INFO root: Big trade buy 7.756@116834.7
+[2025-10-01 19:51:52] INFO root: Prediction worker started (background).
+[2025-10-01 19:51:52] INFO root: No model loaded for inference.
+[2025-10-01 19:51:56] INFO root: meta.json leído: artifacts\meta.json
+[2025-10-01 19:51:56] INFO root: state_dict cargado con strict=True.
+[2025-10-01 19:51:56] INFO root: Modelo preparado en device cuda (input_size=39, hidden=96, num_layers=2).
+[2025-10-01 19:51:56] INFO root: Modelo cargado desde artifacts\model_best.pt y metadata aplicada: {'feature_cols': ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10', 'raw_vol_30', 'fib_r_236', 'dist_fib_r_236', 'fib_r_382', 'dist_fib_r_382', 'fib_r_500', 'dist_fib_r_500', 'fib_r_618', 'dist_fib_r_618', 'fib_r_786', 'dist_fib_r_786', 'fibext_1272', 'dist_fibext_1272', 'fibext_1618', 'dist_fibext_1618', 'fibext_2000', 'dist_fibext_2000', 'td_buy_setup', 'td_sell_setup'], 'seq_len': 128, 'horizon': 20, 'hidden': 96, 'input_size': 39, 'num_layers': 2}
+[2025-10-01 19:51:56] INFO root: Scaler cargado desde artifacts\scaler.pkl.
+[2025-10-01 19:51:57] INFO root: Big trade sell 8.109@116864.8
+[2025-10-01 19:52:01] INFO root: Big trade sell 14.12@116821.6
+[2025-10-01 19:52:11] INFO root: Big trade sell 6.577@116812.0
+[2025-10-01 19:52:12] INFO root: Big trade sell 16.167@116812.0
+[2025-10-01 19:52:13] INFO root: Big trade sell 13.432@116800.0
+[2025-10-01 19:52:14] INFO root: Big trade buy 9.256@116771.5
+[2025-10-01 19:52:14] INFO root: Big trade buy 14.252@116757.2
+[2025-10-01 19:52:24] INFO root: Prepare: loading data from sqlite...
+[2025-10-01 19:52:24] INFO root: Prepare thread started.
+[2025-10-01 19:52:25] INFO root: Loaded 105321 rows from sqlite.
+[2025-10-01 19:52:25] INFO root: Computed features. Shape: (105321, 47)
+[2025-10-01 19:52:25] INFO root: dropna: before=105321, after=105272, removed=49
+[2025-10-01 19:52:25] INFO root: Feature cols selected (39): ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10']...
+[2025-10-01 19:52:25] INFO root: Building sequences...
+[2025-10-01 19:52:26] INFO root: Sequences built: N=105231, seq_len=32, features=39
+[2025-10-01 19:52:28] INFO root: Scaler fitted and df_scaled prepared.
+[2025-10-01 19:52:28] INFO root: Preview raw (first 5 rows):
+   id   symbol timeframe          ts       open       high        low      close     volume  source     created_at     updated_at                 timestamp
+0   1  BTCUSDT        1m  1752231240  118117.79  118129.59  118090.00  118093.63    9.27987  influx  1759324325000  1759324325000 2025-07-11 10:54:00+00:00
+1   2  BTCUSDT        1m  1752231300  118093.63  118093.63  117980.00  117980.01  111.28787  influx  1759324325000  1759324325000 2025-07-11 10:55:00+00:00
+2   3  BTCUSDT        1m  1752231360  117980.00  118023.34  117980.00  118022.39    9.13797  influx  1759324325000  1759324325000 2025-07-11 10:56:00+00:00
+3   4  BTCUSDT        1m  1752231420  118022.38  118022.38  117946.72  117968.01   30.41224  influx  1759324325000  1759324325000 2025-07-11 10:57:00+00:00
+4   5  BTCUSDT        1m  1752231480  117968.01  117968.01  117964.71  117964.72    7.69926  influx  1759324325000  1759324325000 2025-07-11 10:58:00+00:00
+[2025-10-01 19:52:28] INFO root: Preview features (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5          sma_5         sma_20         sma_50          ema_5         ema_20         ema_50  ma_diff_20           bb_m     bb_std          bb_up          bb_dn  bb_width     rsi_14     atr_14  raw_vol_10  raw_vol_30      fib_r_236  dist_fib_r_236      fib_r_382  dist_fib_r_382      fib_r_500  dist_fib_r_500      fib_r_618  dist_fib_r_618      fib_r_786  dist_fib_r_786   fibext_1272  dist_fibext_1272    fibext_1618  dist_fibext_1618    fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250  11.676602 -0.000158  -0.000158  0.000130   0.000130  117794.093750  117726.835938  117817.375000  117788.960938  117759.851562  117815.523438   56.574001  117726.835938  62.577103  117851.992188  117601.679688  0.002126  74.286270  28.154285    0.000165    0.000244  117712.117188        0.130470  117791.898438       -0.015530  117856.375000       -0.133530  117920.851562       -0.251530  118012.656250       -0.419530  118278.21875         -0.905530  118467.281250         -1.251530  118676.023438         -1.633530             1              0   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750  11.676430 -0.000173  -0.000173 -0.000181  -0.000181  117789.820312  117732.296875  117810.757812  117780.312500  117760.156250  117813.460938   30.714001  117732.296875  60.602898  117853.500000  117611.093750  0.002059  63.416958  25.852142    0.000176    0.000238  117707.632812        0.104987  117784.640625       -0.041013  117846.882812       -0.159013  117909.117188       -0.277013  117997.726562       -0.445013  118254.06250         -0.931013  118436.554688         -1.277013  118638.039062         -1.659013             2              0   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750  11.676239 -0.000190  -0.000190 -0.000493  -0.000493  117778.210938  117738.859375  117805.968750  117767.085938  117758.296875  117810.609375    1.772500  117738.859375  53.255333  117845.367188  117632.343750  0.001809  59.572964  27.683571    0.000189    0.000234  117707.632812        0.062555  117784.640625       -0.083445  117846.882812       -0.201445  117909.117188       -0.319445  117997.726562       -0.487445  118254.06250         -0.973445  118436.554688         -1.319445  118638.039062         -1.701445             3              0  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875  11.675980 -0.000260  -0.000260 -0.000781  -0.000781  117759.820312  117743.359375  117799.726562  117748.070312  117753.703125  117806.664062  -33.310501  117743.359375  45.987026  117835.335938  117651.382812  0.001562  48.687981  24.362858    0.000138    0.000239  117707.632812        0.004577  117784.640625       -0.141423  117846.882812       -0.259423  117909.117188       -0.377423  117997.726562       -0.545423  118254.06250         -1.031423  118436.554688         -1.377423  118638.039062         -1.759423             4              0   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000  11.675895 -0.000085  -0.000085 -0.000866  -0.000866  117739.421875  117744.781250  117794.367188  117732.054688  117748.585938  117802.476562  -44.774502  117744.781250  44.045681  117832.875000  117656.695312  0.001496  39.702305  22.860714    0.000137    0.000233  117707.632812       -0.014458  117784.640625       -0.160458  117846.882812       -0.278458  117909.117188       -0.396458  117997.726562       -0.564458  118254.06250         -1.050458  118436.554688         -1.396458  118638.039062         -1.778458             5              0  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-01 19:52:28] INFO root: Preview scaled (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5     sma_5    sma_20    sma_50     ema_5    ema_20    ema_50  ma_diff_20      bb_m    bb_std     bb_up     bb_dn  bb_width    rsi_14    atr_14  raw_vol_10  raw_vol_30  fib_r_236  dist_fib_r_236  fib_r_382  dist_fib_r_382  fib_r_500  dist_fib_r_500  fib_r_618  dist_fib_r_618  fib_r_786  dist_fib_r_786  fibext_1272  dist_fibext_1272  fibext_1618  dist_fibext_1618  fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250   0.647004 -0.360358  -0.359488  0.135458   0.135671  0.647510  0.626353  0.655107  0.645922  0.636906  0.654835    0.462863  0.626353 -0.170372  0.617564  0.634337 -0.185991  1.292819 -0.492717   -0.698564   -0.501693   0.663869       -0.442206   0.667076       -0.442206   0.669559       -0.442206   0.671944       -0.442206   0.675173       -0.442206     0.683397         -0.442206     0.688249         -0.442206     0.692659         -0.442206     -0.339648       -0.63674   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750   0.640749 -0.395388  -0.394458 -0.184118  -0.183290  0.646161  0.628078  0.653016  0.643191  0.637003  0.654183    0.253350  0.628078 -0.203879  0.618038  0.637318 -0.218832  0.712282 -0.562549   -0.655225   -0.525148   0.662448       -0.521699   0.664779       -0.521699   0.666557       -0.521699   0.668238       -0.521699   0.670468       -0.521699     0.675840         -0.521699     0.678699         -0.521698     0.680953         -0.521699     -0.045217       -0.63674   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750   0.633837 -0.433934  -0.432937 -0.504750  -0.503404  0.642496  0.630150  0.651503  0.639016  0.636415  0.653282    0.018870  0.630150 -0.328588  0.615480  0.644046 -0.340931  0.506972 -0.506995   -0.609447   -0.542621   0.662448       -0.654060   0.664779       -0.654060   0.666557       -0.654060   0.668238       -0.654060   0.670468       -0.654060     0.675840         -0.654060     0.678699         -0.654060     0.680953         -0.654060      0.249214       -0.63674  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875   0.624437 -0.593396  -0.592134 -0.800843  -0.799108  0.636690  0.631571  0.649530  0.633012  0.634964  0.652035   -0.265367  0.631571 -0.451952  0.612325  0.650074 -0.461686 -0.074402 -0.607725   -0.799481   -0.522488   0.662448       -0.834919   0.664779       -0.834919   0.666557       -0.834919   0.668238       -0.834919   0.670468       -0.834919     0.675840         -0.834919     0.678699         -0.834919     0.680953         -0.834919      0.543645       -0.63674   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000   0.621362 -0.194221  -0.193644 -0.888514  -0.886680  0.630251  0.632020  0.647836  0.627956  0.633348  0.650711   -0.358247  0.632020 -0.484902  0.611551  0.651756 -0.493939 -0.554333 -0.653291   -0.805910   -0.547993   0.662448       -0.894298   0.664779       -0.894298   0.666557       -0.894298   0.668238       -0.894298   0.670468       -0.894298     0.675840         -0.894298     0.678699         -0.894298     0.680953         -0.894298      0.838076       -0.63674  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-01 19:52:28] INFO root: Prepare stage finished successfully.
+[2025-10-01 19:52:38] INFO root: Big trade sell 5.378@116831.2
+[2025-10-01 19:52:40] INFO root: Big trade sell 12.275@116853.4
+[2025-10-01 19:52:40] INFO root: Big trade buy 7.064@116842.3
+[2025-10-01 19:52:55] INFO root: Big trade sell 5.81@116810.9
+[2025-10-01 19:52:57] INFO root: Big trade buy 6.26@116812.8
+[2025-10-01 19:52:59] INFO root: Big trade buy 7.991@116816.0
+[2025-10-01 19:53:16] INFO root: Big trade sell 17.849@116795.4
+[2025-10-01 19:53:31] INFO root: Big trade buy 5.533@116764.8
+[2025-10-01 19:53:40] INFO root: Big trade buy 7.579@116784.7
+[2025-10-01 19:53:44] INFO root: Big trade buy 8.168@116784.8
+[2025-10-01 19:53:46] INFO root: Big trade sell 7.932@116776.0
+[2025-10-01 19:53:53] INFO root: Big trade sell 8.177@116776.0
+[2025-10-01 19:53:55] INFO root: Big trade buy 6.29@116776.0
+[2025-10-01 19:54:01] INFO root: Big trade sell 18.746@116777.1
+[2025-10-01 19:54:01] INFO root: Big trade sell 11.221@116775.8
+[2025-10-01 19:54:02] INFO root: Big trade sell 6.186@116739.5
+[2025-10-01 19:54:14] INFO root: Big trade sell 5.778@116720.0
+[2025-10-01 19:54:15] INFO root: Big trade buy 16.831@116710.9
+[2025-10-01 19:54:15] INFO root: Big trade sell 12.308@116725.5
+[2025-10-01 19:54:22] INFO root: Big trade sell 8.808@116731.3
+[2025-10-01 19:54:29] INFO root: Big trade sell 8.482@116731.0
+[2025-10-01 19:54:37] INFO root: Big trade sell 6.994@116722.9
+[2025-10-01 19:54:37] INFO root: Big trade buy 12.554@116720.0
+[2025-10-01 19:54:47] INFO root: Big trade buy 232.584@116776.1
+[2025-10-01 19:54:56] INFO root: Big trade sell 5.186@116811.7
+[2025-10-01 19:54:58] INFO root: Big trade buy 7.467@116800.3
+[2025-10-01 19:55:07] INFO root: Big trade sell 6.839@116800.2
+[2025-10-01 19:56:02] INFO root: Big trade sell 6.847@116832.7
+[2025-10-01 19:56:05] INFO root: Big trade sell 10.827@116832.7
+[2025-10-01 19:56:37] INFO root: Big trade buy 5.647@116821.6
+[2025-10-01 19:56:42] INFO root: Big trade sell 7.917@116832.6
+[2025-10-01 19:56:46] INFO root: Big trade buy 6.989@116814.9
+[2025-10-01 19:57:01] INFO root: Big trade sell 5.32@116823.4
+[2025-10-01 19:57:01] INFO root: Big trade sell 7.497@116814.8
+[2025-10-01 19:57:01] INFO root: Big trade sell 7.006@116804.3
+[2025-10-01 19:57:16] INFO root: Big trade sell 8.787@116695.8
+[2025-10-01 19:57:28] INFO root: Big trade buy 7.854@116704.4
+[2025-10-01 19:57:44] INFO root: Big trade buy 5.24@116714.4
+[2025-10-01 19:57:52] INFO root: Big trade buy 22.95@116724.4
+[2025-10-01 19:57:56] INFO root: Big trade buy 35.009@116724.4
+[2025-10-01 19:58:56] INFO root: Big trade sell 5.503@116800.0
+[2025-10-01 19:59:14] INFO root: Big trade buy 5.0@116784.8
+[2025-10-01 19:59:39] INFO root: Big trade sell 5.908@116747.0
+[2025-10-01 19:59:55] INFO root: Big trade sell 11.611@116746.9
+[2025-10-01 20:00:16] INFO root: Big trade buy 97.759@116747.0
+[2025-10-01 20:00:16] INFO root: Big trade buy 35.99@116747.0
+[2025-10-01 20:00:43] INFO root: Big trade sell 12.354@116837.6
+[2025-10-01 20:01:04] INFO root: Big trade buy 11.25@116807.8
+[2025-10-01 20:01:11] INFO root: Big trade buy 9.345@116812.2
+[2025-10-01 20:01:44] INFO root: Big trade sell 9.02@116832.4
+[2025-10-01 20:01:48] INFO root: Big trade sell 9.0@116838.4
+[2025-10-01 20:02:37] INFO root: Big trade sell 16.128@116843.2
+[2025-10-01 20:02:53] INFO root: Big trade sell 6.096@116835.9
+[2025-10-01 20:03:02] INFO root: Big trade sell 6.018@116800.2
+[2025-10-01 20:03:37] INFO root: Big trade buy 13.654@116742.2
+[2025-10-01 20:03:45] INFO root: Big trade sell 16.574@116759.4
+[2025-10-01 20:03:59] INFO root: Big trade buy 5.191@116754.4
+[2025-10-01 20:04:30] INFO root: Big trade sell 5.027@116754.2
+[2025-10-01 20:04:30] INFO root: Big trade sell 5.141@116754.0
+[2025-10-01 20:04:30] INFO root: Big trade buy 13.201@116746.1
+[2025-10-01 20:05:04] INFO root: Big trade buy 8.018@116762.4
+[2025-10-01 20:05:05] INFO root: Big trade sell 7.706@116768.3
+[2025-10-01 20:06:27] INFO root: Big trade buy 33.076@116835.9
+[2025-10-01 20:06:44] INFO root: Big trade buy 7.701@116844.1
+[2025-10-01 20:07:03] INFO root: Big trade buy 5.129@116849.0
+[2025-10-01 20:07:19] INFO root: Big trade buy 10.754@116883.7
+[2025-10-01 20:07:21] INFO root: Big trade buy 9.345@116885.1
+[2025-10-01 20:07:22] INFO root: Big trade buy 8.251@116885.2
+[2025-10-01 20:07:25] INFO root: Big trade buy 10.486@116888.0
+[2025-10-01 20:07:30] INFO root: Big trade buy 11.0@116912.9
+[2025-10-01 20:07:43] INFO root: Big trade sell 5.804@116963.8
+[2025-10-01 20:08:32] INFO root: Big trade buy 6.948@116864.9
+[2025-10-01 20:34:26] INFO root: WS error: Connection to remote host was lost.
+[2025-10-01 20:34:26] ERROR websocket: Connection to remote host was lost. - goodbye
+[2025-10-01 20:34:26] INFO root: WS closed: None None
+[2025-10-01 20:34:26] ERROR root: WS error: Connection to remote host was lost.
+[2025-10-01 20:37:00] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2915, in <module>
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2911, in main
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

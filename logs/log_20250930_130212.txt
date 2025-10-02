@@ -841,3 +841,775 @@ ValueError: could not broadcast input array from shape (64,53) into shape (64,47
 [2025-09-30 18:42:43] INFO TradingDaemon: No trade (signal 0.000488 within threshold).
 [2025-09-30 18:43:16] INFO TradingDaemon: Prediction computed: -0.000108
 [2025-09-30 18:43:16] INFO TradingDaemon: No trade (signal -0.000108 within threshold).
+[2025-09-30 18:43:49] INFO TradingDaemon: Prediction computed: -0.000108
+[2025-09-30 18:43:49] INFO TradingDaemon: No trade (signal -0.000108 within threshold).
+[2025-09-30 18:44:22] INFO TradingDaemon: Prediction computed: -0.000314
+[2025-09-30 18:44:22] INFO TradingDaemon: No trade (signal -0.000314 within threshold).
+[2025-09-30 18:44:54] INFO TradingDaemon: Prediction computed: -0.000314
+[2025-09-30 18:44:54] INFO TradingDaemon: No trade (signal -0.000314 within threshold).
+[2025-09-30 18:45:27] INFO TradingDaemon: Prediction computed: -0.000203
+[2025-09-30 18:45:27] INFO TradingDaemon: No trade (signal -0.000203 within threshold).
+[2025-09-30 18:46:00] INFO TradingDaemon: Prediction computed: -0.000203
+[2025-09-30 18:46:00] INFO TradingDaemon: No trade (signal -0.000203 within threshold).
+[2025-09-30 18:46:33] INFO TradingDaemon: Prediction computed: 0.000052
+[2025-09-30 18:46:33] INFO TradingDaemon: No trade (signal 0.000052 within threshold).
+[2025-09-30 18:47:06] INFO TradingDaemon: Prediction computed: 0.000265
+[2025-09-30 18:47:06] INFO TradingDaemon: No trade (signal 0.000265 within threshold).
+[2025-09-30 18:47:39] INFO TradingDaemon: Prediction computed: 0.000265
+[2025-09-30 18:47:39] INFO TradingDaemon: No trade (signal 0.000265 within threshold).
+[2025-09-30 18:48:12] INFO TradingDaemon: Prediction computed: 0.000284
+[2025-09-30 18:48:12] INFO TradingDaemon: No trade (signal 0.000284 within threshold).
+[2025-09-30 18:48:45] INFO TradingDaemon: Prediction computed: 0.000284
+[2025-09-30 18:48:45] INFO TradingDaemon: No trade (signal 0.000284 within threshold).
+[2025-09-30 18:49:18] INFO TradingDaemon: Prediction computed: 0.000038
+[2025-09-30 18:49:18] INFO TradingDaemon: No trade (signal 0.000038 within threshold).
+[2025-09-30 18:49:50] INFO TradingDaemon: Prediction computed: 0.000038
+[2025-09-30 18:49:50] INFO TradingDaemon: No trade (signal 0.000038 within threshold).
+[2025-09-30 18:50:23] INFO TradingDaemon: Prediction computed: -0.000220
+[2025-09-30 18:50:23] INFO TradingDaemon: No trade (signal -0.000220 within threshold).
+[2025-09-30 18:50:56] INFO TradingDaemon: Prediction computed: -0.000220
+[2025-09-30 18:50:56] INFO TradingDaemon: No trade (signal -0.000220 within threshold).
+[2025-09-30 18:51:29] INFO TradingDaemon: Prediction computed: -0.000879
+[2025-09-30 18:51:29] INFO TradingDaemon: Paper trade simulated: sell 0.00088616 @ 112846.27
+[2025-09-30 18:52:02] INFO TradingDaemon: Prediction computed: -0.001281
+[2025-09-30 18:52:02] INFO TradingDaemon: Paper trade simulated: sell 0.00088608 @ 112856.99
+[2025-09-30 18:52:35] INFO TradingDaemon: Prediction computed: -0.001281
+[2025-09-30 18:52:35] INFO TradingDaemon: Paper trade simulated: sell 0.00088608 @ 112856.99
+[2025-09-30 18:53:08] INFO TradingDaemon: Prediction computed: -0.001360
+[2025-09-30 18:53:08] INFO TradingDaemon: Paper trade simulated: sell 0.00088599 @ 112867.77
+[2025-09-30 18:53:40] INFO TradingDaemon: Prediction computed: -0.001360
+[2025-09-30 18:53:40] INFO TradingDaemon: Paper trade simulated: sell 0.00088599 @ 112867.77
+[2025-09-30 18:54:13] INFO TradingDaemon: Prediction computed: -0.001082
+[2025-09-30 18:54:13] INFO TradingDaemon: Paper trade simulated: sell 0.00088621 @ 112840.17
+[2025-09-30 18:54:46] INFO TradingDaemon: Prediction computed: -0.001082
+[2025-09-30 18:54:46] INFO TradingDaemon: Paper trade simulated: sell 0.00088621 @ 112840.17
+[2025-09-30 18:55:08] INFO root: Prediction worker started (background).
+[2025-09-30 18:55:08] INFO root: Prediction computed: log=-0.001177 pct=-0.1176298186907454 vol=0.6577019095420837
+[2025-09-30 18:55:19] INFO TradingDaemon: Prediction computed: -0.001177
+[2025-09-30 18:55:19] INFO TradingDaemon: Paper trade simulated: sell 0.00088649 @ 112804.00
+[2025-09-30 18:55:52] INFO TradingDaemon: Prediction computed: -0.001177
+[2025-09-30 18:55:52] INFO TradingDaemon: Paper trade simulated: sell 0.00088649 @ 112804.00
+[2025-09-30 18:56:24] INFO TradingDaemon: Prediction computed: -0.001111
+[2025-09-30 18:56:24] INFO TradingDaemon: Paper trade simulated: sell 0.00088634 @ 112823.65
+[2025-09-30 18:56:57] INFO TradingDaemon: Prediction computed: -0.001111
+[2025-09-30 18:56:57] INFO TradingDaemon: Paper trade simulated: sell 0.00088634 @ 112823.65
+[2025-09-30 18:57:30] INFO TradingDaemon: Prediction computed: -0.000787
+[2025-09-30 18:57:30] INFO TradingDaemon: Paper trade simulated: sell 0.00088652 @ 112800.01
+[2025-09-30 18:58:02] INFO TradingDaemon: Prediction computed: -0.000909
+[2025-09-30 18:58:02] INFO TradingDaemon: Paper trade simulated: sell 0.00088627 @ 112832.50
+[2025-09-30 18:58:35] INFO TradingDaemon: Prediction computed: -0.000909
+[2025-09-30 18:58:35] INFO TradingDaemon: Paper trade simulated: sell 0.00088627 @ 112832.50
+[2025-09-30 18:59:08] INFO TradingDaemon: Prediction computed: -0.001011
+[2025-09-30 18:59:08] INFO TradingDaemon: Paper trade simulated: sell 0.00088646 @ 112808.69
+[2025-09-30 18:59:41] INFO TradingDaemon: Prediction computed: -0.001011
+[2025-09-30 18:59:41] INFO TradingDaemon: Paper trade simulated: sell 0.00088646 @ 112808.69
+[2025-09-30 19:00:13] INFO TradingDaemon: Prediction computed: -0.001253
+[2025-09-30 19:00:13] INFO TradingDaemon: Paper trade simulated: sell 0.00088620 @ 112841.24
+[2025-09-30 19:00:46] INFO TradingDaemon: Prediction computed: -0.001253
+[2025-09-30 19:00:46] INFO TradingDaemon: Paper trade simulated: sell 0.00088620 @ 112841.24
+[2025-09-30 19:01:19] INFO TradingDaemon: Prediction computed: -0.000978
+[2025-09-30 19:01:19] INFO TradingDaemon: Paper trade simulated: sell 0.00088593 @ 112876.27
+[2025-09-30 19:01:52] INFO TradingDaemon: Prediction computed: -0.000978
+[2025-09-30 19:01:52] INFO TradingDaemon: Paper trade simulated: sell 0.00088593 @ 112876.27
+[2025-09-30 19:02:24] INFO TradingDaemon: Prediction computed: -0.000192
+[2025-09-30 19:02:24] INFO TradingDaemon: No trade (signal -0.000192 within threshold).
+[2025-09-30 19:02:57] INFO TradingDaemon: Prediction computed: -0.000192
+[2025-09-30 19:02:57] INFO TradingDaemon: No trade (signal -0.000192 within threshold).
+[2025-09-30 19:03:30] INFO TradingDaemon: Prediction computed: 0.000209
+[2025-09-30 19:03:30] INFO TradingDaemon: No trade (signal 0.000209 within threshold).
+[2025-09-30 19:04:02] INFO TradingDaemon: Prediction computed: 0.000173
+[2025-09-30 19:04:02] INFO TradingDaemon: No trade (signal 0.000173 within threshold).
+[2025-09-30 19:04:35] INFO TradingDaemon: Prediction computed: 0.000173
+[2025-09-30 19:04:35] INFO TradingDaemon: No trade (signal 0.000173 within threshold).
+[2025-09-30 19:05:08] INFO TradingDaemon: Prediction computed: -0.000364
+[2025-09-30 19:05:08] INFO TradingDaemon: No trade (signal -0.000364 within threshold).
+[2025-09-30 19:05:41] INFO TradingDaemon: Prediction computed: -0.000364
+[2025-09-30 19:05:41] INFO TradingDaemon: No trade (signal -0.000364 within threshold).
+[2025-09-30 19:06:13] INFO TradingDaemon: Prediction computed: -0.000646
+[2025-09-30 19:06:13] INFO TradingDaemon: Paper trade simulated: sell 0.00088417 @ 113100.00
+[2025-09-30 19:06:46] INFO TradingDaemon: Prediction computed: -0.000646
+[2025-09-30 19:06:46] INFO TradingDaemon: Paper trade simulated: sell 0.00088417 @ 113100.00
+[2025-09-30 19:07:19] INFO TradingDaemon: Prediction computed: -0.000467
+[2025-09-30 19:07:19] INFO TradingDaemon: No trade (signal -0.000467 within threshold).
+[2025-09-30 19:07:52] INFO TradingDaemon: Prediction computed: -0.000467
+[2025-09-30 19:07:52] INFO TradingDaemon: No trade (signal -0.000467 within threshold).
+[2025-09-30 19:08:25] INFO TradingDaemon: Prediction computed: -0.000043
+[2025-09-30 19:08:25] INFO TradingDaemon: No trade (signal -0.000043 within threshold).
+[2025-09-30 19:08:58] INFO TradingDaemon: Prediction computed: -0.000043
+[2025-09-30 19:08:58] INFO TradingDaemon: No trade (signal -0.000043 within threshold).
+[2025-09-30 19:09:30] INFO TradingDaemon: Prediction computed: 0.000385
+[2025-09-30 19:09:30] INFO TradingDaemon: No trade (signal 0.000385 within threshold).
+[2025-09-30 19:10:03] INFO TradingDaemon: Prediction computed: 0.000204
+[2025-09-30 19:10:03] INFO TradingDaemon: No trade (signal 0.000204 within threshold).
+[2025-09-30 19:10:36] INFO TradingDaemon: Prediction computed: 0.000204
+[2025-09-30 19:10:36] INFO TradingDaemon: No trade (signal 0.000204 within threshold).
+[2025-09-30 19:11:09] INFO TradingDaemon: Prediction computed: 0.000134
+[2025-09-30 19:11:09] INFO TradingDaemon: No trade (signal 0.000134 within threshold).
+[2025-09-30 19:11:42] INFO TradingDaemon: Prediction computed: 0.000134
+[2025-09-30 19:11:42] INFO TradingDaemon: No trade (signal 0.000134 within threshold).
+[2025-09-30 19:12:14] INFO TradingDaemon: Prediction computed: 0.000153
+[2025-09-30 19:12:14] INFO TradingDaemon: No trade (signal 0.000153 within threshold).
+[2025-09-30 19:12:47] INFO TradingDaemon: Prediction computed: 0.000153
+[2025-09-30 19:12:47] INFO TradingDaemon: No trade (signal 0.000153 within threshold).
+[2025-09-30 19:13:20] INFO TradingDaemon: Prediction computed: -0.000005
+[2025-09-30 19:13:20] INFO TradingDaemon: No trade (signal -0.000005 within threshold).
+[2025-09-30 19:13:53] INFO TradingDaemon: Prediction computed: -0.000005
+[2025-09-30 19:13:53] INFO TradingDaemon: No trade (signal -0.000005 within threshold).
+[2025-09-30 19:14:26] INFO TradingDaemon: Prediction computed: 0.000151
+[2025-09-30 19:14:26] INFO TradingDaemon: No trade (signal 0.000151 within threshold).
+[2025-09-30 19:14:59] INFO TradingDaemon: Prediction computed: 0.000151
+[2025-09-30 19:14:59] INFO TradingDaemon: No trade (signal 0.000151 within threshold).
+[2025-09-30 19:15:31] INFO TradingDaemon: Prediction computed: 0.000481
+[2025-09-30 19:15:31] INFO TradingDaemon: No trade (signal 0.000481 within threshold).
+[2025-09-30 19:16:04] INFO TradingDaemon: Prediction computed: 0.000747
+[2025-09-30 19:16:04] INFO TradingDaemon: Paper trade simulated: buy 0.00088385 @ 113141.98
+[2025-09-30 19:16:37] INFO TradingDaemon: Prediction computed: 0.000747
+[2025-09-30 19:16:37] INFO TradingDaemon: Paper trade simulated: buy 0.00088385 @ 113141.98
+[2025-09-30 19:17:10] INFO TradingDaemon: Prediction computed: 0.001144
+[2025-09-30 19:17:10] INFO TradingDaemon: Paper trade simulated: buy 0.00088385 @ 113141.97
+[2025-09-30 19:17:43] INFO TradingDaemon: Prediction computed: 0.001144
+[2025-09-30 19:17:43] INFO TradingDaemon: Paper trade simulated: buy 0.00088385 @ 113141.97
+[2025-09-30 19:18:16] INFO TradingDaemon: Prediction computed: 0.001145
+[2025-09-30 19:18:16] INFO TradingDaemon: Paper trade simulated: buy 0.00088326 @ 113216.55
+[2025-09-30 19:18:48] INFO TradingDaemon: Prediction computed: 0.001145
+[2025-09-30 19:18:48] INFO TradingDaemon: Paper trade simulated: buy 0.00088326 @ 113216.55
+[2025-09-30 19:19:21] INFO TradingDaemon: Prediction computed: 0.001222
+[2025-09-30 19:19:21] INFO TradingDaemon: Paper trade simulated: buy 0.00088339 @ 113200.04
+[2025-09-30 19:19:54] INFO TradingDaemon: Prediction computed: 0.001222
+[2025-09-30 19:19:54] INFO TradingDaemon: Paper trade simulated: buy 0.00088339 @ 113200.04
+[2025-09-30 19:20:27] INFO TradingDaemon: Prediction computed: 0.001095
+[2025-09-30 19:20:27] INFO TradingDaemon: Paper trade simulated: buy 0.00088321 @ 113223.55
+[2025-09-30 19:21:00] INFO TradingDaemon: Prediction computed: 0.001095
+[2025-09-30 19:21:00] INFO TradingDaemon: Paper trade simulated: buy 0.00088321 @ 113223.55
+[2025-09-30 19:21:33] INFO TradingDaemon: Prediction computed: 0.001104
+[2025-09-30 19:21:33] INFO TradingDaemon: Paper trade simulated: buy 0.00088277 @ 113279.91
+[2025-09-30 19:22:06] INFO TradingDaemon: Prediction computed: 0.000958
+[2025-09-30 19:22:06] INFO TradingDaemon: Paper trade simulated: buy 0.00088304 @ 113245.58
+[2025-09-30 19:22:38] INFO TradingDaemon: Prediction computed: 0.000958
+[2025-09-30 19:22:38] INFO TradingDaemon: Paper trade simulated: buy 0.00088304 @ 113245.58
+[2025-09-30 19:23:11] INFO TradingDaemon: Prediction computed: 0.000227
+[2025-09-30 19:23:11] INFO TradingDaemon: No trade (signal 0.000227 within threshold).
+[2025-09-30 19:23:44] INFO TradingDaemon: Prediction computed: 0.000227
+[2025-09-30 19:23:44] INFO TradingDaemon: No trade (signal 0.000227 within threshold).
+[2025-09-30 19:24:17] INFO TradingDaemon: Prediction computed: -0.000458
+[2025-09-30 19:24:17] INFO TradingDaemon: No trade (signal -0.000458 within threshold).
+[2025-09-30 19:24:50] INFO TradingDaemon: Prediction computed: -0.000458
+[2025-09-30 19:24:50] INFO TradingDaemon: No trade (signal -0.000458 within threshold).
+[2025-09-30 19:25:23] INFO TradingDaemon: Prediction computed: -0.001444
+[2025-09-30 19:25:23] INFO TradingDaemon: Paper trade simulated: sell 0.00088301 @ 113249.43
+[2025-09-30 19:25:56] INFO TradingDaemon: Prediction computed: -0.001444
+[2025-09-30 19:25:56] INFO TradingDaemon: Paper trade simulated: sell 0.00088301 @ 113249.43
+[2025-09-30 19:26:28] INFO TradingDaemon: Prediction computed: -0.001568
+[2025-09-30 19:26:28] INFO TradingDaemon: Paper trade simulated: sell 0.00088277 @ 113279.93
+[2025-09-30 19:27:01] INFO TradingDaemon: Prediction computed: -0.001754
+[2025-09-30 19:27:01] INFO TradingDaemon: Paper trade simulated: sell 0.00088318 @ 113226.59
+[2025-09-30 19:27:34] INFO TradingDaemon: Prediction computed: -0.001754
+[2025-09-30 19:27:34] INFO TradingDaemon: Paper trade simulated: sell 0.00088318 @ 113226.59
+[2025-09-30 19:28:07] INFO TradingDaemon: Prediction computed: -0.001284
+[2025-09-30 19:28:07] INFO TradingDaemon: Paper trade simulated: sell 0.00088342 @ 113196.80
+[2025-09-30 19:28:40] INFO TradingDaemon: Prediction computed: -0.001284
+[2025-09-30 19:28:40] INFO TradingDaemon: Paper trade simulated: sell 0.00088342 @ 113196.80
+[2025-09-30 19:29:13] INFO TradingDaemon: Prediction computed: -0.000823
+[2025-09-30 19:29:13] INFO TradingDaemon: Paper trade simulated: sell 0.00088337 @ 113202.28
+[2025-09-30 19:29:46] INFO TradingDaemon: Prediction computed: -0.000823
+[2025-09-30 19:29:46] INFO TradingDaemon: Paper trade simulated: sell 0.00088337 @ 113202.28
+[2025-09-30 19:30:18] INFO TradingDaemon: Prediction computed: -0.000151
+[2025-09-30 19:30:18] INFO TradingDaemon: No trade (signal -0.000151 within threshold).
+[2025-09-30 19:30:51] INFO TradingDaemon: Prediction computed: -0.000151
+[2025-09-30 19:30:51] INFO TradingDaemon: No trade (signal -0.000151 within threshold).
+[2025-09-30 19:31:24] INFO TradingDaemon: Prediction computed: 0.000390
+[2025-09-30 19:31:24] INFO TradingDaemon: No trade (signal 0.000390 within threshold).
+[2025-09-30 19:31:57] INFO TradingDaemon: Prediction computed: 0.000390
+[2025-09-30 19:31:57] INFO TradingDaemon: No trade (signal 0.000390 within threshold).
+[2025-09-30 19:32:30] INFO TradingDaemon: Prediction computed: 0.000775
+[2025-09-30 19:32:30] INFO TradingDaemon: Paper trade simulated: buy 0.00088315 @ 113230.54
+[2025-09-30 19:33:03] INFO TradingDaemon: Prediction computed: 0.000781
+[2025-09-30 19:33:03] INFO TradingDaemon: Paper trade simulated: buy 0.00088304 @ 113245.52
+[2025-09-30 19:33:35] INFO TradingDaemon: Prediction computed: 0.000781
+[2025-09-30 19:33:35] INFO TradingDaemon: Paper trade simulated: buy 0.00088304 @ 113245.52
+[2025-09-30 19:34:08] INFO TradingDaemon: Prediction computed: 0.000894
+[2025-09-30 19:34:08] INFO TradingDaemon: Paper trade simulated: buy 0.00088285 @ 113270.10
+[2025-09-30 19:34:41] INFO TradingDaemon: Prediction computed: 0.000894
+[2025-09-30 19:34:41] INFO TradingDaemon: Paper trade simulated: buy 0.00088285 @ 113270.10
+[2025-09-30 19:35:14] INFO TradingDaemon: Prediction computed: 0.000782
+[2025-09-30 19:35:14] INFO TradingDaemon: Paper trade simulated: buy 0.00088307 @ 113241.79
+[2025-09-30 19:35:47] INFO TradingDaemon: Prediction computed: 0.000782
+[2025-09-30 19:35:47] INFO TradingDaemon: Paper trade simulated: buy 0.00088307 @ 113241.79
+[2025-09-30 19:36:20] INFO TradingDaemon: Prediction computed: 0.000520
+[2025-09-30 19:36:20] INFO TradingDaemon: Paper trade simulated: buy 0.00088277 @ 113279.92
+[2025-09-30 19:36:52] INFO TradingDaemon: Prediction computed: 0.000520
+[2025-09-30 19:36:52] INFO TradingDaemon: Paper trade simulated: buy 0.00088277 @ 113279.92
+[2025-09-30 19:37:25] INFO TradingDaemon: Prediction computed: 0.000296
+[2025-09-30 19:37:25] INFO TradingDaemon: No trade (signal 0.000296 within threshold).
+[2025-09-30 19:37:58] INFO TradingDaemon: Prediction computed: 0.000296
+[2025-09-30 19:37:58] INFO TradingDaemon: No trade (signal 0.000296 within threshold).
+[2025-09-30 19:38:31] INFO TradingDaemon: Prediction computed: -0.000307
+[2025-09-30 19:38:31] INFO TradingDaemon: No trade (signal -0.000307 within threshold).
+[2025-09-30 19:39:04] INFO TradingDaemon: Prediction computed: -0.000624
+[2025-09-30 19:39:04] INFO TradingDaemon: Paper trade simulated: sell 0.00088228 @ 113342.41
+[2025-09-30 19:39:37] INFO TradingDaemon: Prediction computed: -0.000624
+[2025-09-30 19:39:37] INFO TradingDaemon: Paper trade simulated: sell 0.00088228 @ 113342.41
+[2025-09-30 19:40:09] INFO TradingDaemon: Prediction computed: -0.001033
+[2025-09-30 19:40:09] INFO TradingDaemon: Paper trade simulated: sell 0.00088187 @ 113395.54
+[2025-09-30 19:40:42] INFO TradingDaemon: Prediction computed: -0.001033
+[2025-09-30 19:40:42] INFO TradingDaemon: Paper trade simulated: sell 0.00088187 @ 113395.54
+[2025-09-30 19:41:15] INFO TradingDaemon: Prediction computed: -0.001182
+[2025-09-30 19:41:15] INFO TradingDaemon: Paper trade simulated: sell 0.00088165 @ 113423.70
+[2025-09-30 19:41:48] INFO TradingDaemon: Prediction computed: -0.001182
+[2025-09-30 19:41:48] INFO TradingDaemon: Paper trade simulated: sell 0.00088165 @ 113423.70
+[2025-09-30 19:42:21] INFO TradingDaemon: Prediction computed: -0.000803
+[2025-09-30 19:42:21] INFO TradingDaemon: Paper trade simulated: sell 0.00088118 @ 113483.87
+[2025-09-30 19:42:54] INFO TradingDaemon: Prediction computed: -0.000803
+[2025-09-30 19:42:54] INFO TradingDaemon: Paper trade simulated: sell 0.00088118 @ 113483.87
+[2025-09-30 19:43:26] INFO TradingDaemon: Prediction computed: -0.000463
+[2025-09-30 19:43:26] INFO TradingDaemon: No trade (signal -0.000463 within threshold).
+[2025-09-30 19:43:59] INFO TradingDaemon: Prediction computed: -0.000463
+[2025-09-30 19:43:59] INFO TradingDaemon: No trade (signal -0.000463 within threshold).
+[2025-09-30 19:44:32] INFO TradingDaemon: Prediction computed: -0.000331
+[2025-09-30 19:44:32] INFO TradingDaemon: No trade (signal -0.000331 within threshold).
+[2025-09-30 19:45:05] INFO TradingDaemon: Prediction computed: -0.000564
+[2025-09-30 19:45:05] INFO TradingDaemon: Paper trade simulated: sell 0.00088267 @ 113292.36
+[2025-09-30 19:45:37] INFO TradingDaemon: Prediction computed: -0.000564
+[2025-09-30 19:45:37] INFO TradingDaemon: Paper trade simulated: sell 0.00088267 @ 113292.36
+[2025-09-30 19:46:10] INFO TradingDaemon: Prediction computed: -0.000778
+[2025-09-30 19:46:10] INFO TradingDaemon: Paper trade simulated: sell 0.00088287 @ 113266.36
+[2025-09-30 19:46:43] INFO TradingDaemon: Prediction computed: -0.000778
+[2025-09-30 19:46:43] INFO TradingDaemon: Paper trade simulated: sell 0.00088287 @ 113266.36
+[2025-09-30 19:47:15] INFO TradingDaemon: Prediction computed: -0.000792
+[2025-09-30 19:47:15] INFO TradingDaemon: Paper trade simulated: sell 0.00088277 @ 113279.93
+[2025-09-30 19:47:48] INFO TradingDaemon: Prediction computed: -0.000792
+[2025-09-30 19:47:48] INFO TradingDaemon: Paper trade simulated: sell 0.00088277 @ 113279.93
+[2025-09-30 19:48:21] INFO TradingDaemon: Prediction computed: -0.000681
+[2025-09-30 19:48:21] INFO TradingDaemon: Paper trade simulated: sell 0.00088282 @ 113273.98
+[2025-09-30 19:48:53] INFO TradingDaemon: Prediction computed: -0.000681
+[2025-09-30 19:48:53] INFO TradingDaemon: Paper trade simulated: sell 0.00088282 @ 113273.98
+[2025-09-30 19:49:26] INFO TradingDaemon: Prediction computed: -0.000551
+[2025-09-30 19:49:26] INFO TradingDaemon: Paper trade simulated: sell 0.00088317 @ 113228.68
+[2025-09-30 19:49:59] INFO TradingDaemon: Prediction computed: -0.000551
+[2025-09-30 19:49:59] INFO TradingDaemon: Paper trade simulated: sell 0.00088317 @ 113228.68
+[2025-09-30 19:50:32] INFO TradingDaemon: Prediction computed: -0.000205
+[2025-09-30 19:50:32] INFO TradingDaemon: No trade (signal -0.000205 within threshold).
+[2025-09-30 19:51:04] INFO TradingDaemon: Prediction computed: -0.000010
+[2025-09-30 19:51:04] INFO TradingDaemon: No trade (signal -0.000010 within threshold).
+[2025-09-30 19:51:37] INFO TradingDaemon: Prediction computed: -0.000010
+[2025-09-30 19:51:37] INFO TradingDaemon: No trade (signal -0.000010 within threshold).
+[2025-09-30 19:52:10] INFO TradingDaemon: Prediction computed: 0.000276
+[2025-09-30 19:52:10] INFO TradingDaemon: No trade (signal 0.000276 within threshold).
+[2025-09-30 19:52:43] INFO TradingDaemon: Prediction computed: 0.000276
+[2025-09-30 19:52:43] INFO TradingDaemon: No trade (signal 0.000276 within threshold).
+[2025-09-30 19:53:16] INFO TradingDaemon: Prediction computed: 0.000409
+[2025-09-30 19:53:16] INFO TradingDaemon: No trade (signal 0.000409 within threshold).
+[2025-09-30 19:53:49] INFO TradingDaemon: Prediction computed: 0.000409
+[2025-09-30 19:53:49] INFO TradingDaemon: No trade (signal 0.000409 within threshold).
+[2025-09-30 19:54:22] INFO TradingDaemon: Prediction computed: 0.000299
+[2025-09-30 19:54:22] INFO TradingDaemon: No trade (signal 0.000299 within threshold).
+[2025-09-30 19:54:55] INFO TradingDaemon: Prediction computed: 0.000299
+[2025-09-30 19:54:55] INFO TradingDaemon: No trade (signal 0.000299 within threshold).
+[2025-09-30 19:55:27] INFO TradingDaemon: Prediction computed: 0.000178
+[2025-09-30 19:55:27] INFO TradingDaemon: No trade (signal 0.000178 within threshold).
+[2025-09-30 19:56:00] INFO TradingDaemon: Prediction computed: 0.000178
+[2025-09-30 19:56:00] INFO TradingDaemon: No trade (signal 0.000178 within threshold).
+[2025-09-30 19:56:33] INFO TradingDaemon: Prediction computed: -0.000205
+[2025-09-30 19:56:33] INFO TradingDaemon: No trade (signal -0.000205 within threshold).
+[2025-09-30 19:57:06] INFO TradingDaemon: Prediction computed: -0.000666
+[2025-09-30 19:57:06] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 19:57:06] INFO TradingDaemon: Paper trade simulated: sell 0.00088296 @ 113254.80
+[2025-09-30 19:57:39] INFO TradingDaemon: Prediction computed: -0.000666
+[2025-09-30 19:57:39] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 19:57:39] INFO TradingDaemon: Paper trade simulated: sell 0.00088296 @ 113254.80
+[2025-09-30 19:58:12] INFO TradingDaemon: Prediction computed: -0.001002
+[2025-09-30 19:58:12] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 19:58:12] INFO TradingDaemon: Paper trade simulated: sell 0.00088261 @ 113300.56
+[2025-09-30 19:58:45] INFO TradingDaemon: Prediction computed: -0.001002
+[2025-09-30 19:58:45] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 19:58:45] INFO TradingDaemon: Paper trade simulated: sell 0.00088261 @ 113300.56
+[2025-09-30 19:59:17] INFO TradingDaemon: Prediction computed: -0.001290
+[2025-09-30 19:59:17] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 19:59:18] INFO TradingDaemon: Paper trade simulated: sell 0.00088287 @ 113267.41
+[2025-09-30 19:59:50] INFO TradingDaemon: Prediction computed: -0.001290
+[2025-09-30 19:59:50] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 19:59:50] INFO TradingDaemon: Paper trade simulated: sell 0.00088287 @ 113267.41
+[2025-09-30 20:00:23] INFO TradingDaemon: Prediction computed: -0.001135
+[2025-09-30 20:00:23] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:00:23] INFO TradingDaemon: Paper trade simulated: sell 0.00088303 @ 113246.11
+[2025-09-30 20:00:56] INFO TradingDaemon: Prediction computed: -0.001135
+[2025-09-30 20:00:56] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:00:56] INFO TradingDaemon: Paper trade simulated: sell 0.00088303 @ 113246.11
+[2025-09-30 20:01:29] INFO TradingDaemon: Prediction computed: -0.000567
+[2025-09-30 20:01:29] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:01:29] INFO TradingDaemon: Paper trade simulated: sell 0.00088343 @ 113194.87
+[2025-09-30 20:02:02] INFO TradingDaemon: Prediction computed: -0.000754
+[2025-09-30 20:02:02] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:02:02] INFO TradingDaemon: Paper trade simulated: sell 0.00088314 @ 113232.30
+[2025-09-30 20:02:35] INFO TradingDaemon: Prediction computed: -0.000754
+[2025-09-30 20:02:35] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:02:35] INFO TradingDaemon: Paper trade simulated: sell 0.00088314 @ 113232.30
+[2025-09-30 20:03:08] INFO TradingDaemon: Prediction computed: -0.001301
+[2025-09-30 20:03:08] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:03:08] INFO TradingDaemon: Paper trade simulated: sell 0.00088321 @ 113223.55
+[2025-09-30 20:03:40] INFO TradingDaemon: Prediction computed: -0.001301
+[2025-09-30 20:03:40] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:03:40] INFO TradingDaemon: Paper trade simulated: sell 0.00088321 @ 113223.55
+[2025-09-30 20:04:13] INFO TradingDaemon: Prediction computed: -0.001691
+[2025-09-30 20:04:13] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:04:13] INFO TradingDaemon: Paper trade simulated: sell 0.00088318 @ 113226.60
+[2025-09-30 20:04:46] INFO TradingDaemon: Prediction computed: -0.001691
+[2025-09-30 20:04:46] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:04:46] INFO TradingDaemon: Paper trade simulated: sell 0.00088318 @ 113226.60
+[2025-09-30 20:05:19] INFO TradingDaemon: Prediction computed: -0.001697
+[2025-09-30 20:05:19] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:05:19] INFO TradingDaemon: Paper trade simulated: sell 0.00088325 @ 113218.11
+[2025-09-30 20:05:52] INFO TradingDaemon: Prediction computed: -0.001697
+[2025-09-30 20:05:52] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:05:52] INFO TradingDaemon: Paper trade simulated: sell 0.00088325 @ 113218.11
+[2025-09-30 20:06:25] INFO TradingDaemon: Prediction computed: -0.001874
+[2025-09-30 20:06:25] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:06:25] INFO TradingDaemon: Paper trade simulated: sell 0.00088299 @ 113252.19
+[2025-09-30 20:06:58] INFO TradingDaemon: Prediction computed: -0.001874
+[2025-09-30 20:06:58] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:06:58] INFO TradingDaemon: Paper trade simulated: sell 0.00088299 @ 113252.19
+[2025-09-30 20:07:31] INFO TradingDaemon: Prediction computed: -0.001719
+[2025-09-30 20:07:31] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:07:31] INFO TradingDaemon: Paper trade simulated: sell 0.00088285 @ 113269.19
+[2025-09-30 20:08:03] INFO TradingDaemon: Prediction computed: -0.001573
+[2025-09-30 20:08:03] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:08:03] INFO TradingDaemon: Paper trade simulated: sell 0.00088274 @ 113283.04
+[2025-09-30 20:08:36] INFO TradingDaemon: Prediction computed: -0.001573
+[2025-09-30 20:08:36] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:08:36] INFO TradingDaemon: Paper trade simulated: sell 0.00088274 @ 113283.04
+[2025-09-30 20:09:09] INFO TradingDaemon: Prediction computed: -0.000914
+[2025-09-30 20:09:09] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:09:09] INFO TradingDaemon: Paper trade simulated: sell 0.00088274 @ 113283.02
+[2025-09-30 20:09:42] INFO TradingDaemon: Prediction computed: -0.000914
+[2025-09-30 20:09:42] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:09:42] INFO TradingDaemon: Paper trade simulated: sell 0.00088274 @ 113283.02
+[2025-09-30 20:10:15] INFO TradingDaemon: Prediction computed: -0.000222
+[2025-09-30 20:10:15] INFO TradingDaemon: No trade (signal -0.000222 within threshold).
+[2025-09-30 20:10:48] INFO TradingDaemon: Prediction computed: -0.000222
+[2025-09-30 20:10:48] INFO TradingDaemon: No trade (signal -0.000222 within threshold).
+[2025-09-30 20:11:21] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 20:11:21] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 20:11:54] INFO TradingDaemon: Prediction computed: -0.000061
+[2025-09-30 20:11:54] INFO TradingDaemon: No trade (signal -0.000061 within threshold).
+[2025-09-30 20:12:26] INFO TradingDaemon: Prediction computed: 0.000152
+[2025-09-30 20:12:26] INFO TradingDaemon: No trade (signal 0.000152 within threshold).
+[2025-09-30 20:12:59] INFO TradingDaemon: Prediction computed: 0.000152
+[2025-09-30 20:12:59] INFO TradingDaemon: No trade (signal 0.000152 within threshold).
+[2025-09-30 20:13:32] INFO TradingDaemon: Prediction computed: -0.000405
+[2025-09-30 20:13:32] INFO TradingDaemon: No trade (signal -0.000405 within threshold).
+[2025-09-30 20:14:05] INFO TradingDaemon: Prediction computed: -0.000601
+[2025-09-30 20:14:05] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:14:05] INFO TradingDaemon: Paper trade simulated: sell 0.00088095 @ 113513.52
+[2025-09-30 20:14:38] INFO TradingDaemon: Prediction computed: -0.000601
+[2025-09-30 20:14:38] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:14:38] INFO TradingDaemon: Paper trade simulated: sell 0.00088095 @ 113513.52
+[2025-09-30 20:15:11] INFO TradingDaemon: Prediction computed: -0.000397
+[2025-09-30 20:15:11] INFO TradingDaemon: No trade (signal -0.000397 within threshold).
+[2025-09-30 20:15:44] INFO TradingDaemon: Prediction computed: -0.000397
+[2025-09-30 20:15:44] INFO TradingDaemon: No trade (signal -0.000397 within threshold).
+[2025-09-30 20:16:16] INFO TradingDaemon: Prediction computed: 0.000030
+[2025-09-30 20:16:16] INFO TradingDaemon: No trade (signal 0.000030 within threshold).
+[2025-09-30 20:16:49] INFO TradingDaemon: Prediction computed: 0.000030
+[2025-09-30 20:16:49] INFO TradingDaemon: No trade (signal 0.000030 within threshold).
+[2025-09-30 20:17:22] INFO TradingDaemon: Prediction computed: 0.000502
+[2025-09-30 20:17:22] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:17:22] INFO TradingDaemon: Paper trade simulated: buy 0.00088120 @ 113481.32
+[2025-09-30 20:17:55] INFO TradingDaemon: Prediction computed: 0.000502
+[2025-09-30 20:17:55] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:17:55] INFO TradingDaemon: Paper trade simulated: buy 0.00088120 @ 113481.32
+[2025-09-30 20:18:28] INFO TradingDaemon: Prediction computed: 0.000733
+[2025-09-30 20:18:28] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:18:28] INFO TradingDaemon: Paper trade simulated: buy 0.00088139 @ 113457.10
+[2025-09-30 20:19:01] INFO TradingDaemon: Prediction computed: 0.000805
+[2025-09-30 20:19:01] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:19:01] INFO TradingDaemon: Paper trade simulated: buy 0.00088165 @ 113424.07
+[2025-09-30 20:19:34] INFO TradingDaemon: Prediction computed: 0.000805
+[2025-09-30 20:19:34] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:19:34] INFO TradingDaemon: Paper trade simulated: buy 0.00088165 @ 113424.07
+[2025-09-30 20:20:06] INFO TradingDaemon: Prediction computed: 0.000713
+[2025-09-30 20:20:06] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:20:06] INFO TradingDaemon: Paper trade simulated: buy 0.00088142 @ 113453.87
+[2025-09-30 20:20:39] INFO TradingDaemon: Prediction computed: 0.000713
+[2025-09-30 20:20:39] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:20:39] INFO TradingDaemon: Paper trade simulated: buy 0.00088142 @ 113453.87
+[2025-09-30 20:21:12] INFO TradingDaemon: Prediction computed: 0.000644
+[2025-09-30 20:21:12] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:21:12] INFO TradingDaemon: Paper trade simulated: buy 0.00088189 @ 113392.25
+[2025-09-30 20:21:45] INFO TradingDaemon: Prediction computed: 0.000644
+[2025-09-30 20:21:45] ERROR TradingDaemon: Failed to write ledger
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 830, in _write_ledger
+    with ledger.open("a", newline="", encoding="utf-8") as fh:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\pathlib.py", line 1119, in open
+    return self._accessor.open(self, mode, buffering, encoding, errors,
+PermissionError: [Errno 13] Permission denied: 'artifacts\\ledger.csv'
+[2025-09-30 20:21:45] INFO TradingDaemon: Paper trade simulated: buy 0.00088189 @ 113392.25
+[2025-09-30 20:22:18] INFO TradingDaemon: Prediction computed: 0.000457
+[2025-09-30 20:22:18] INFO TradingDaemon: No trade (signal 0.000457 within threshold).
+[2025-09-30 20:22:51] INFO TradingDaemon: Prediction computed: 0.000457
+[2025-09-30 20:22:51] INFO TradingDaemon: No trade (signal 0.000457 within threshold).
+[2025-09-30 20:23:24] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 20:23:24] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 20:23:53] INFO root: Status data fetched: 50 rows.
+[2025-09-30 20:23:54] INFO root: Prediction worker started (background).
+[2025-09-30 20:23:54] INFO root: Prediction computed: log=0.000417 pct=0.04170661415960897 vol=0.6581030488014221
+[2025-09-30 20:23:56] INFO TradingDaemon: Prediction computed: 0.000417
+[2025-09-30 20:23:56] INFO TradingDaemon: No trade (signal 0.000417 within threshold).
+[2025-09-30 20:24:29] INFO TradingDaemon: Prediction computed: 0.000447
+[2025-09-30 20:24:29] INFO TradingDaemon: No trade (signal 0.000447 within threshold).
+[2025-09-30 20:24:33] INFO root: Big trade buy 0.0004@113475.23
+[2025-09-30 20:24:33] INFO root: Big trade buy 0.00362@113475.23
+[2025-09-30 20:24:33] INFO root: Big trade sell 0.00122@113475.22
+[2025-09-30 20:24:33] INFO root: Big trade buy 0.01@113475.23
+[2025-09-30 20:24:33] INFO root: Big trade buy 0.01@113475.23
+[2025-09-30 20:24:33] INFO root: Big trade buy 9e-05@113475.23
+[2025-09-30 20:24:41] INFO root: Big trade buy 0.22413@113475.23
+[2025-09-30 20:25:02] INFO TradingDaemon: Prediction computed: 0.000368
+[2025-09-30 20:25:02] INFO TradingDaemon: No trade (signal 0.000368 within threshold).
+[2025-09-30 20:25:21] INFO root: Big trade buy 2.64387@113470.02
+[2025-09-30 20:25:35] INFO TradingDaemon: Prediction computed: 0.000368
+[2025-09-30 20:25:35] INFO TradingDaemon: No trade (signal 0.000368 within threshold).
+[2025-09-30 20:26:07] INFO TradingDaemon: Prediction computed: 0.000340
+[2025-09-30 20:26:07] INFO TradingDaemon: No trade (signal 0.000340 within threshold).
+[2025-09-30 20:26:40] INFO TradingDaemon: Prediction computed: 0.000340
+[2025-09-30 20:26:40] INFO TradingDaemon: No trade (signal 0.000340 within threshold).
+[2025-09-30 20:27:13] INFO TradingDaemon: Prediction computed: 0.000262
+[2025-09-30 20:27:13] INFO TradingDaemon: No trade (signal 0.000262 within threshold).
+[2025-09-30 20:27:46] INFO TradingDaemon: Prediction computed: 0.000262
+[2025-09-30 20:27:46] INFO TradingDaemon: No trade (signal 0.000262 within threshold).
+[2025-09-30 20:28:18] INFO TradingDaemon: Prediction computed: -0.000088
+[2025-09-30 20:28:18] INFO TradingDaemon: No trade (signal -0.000088 within threshold).
+[2025-09-30 20:28:40] INFO root: Big trade sell 1.0@113458.17
+[2025-09-30 20:28:51] INFO TradingDaemon: Prediction computed: -0.000088
+[2025-09-30 20:28:51] INFO TradingDaemon: No trade (signal -0.000088 within threshold).
+[2025-09-30 20:29:24] INFO TradingDaemon: Prediction computed: -0.000243
+[2025-09-30 20:29:24] INFO TradingDaemon: No trade (signal -0.000243 within threshold).
+[2025-09-30 20:29:56] INFO TradingDaemon: Prediction computed: -0.000243
+[2025-09-30 20:29:56] INFO TradingDaemon: No trade (signal -0.000243 within threshold).
+[2025-09-30 20:30:29] INFO TradingDaemon: Prediction computed: -0.000637
+[2025-09-30 20:30:29] INFO TradingDaemon: Paper trade simulated: sell 0.00088132 @ 113465.66
+[2025-09-30 20:31:02] INFO TradingDaemon: Prediction computed: -0.000877
+[2025-09-30 20:31:02] INFO TradingDaemon: Paper trade simulated: sell 0.00088119 @ 113483.01
+[2025-09-30 20:31:34] INFO TradingDaemon: Prediction computed: -0.000877
+[2025-09-30 20:31:34] INFO TradingDaemon: Paper trade simulated: sell 0.00088119 @ 113483.01
+[2025-09-30 20:32:07] INFO TradingDaemon: Prediction computed: -0.001148
+[2025-09-30 20:32:07] INFO TradingDaemon: Paper trade simulated: sell 0.00088152 @ 113440.56
+[2025-09-30 20:32:40] INFO TradingDaemon: Prediction computed: -0.001148
+[2025-09-30 20:32:40] INFO TradingDaemon: Paper trade simulated: sell 0.00088152 @ 113440.56
+[2025-09-30 20:33:12] INFO TradingDaemon: Prediction computed: -0.000477
+[2025-09-30 20:33:12] INFO TradingDaemon: No trade (signal -0.000477 within threshold).
+[2025-09-30 20:33:45] INFO TradingDaemon: Prediction computed: -0.000477
+[2025-09-30 20:33:45] INFO TradingDaemon: No trade (signal -0.000477 within threshold).
+[2025-09-30 20:33:46] INFO root: Big trade sell 1.88@113383.43
+[2025-09-30 20:33:46] INFO root: Big trade sell 1.97323@113383.43
+[2025-09-30 20:33:46] INFO root: Big trade sell 1.49148@113370.92
+[2025-09-30 20:33:46] INFO root: Big trade sell 2.25149@113367.66
+[2025-09-30 20:33:46] INFO root: Big trade sell 1.01405@113367.65
+[2025-09-30 20:33:46] INFO root: Big trade sell 1.55531@113364.08
+[2025-09-30 20:33:46] INFO root: Big trade sell 2.69306@113364.07
+[2025-09-30 20:33:46] INFO root: Big trade sell 1.01405@113364.04
+[2025-09-30 20:33:46] INFO root: Big trade sell 1.73449@113360.26
+[2025-09-30 20:33:57] INFO root: Big trade buy 4.0@113340.96
+[2025-09-30 20:34:18] INFO TradingDaemon: Prediction computed: -0.000344
+[2025-09-30 20:34:18] INFO TradingDaemon: No trade (signal -0.000344 within threshold).
+[2025-09-30 20:34:50] INFO TradingDaemon: Prediction computed: -0.000344
+[2025-09-30 20:34:50] INFO TradingDaemon: No trade (signal -0.000344 within threshold).
+[2025-09-30 20:35:04] INFO root: Big trade buy 2.87889@113385.0
+[2025-09-30 20:35:23] INFO TradingDaemon: Prediction computed: 0.000023
+[2025-09-30 20:35:23] INFO TradingDaemon: No trade (signal 0.000023 within threshold).
+[2025-09-30 20:35:55] INFO TradingDaemon: Prediction computed: 0.000023
+[2025-09-30 20:35:55] INFO TradingDaemon: No trade (signal 0.000023 within threshold).
+[2025-09-30 20:35:58] INFO root: Big trade buy 3.60183@113419.22
+[2025-09-30 20:36:28] INFO TradingDaemon: Prediction computed: 0.000299
+[2025-09-30 20:36:28] INFO TradingDaemon: No trade (signal 0.000299 within threshold).
+[2025-09-30 20:37:01] INFO TradingDaemon: Prediction computed: 0.000301
+[2025-09-30 20:37:01] INFO TradingDaemon: No trade (signal 0.000301 within threshold).
+[2025-09-30 20:37:33] INFO TradingDaemon: Prediction computed: 0.000301
+[2025-09-30 20:37:33] INFO TradingDaemon: No trade (signal 0.000301 within threshold).
+[2025-09-30 20:38:06] INFO TradingDaemon: Prediction computed: 0.000069
+[2025-09-30 20:38:06] INFO TradingDaemon: No trade (signal 0.000069 within threshold).
+[2025-09-30 20:38:39] INFO TradingDaemon: Prediction computed: 0.000069
+[2025-09-30 20:38:39] INFO TradingDaemon: No trade (signal 0.000069 within threshold).
+[2025-09-30 20:39:11] INFO TradingDaemon: Prediction computed: -0.000285
+[2025-09-30 20:39:11] INFO TradingDaemon: No trade (signal -0.000285 within threshold).
+[2025-09-30 20:39:44] INFO TradingDaemon: Prediction computed: -0.000285
+[2025-09-30 20:39:44] INFO TradingDaemon: No trade (signal -0.000285 within threshold).
+[2025-09-30 20:40:12] INFO root: Big trade buy 4.19335@113455.24
+[2025-09-30 20:40:17] INFO TradingDaemon: Prediction computed: -0.000492
+[2025-09-30 20:40:17] INFO TradingDaemon: No trade (signal -0.000492 within threshold).
+[2025-09-30 20:40:50] INFO TradingDaemon: Prediction computed: -0.000492
+[2025-09-30 20:40:50] INFO TradingDaemon: No trade (signal -0.000492 within threshold).
+[2025-09-30 20:41:22] INFO TradingDaemon: Prediction computed: -0.000150
+[2025-09-30 20:41:22] INFO TradingDaemon: No trade (signal -0.000150 within threshold).
+[2025-09-30 20:41:55] INFO TradingDaemon: Prediction computed: -0.000150
+[2025-09-30 20:41:55] INFO TradingDaemon: No trade (signal -0.000150 within threshold).
+[2025-09-30 20:42:28] INFO TradingDaemon: Prediction computed: 0.000266
+[2025-09-30 20:42:28] INFO TradingDaemon: No trade (signal 0.000266 within threshold).
+[2025-09-30 20:43:01] INFO TradingDaemon: Prediction computed: 0.000682
+[2025-09-30 20:43:01] INFO TradingDaemon: Paper trade simulated: buy 0.00088147 @ 113446.69
+[2025-09-30 20:43:34] INFO TradingDaemon: Prediction computed: 0.000682
+[2025-09-30 20:43:34] INFO TradingDaemon: Paper trade simulated: buy 0.00088147 @ 113446.69
+[2025-09-30 20:44:07] INFO TradingDaemon: Prediction computed: 0.000355
+[2025-09-30 20:44:07] INFO TradingDaemon: No trade (signal 0.000355 within threshold).
+[2025-09-30 20:44:39] INFO TradingDaemon: Prediction computed: 0.000355
+[2025-09-30 20:44:39] INFO TradingDaemon: No trade (signal 0.000355 within threshold).
+[2025-09-30 20:45:12] INFO TradingDaemon: Prediction computed: -0.000074
+[2025-09-30 20:45:12] INFO TradingDaemon: No trade (signal -0.000074 within threshold).
+[2025-09-30 20:45:17] INFO root: Big trade buy 1.22326@113489.0
+[2025-09-30 20:45:45] INFO TradingDaemon: Prediction computed: -0.000074
+[2025-09-30 20:45:45] INFO TradingDaemon: No trade (signal -0.000074 within threshold).
+[2025-09-30 20:46:18] INFO TradingDaemon: Prediction computed: -0.000326
+[2025-09-30 20:46:18] INFO TradingDaemon: No trade (signal -0.000326 within threshold).
+[2025-09-30 20:46:27] INFO root: Big trade buy 3.64923@113471.01
+[2025-09-30 20:46:29] INFO root: Big trade sell 1.0@113482.48
+[2025-09-30 20:46:51] INFO TradingDaemon: Prediction computed: -0.000326
+[2025-09-30 20:46:51] INFO TradingDaemon: No trade (signal -0.000326 within threshold).
+[2025-09-30 20:47:24] INFO TradingDaemon: Prediction computed: -0.000467
+[2025-09-30 20:47:24] INFO TradingDaemon: No trade (signal -0.000467 within threshold).
+[2025-09-30 20:47:33] INFO root: Big trade buy 2.59737@113504.56
+[2025-09-30 20:47:57] INFO TradingDaemon: Prediction computed: -0.000467
+[2025-09-30 20:47:57] INFO TradingDaemon: No trade (signal -0.000467 within threshold).
+[2025-09-30 20:48:30] INFO TradingDaemon: Prediction computed: -0.000458
+[2025-09-30 20:48:30] INFO TradingDaemon: No trade (signal -0.000458 within threshold).
+[2025-09-30 20:49:02] INFO TradingDaemon: Prediction computed: 0.000010
+[2025-09-30 20:49:02] INFO TradingDaemon: No trade (signal 0.000010 within threshold).
+[2025-09-30 20:49:35] INFO TradingDaemon: Prediction computed: 0.000010
+[2025-09-30 20:49:35] INFO TradingDaemon: No trade (signal 0.000010 within threshold).
+[2025-09-30 20:50:08] INFO TradingDaemon: Prediction computed: 0.000594
+[2025-09-30 20:50:08] INFO TradingDaemon: Paper trade simulated: buy 0.00088081 @ 113532.36
+[2025-09-30 20:50:41] INFO TradingDaemon: Prediction computed: 0.000594
+[2025-09-30 20:50:41] INFO TradingDaemon: Paper trade simulated: buy 0.00088081 @ 113532.36
+[2025-09-30 20:51:14] INFO TradingDaemon: Prediction computed: 0.000349
+[2025-09-30 20:51:14] INFO TradingDaemon: No trade (signal 0.000349 within threshold).
+[2025-09-30 20:51:37] INFO root: Big trade sell 2.59122@113538.35
+[2025-09-30 20:51:47] INFO TradingDaemon: Prediction computed: 0.000349
+[2025-09-30 20:51:47] INFO TradingDaemon: No trade (signal 0.000349 within threshold).
+[2025-09-30 20:52:20] INFO TradingDaemon: Prediction computed: 0.000055
+[2025-09-30 20:52:20] INFO TradingDaemon: No trade (signal 0.000055 within threshold).
+[2025-09-30 20:52:43] INFO root: Big trade sell 4.0@113564.46
+[2025-09-30 20:52:52] INFO TradingDaemon: Prediction computed: 0.000055
+[2025-09-30 20:52:52] INFO TradingDaemon: No trade (signal 0.000055 within threshold).
+[2025-09-30 20:53:25] INFO root: Big trade buy 2.91091@113616.88
+[2025-09-30 20:53:25] INFO TradingDaemon: Prediction computed: -0.000228
+[2025-09-30 20:53:25] INFO TradingDaemon: No trade (signal -0.000228 within threshold).
+[2025-09-30 20:53:27] INFO root: Big trade buy 1.1442@113641.74
+[2025-09-30 20:53:28] INFO root: Big trade sell 2.64294@113674.67
+[2025-09-30 20:53:58] INFO TradingDaemon: Prediction computed: -0.000228
+[2025-09-30 20:53:58] INFO TradingDaemon: No trade (signal -0.000228 within threshold).
+[2025-09-30 20:54:31] INFO TradingDaemon: Prediction computed: -0.000107
+[2025-09-30 20:54:31] INFO TradingDaemon: No trade (signal -0.000107 within threshold).
+[2025-09-30 20:55:04] INFO TradingDaemon: Prediction computed: 0.000153
+[2025-09-30 20:55:04] INFO TradingDaemon: No trade (signal 0.000153 within threshold).
+[2025-09-30 20:55:37] INFO TradingDaemon: Prediction computed: 0.000153
+[2025-09-30 20:55:37] INFO TradingDaemon: No trade (signal 0.000153 within threshold).
+[2025-09-30 20:55:45] INFO root: Big trade buy 2.89949@113652.02
+[2025-09-30 20:56:10] INFO TradingDaemon: Prediction computed: -0.000145
+[2025-09-30 20:56:10] INFO TradingDaemon: No trade (signal -0.000145 within threshold).
+[2025-09-30 20:56:40] INFO root: WS closed: None None
+[2025-09-30 20:56:40] INFO root: Websocket closed by user.
+[2025-09-30 20:56:42] INFO TradingDaemon: Prediction computed: -0.000145
+[2025-09-30 20:56:43] INFO TradingDaemon: No trade (signal -0.000145 within threshold).

@@ -1,0 +1,20 @@
+[2025-10-02 03:41:46] INFO root: init_logging: logfile=logs\log_20251002_014146.txt
+[2025-10-02 03:41:46] INFO __main__: Logging initialized
+[2025-10-02 03:41:49] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 03:41:55] INFO websocket: Websocket connected
+[2025-10-02 03:41:55] INFO root: WS open (callback)
+[2025-10-02 03:46:53] INFO root: Big trade buy 11.01303@118778.11
+[2025-10-02 03:47:13] INFO root: Big trade sell 8.26865@118834.38
+[2025-10-02 04:01:13] INFO root: Big trade buy 10.08586@118573.9
+[2025-10-02 04:27:00] INFO root: Big trade sell 7.01804@118621.0
+[2025-10-02 04:28:23] INFO root: Big trade sell 5.62849@118566.67
+[2025-10-02 04:29:35] INFO root: Big trade sell 5.0@118500.0
+[2025-10-02 04:29:52] INFO root: Big trade sell 5.0@118504.49
+[2025-10-02 04:31:17] INFO root: Big trade sell 5.0@118500.0
+[2025-10-02 05:09:26] INFO root: Big trade buy 10.6871@118862.79
+[2025-10-02 05:11:18] INFO root: Big trade buy 5.39911@118991.01
+[2025-10-02 05:11:29] INFO root: Big trade buy 6.86391@118991.02
+[2025-10-02 05:24:50] INFO root: Big trade sell 5.0@118908.11
+[2025-10-02 05:26:50] INFO root: Big trade buy 5.64835@119000.02
+[2025-10-02 05:29:42] INFO root: Big trade sell 5.0@118937.31
+[2025-10-02 06:42:33] INFO root: Big trade sell 6.11513@118483.14

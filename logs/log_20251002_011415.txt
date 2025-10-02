@@ -1,0 +1,15 @@
+[2025-10-02 03:14:15] INFO root: init_logging: logfile=logs\log_20251002_011415.txt
+[2025-10-02 03:14:15] INFO __main__: Logging initialized
+[2025-10-02 03:14:18] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 3110, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 3105, in main
+    app = TradingAppExtended(root)
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 433, in __init__
+    self._build_ui()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 1371, in _build_ui
+    self._build_status_tab()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 1475, in _build_status_tab
+    btn_ws_panel = Button(frm_controls, text="Open WS Panel", command=self._open_ws_panel())
+TypeError: TradingAppExtended._open_ws_panel() takes 0 positional arguments but 1 was given

@@ -1,0 +1,6 @@
+[2025-10-01 17:58:24] INFO root: init_logging: logfile=logs\log_20251001_155824.txt
+[2025-10-01 17:58:24] INFO __main__: Logging initialized
+[2025-10-01 17:58:26] WARNING trading_gui_extended: Tkinter / DISPLAY error detected. Entering headless mode.
+[2025-10-01 17:58:26] INFO trading_gui_extended: fiboevo: detected functions: ['add_technical_features', 'create_sequences_from_df', 'LSTM2Head']
+[2025-10-01 17:58:26] INFO trading_gui_extended: add_technical_features smoke test OK, result shape=(0, 42)
+[2025-10-01 17:58:26] INFO trading_gui_extended: Headless mode completed. To use the GUI run in an environment with a display (set $DISPLAY).

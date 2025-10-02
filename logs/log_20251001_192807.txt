@@ -1,0 +1,24 @@
+[2025-10-01 21:28:07] INFO root: init_logging: logfile=logs\log_20251001_192807.txt
+[2025-10-01 21:28:07] INFO __main__: Logging initialized
+[2025-10-01 21:28:11] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 604, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+[2025-10-01 21:28:11] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 604, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+
+[2025-10-01 21:29:04] INFO websocket: Websocket connected
+[2025-10-01 21:29:04] INFO root: WS open (callback)
+[2025-10-01 21:30:58] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 2915, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 2911, in main
+    root.mainloop()
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

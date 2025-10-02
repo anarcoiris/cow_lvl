@@ -1,0 +1,19 @@
+[2025-10-02 03:27:56] INFO root: init_logging: logfile=logs\log_20251002_012756.txt
+[2025-10-02 03:27:56] INFO __main__: Logging initialized
+[2025-10-02 03:27:59] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 03:28:04] ERROR __main__: Failed to create ws panel UI in Toplevel
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1471, in _open_ws_panel
+    self._extend_status_tab_ui(top)
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 1122, in _extend_status_tab_ui
+    import ttk as _unused_ttk  # no-op placeholder for static analysis (ttk used already)
+ModuleNotFoundError: No module named 'ttk'
+[2025-10-02 03:29:29] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 3111, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended2.py", line 3107, in main
+    root.mainloop()
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

@@ -1,0 +1,35 @@
+[2025-10-02 02:04:52] INFO root: init_logging: logfile=logs\log_20251002_000452.txt
+[2025-10-02 02:04:52] INFO __main__: Logging initialized
+[2025-10-02 02:04:55] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 02:04:55] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 630, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+[2025-10-02 02:04:55] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 630, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+
+[2025-10-02 02:05:18] INFO root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Thu, 02 Oct 2025 00:05:18 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-10-02 02:05:18] ERROR websocket: Handshake status 404 Not Found -+-+- {'date': 'Thu, 02 Oct 2025 00:05:18 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path' - goodbye
+[2025-10-02 02:05:18] INFO root: WS closed: None None
+[2025-10-02 02:05:18] ERROR root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Thu, 02 Oct 2025 00:05:18 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-10-02 02:05:26] INFO root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Thu, 02 Oct 2025 00:05:26 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-10-02 02:05:26] ERROR websocket: Handshake status 404 Not Found -+-+- {'date': 'Thu, 02 Oct 2025 00:05:26 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path' - goodbye
+[2025-10-02 02:05:26] INFO root: WS closed: None None
+[2025-10-02 02:05:26] ERROR root: WS error: Handshake status 404 Not Found -+-+- {'date': 'Thu, 02 Oct 2025 00:05:26 GMT', 'content-type': 'text/plain', 'content-length': '20', 'connection': 'keep-alive'} -+-+- b'Invalid request path'
+[2025-10-02 02:05:43] INFO websocket: Websocket connected
+[2025-10-02 02:05:43] INFO root: WS open (callback)
+[2025-10-02 02:05:53] INFO root: Already connected.
+[2025-10-02 02:05:54] INFO root: Already connected.
+[2025-10-02 02:14:09] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 3044, in <module>
+    _tb = traceback.format_exc()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 3040, in main
+    try:
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

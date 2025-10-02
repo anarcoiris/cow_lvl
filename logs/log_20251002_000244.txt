@@ -1,0 +1,41 @@
+[2025-10-02 02:02:44] INFO root: init_logging: logfile=logs\log_20251002_000244.txt
+[2025-10-02 02:02:44] INFO __main__: Logging initialized
+[2025-10-02 02:02:46] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 180, in <module>
+    from sklearn.preprocessing import StandardScaler
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\__init__.py", line 73, in <module>
+    from .base import clone  # noqa: E402
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\base.py", line 19, in <module>
+    from .utils._metadata_requests import _MetadataRequester, _routing_enabled
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\utils\__init__.py", line 9, in <module>
+    from ._chunking import gen_batches, gen_even_slices
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\utils\_chunking.py", line 11, in <module>
+    from ._param_validation import Interval, validate_params
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\utils\_param_validation.py", line 17, in <module>
+    from .validation import _is_arraylike_not_scalar
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\utils\validation.py", line 21, in <module>
+    from ..utils._array_api import _asarray_with_order, _is_numpy_namespace, get_namespace
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\utils\_array_api.py", line 20, in <module>
+    from .fixes import parse_version
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\sklearn\utils\fixes.py", line 16, in <module>
+    import scipy.stats
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\stats\__init__.py", line 624, in <module>
+    from ._stats_py import *
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\stats\_stats_py.py", line 248, in <module>
+    def hmean(a, axis=0, dtype=None, *, weights=None):
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\stats\_axis_nan_policy.py", line 665, in axis_nan_policy_decorator
+    doc = FunctionDoc(axis_nan_policy_wrapper)
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\_lib\_docscrape.py", line 589, in __init__
+    NumpyDocString.__init__(self, doc, config)
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\_lib\_docscrape.py", line 148, in __init__
+    self._parse()
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\_lib\_docscrape.py", line 390, in _parse
+    self._parse_summary()
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\_lib\_docscrape.py", line 386, in _parse_summary
+    self["Extended Summary"] = self._read_to_next_section()
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\_lib\_docscrape.py", line 204, in _read_to_next_section
+    while not self._is_at_section() and not self._doc.eof():
+  File "C:\Users\soyko\AppData\Roaming\Python\Python310\site-packages\scipy\_lib\_docscrape.py", line 176, in _is_at_section
+    if l1.startswith(".. index::"):
+KeyboardInterrupt

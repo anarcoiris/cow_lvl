@@ -71,7 +71,7 @@ if not logger.handlers:
     ch.setLevel(logging.INFO)
     formatter = logging.Formatter("[%(asctime)s] %(levelname)s %(name)s: %(message)s", "%Y-%m-%d %H:%M:%S")
     ch.setFormatter(formatter)
-    logger.addHandler(ch)
+    # logger.addHandler(ch)
     logger.setLevel(logging.INFO)
 
 

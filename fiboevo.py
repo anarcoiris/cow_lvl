@@ -218,93 +218,149 @@ def simulate_ou(theta: float = 1.0, sigma: float = 0.5, dt: float = 0.01, steps:
 
     return price.astype(np.float32), high.astype(np.float32), low.astype(np.float32)
 
-
-# ==========================================
-# Feature engineering
-# ==========================================
 def add_technical_features(
-    close: np.ndarray,
-    high: Optional[np.ndarray] = None,
-    low: Optional[np.ndarray] = None,
-    volume: Optional[np.ndarray] = None,
+    close: Union[np.ndarray, pd.Series],
+    high: Optional[Union[np.ndarray, pd.Series]] = None,
+    low: Optional[Union[np.ndarray, pd.Series]] = None,
+    volume: Optional[Union[np.ndarray, pd.Series]] = None,
     window_long: int = 50,
+    include_vp: bool = False,
+    fib_retracements: Optional[Sequence[float]] = None,
+    fib_extensions: Optional[Sequence[float]] = None,
+    include_fib_dist_cols: bool = True,
+    fib_composite: Optional[Dict] = None,
+    fib_lookback: int = 50,
+    dropna_after: bool = False,
+    out_dtype: str = "float32",
 ) -> pd.DataFrame:
-    """Return a DataFrame with features aligned to close.
-    IMPORTANT: We avoid forward/backward filling to prevent look-ahead leakage.
-    Caller should dropna() after feature creation.
-    """
-    df = pd.DataFrame({"close": close})
+    # --- defaults
+    if fib_retracements is None:
+        fib_retracements = [0.236, 0.382, 0.5, 0.618, 0.786]
+    if fib_extensions is None:
+        fib_extensions = [1.272, 1.618, 2.0]
+
+    # Convert inputs to Series to preserve index if present
+    if isinstance(close, np.ndarray):
+        idx = None
+        close_s = pd.Series(close)
+    else:
+        close_s = pd.Series(close)
+        idx = close_s.index
+
+    df = pd.DataFrame({"close": close_s})
     if high is None:
-        high = close
+        high_s = close_s.copy()
+    else:
+        high_s = pd.Series(high, index=idx) if not isinstance(high, pd.Series) else high
     if low is None:
-        low = close
-    df["high"] = high
-    df["low"] = low
+        low_s = close_s.copy()
+    else:
+        low_s = pd.Series(low, index=idx) if not isinstance(low, pd.Series) else low
+    df["high"] = high_s
+    df["low"] = low_s
 
-    # safe log_close optional (not used everywhere but useful to keep)
-    df["log_close"] = np.log(df["close"].replace(0, np.nan))
+    # safe log_close
+    with np.errstate(divide="ignore", invalid="ignore"):
+        df["log_close"] = np.log(df["close"].replace(0, np.nan))
 
-    # basic returns
+    # returns (keep both real and log for compatibility; prefer log for modeling)
     df["ret_1"] = df["close"].pct_change(1)
     df["log_ret_1"] = df["log_close"].diff(1)
     df["ret_5"] = df["close"].pct_change(5)
     df["log_ret_5"] = df["log_close"].diff(5)
 
-    # moving averages + diffs
-    for L in [5, 10, 20, 50, window_long]:
+    # moving averages and EMAs (short/medium/long + window_long)
+    MA_WINDOWS = [5, 20, 50]
+    EMA_WINDOWS = [5, 20]
+    if window_long not in MA_WINDOWS:
+        MA_WINDOWS.append(window_long)
+    if window_long not in EMA_WINDOWS:
+        EMA_WINDOWS.append(window_long)
+
+    for L in sorted(set(MA_WINDOWS)):
         df[f"sma_{L}"] = df["close"].rolling(L, min_periods=L).mean()
+    for L in sorted(set(EMA_WINDOWS)):
         df[f"ema_{L}"] = df["close"].ewm(span=L, adjust=False).mean()
+
+    # representative MA diff (prefer 20 if present)
+    if "sma_20" in df.columns:
+        df["ma_diff_20"] = df["close"] - df["sma_20"]
+    else:
+        L = sorted(set(MA_WINDOWS))[0]
         df[f"ma_diff_{L}"] = df["close"] - df[f"sma_{L}"]
 
-    # Bollinger
+    # Bollinger 20
     bb_m = df["close"].rolling(20, min_periods=20).mean()
     bb_std = df["close"].rolling(20, min_periods=20).std()
     df["bb_m"] = bb_m
     df["bb_std"] = bb_std
-    df["bb_up"] = bb_m + 2 * bb_std
-    df["bb_dn"] = bb_m - 2 * bb_std
-    df["bb_width"] = (df["bb_up"] - df["bb_dn"]) / (bb_m.replace(0, np.nan))
+    df["bb_up"] = bb_m + 2.0 * bb_std
+    df["bb_dn"] = bb_m - 2.0 * bb_std
+    df["bb_width"] = (df["bb_up"] - df["bb_dn"]) / bb_m.replace(0, np.nan)
 
-    # RSI
+    # RSI (pandas_ta fallback else simple)
     try:
-        if _HAS_PT:
-            df["rsi_14"] = pta.rsi(df["close"], length=14)
-        else:
-            df["rsi_14"] = simple_rsi(df["close"].values, 14)
+        import pandas_ta as pta  # type: ignore
+        df["rsi_14"] = pta.rsi(df["close"], length=14)
     except Exception:
-        df["rsi_14"] = simple_rsi(df["close"].values, 14)
+        s = df["close"]
+        diff = s.diff(1)
+        up = diff.clip(lower=0)
+        down = -diff.clip(upper=0)
+        ma_up = up.rolling(14, min_periods=14).mean()
+        ma_down = down.rolling(14, min_periods=14).mean()
+        rs = ma_up / (ma_down + 1e-12)
+        df["rsi_14"] = (100 - (100 / (1 + rs))).to_numpy()
 
     # ATR
-    df["atr_14"] = atr_simple(df["high"], df["low"], df["close"], 14)
+    try:
+        df["atr_14"] = atr_simple(df["high"].values, df["low"].values, df["close"].values, length=14)
+    except Exception:
+        df["atr_14"] = (df["high"] - df["low"]).rolling(14, min_periods=14).mean()
 
-    # rolling volatility (UNSCALED, raw)
+    # volatility (log returns preferred)
     df["raw_vol_10"] = df["log_ret_1"].rolling(10, min_periods=10).std()
     df["raw_vol_30"] = df["log_ret_1"].rolling(30, min_periods=30).std()
 
-    # Fibonacci based on lookback extremes
-    lookback = 50
-    highs = df["high"].rolling(lookback, min_periods=lookback).max()
-    lows = df["low"].rolling(lookback, min_periods=lookback).min()
-    fibs = [0.0, 0.236, 0.382, 0.5, 0.618, 0.786, 1.0]
-    for f in fibs:
-        level = lows + (highs - lows) * f
-        name = f"fib_{int(f*1000)}"
-        df[name] = level
-        df[f"dist_{name}"] = (df["close"] - level) / df["close"].replace(0, np.nan)
+    # Fibonacci (retracements + extensions) using fib_lookback
+    highs = df["high"].rolling(fib_lookback, min_periods=fib_lookback).max()
+    lows = df["low"].rolling(fib_lookback, min_periods=fib_lookback).min()
+    range_ = (highs - lows).replace(0, np.nan)
 
-    # TD-like setups
-    close_arr = df["close"].values
-    buy_setup = np.zeros(len(close_arr), dtype=int)
-    sell_setup = np.zeros(len(close_arr), dtype=int)
-    for i in range(4, len(close_arr)):
-        buy_setup[i] = buy_setup[i - 1] + 1 if close_arr[i] < close_arr[i - 4] else 0
-        sell_setup[i] = sell_setup[i - 1] + 1 if close_arr[i] > close_arr[i - 4] else 0
+    all_f_levels = []
+    # retracements (0..1)
+    for f in fib_retracements:
+        lvl = lows + (highs - lows) * float(f)
+        tag = f"fib_r_{int(f*1000)}"
+        df[tag] = lvl
+        if include_fib_dist_cols:
+            df[f"dist_{tag}"] = (df["close"] - lvl) / range_
+        all_f_levels.append(("r", f, tag))
+
+    # extensions (>1)
+    for f in fib_extensions:
+        lvl = lows + (highs - lows) * float(f)
+        tag = f"fibext_{int(f*1000)}"
+        df[tag] = lvl
+        if include_fib_dist_cols:
+            df[f"dist_{tag}"] = (df["close"] - lvl) / range_
+        all_f_levels.append(("ext", f, tag))
+
+    # TD-like setups (simple)
+    close_v = df["close"].values
+    buy_setup = np.zeros(len(close_v), dtype=int)
+    sell_setup = np.zeros(len(close_v), dtype=int)
+    for i in range(4, len(close_v)):
+        buy_setup[i] = buy_setup[i - 1] + 1 if close_v[i] < close_v[i - 4] else 0
+        sell_setup[i] = sell_setup[i - 1] + 1 if close_v[i] > close_v[i - 4] else 0
     df["td_buy_setup"] = buy_setup
     df["td_sell_setup"] = sell_setup
 
-    # Volume profile approximation (optional)
-    if volume is not None:
-        df["volume"] = volume
+    # Volume profile approximation (optional, expensive)
+    if include_vp and (volume is not None):
+        # si volume es array/series, respetar índice
+        vol_s = pd.Series(volume, index=idx) if not isinstance(volume, pd.Series) else volume
+        df["volume"] = vol_s
         window = 100
         pocs = [np.nan] * len(df)
         for i in range(window, len(df)):
@@ -314,35 +370,106 @@ def add_technical_features(
                 pocs[i] = np.nan
                 continue
             hist, edges = np.histogram(seg.values, bins=20, weights=seg_vol)
-            max_bin = np.argmax(hist)
+            max_bin = int(np.argmax(hist))
             pocs[i] = 0.5 * (edges[max_bin] + edges[max_bin + 1])
         df["vp_poc"] = pocs
         df["dist_vp"] = (df["close"] - df["vp_poc"]) / df["close"].replace(0, np.nan)
     else:
-        df["volume"] = df.get("volume", np.nan)
-        df["vp_poc"] = np.nan
-        df["dist_vp"] = np.nan
+        # conservar `volume` sólo si fue pasado por el caller y no existe ya
+        if volume is not None and "volume" not in df.columns:
+            df["volume"] = pd.Series(volume, index=idx)
 
-    # -------------------------
-    # Deterministic ordering of columns to avoid surprises
+    # Optional: compute fib composite scalar (compute dist internally if needed)
+    if fib_composite:
+        method = fib_composite.get("method", "cubic_sum")
+        weights = fib_composite.get("weights", None)
+        normalize = bool(fib_composite.get("normalize", True))
+
+        # collect dist columns if created
+        dist_cols = [f"dist_{tag}" for (_t, _fval, tag) in all_f_levels if f"dist_{tag}" in df.columns]
+
+        if len(dist_cols) == 0:
+            # compute dist array on the fly (no column creation)
+            dist_list = []
+            for (_t, fval, tag) in all_f_levels:
+                lvl = df[tag].values
+                dist_list.append((df["close"].values - lvl) / range_.values)
+            if dist_list:
+                dist_arr = np.vstack(dist_list).T
+            else:
+                dist_arr = None
+        else:
+            dist_arr = df[dist_cols].values if len(dist_cols) > 0 else None
+
+        if dist_arr is None or dist_arr.shape[1] == 0:
+            df["fib_composite"] = np.nan
+        else:
+            K = dist_arr.shape[1]
+            if weights is None:
+                w = np.ones(K, dtype=float)
+            else:
+                w = np.asarray(weights, dtype=float)
+                if w.size != K:
+                    if w.size == 1:
+                        w = np.repeat(w, K)
+                    else:
+                        w = np.resize(w, K)
+            if method == "cubic_sum":
+                with np.errstate(invalid="ignore"):
+                    comp = np.nansum((dist_arr ** 3) * w.reshape(1, -1), axis=1)
+                if normalize:
+                    denom = np.sum(np.abs(w)) or 1.0
+                    comp = comp / denom
+                df["fib_composite"] = comp
+            else:
+                comp = np.nansum(dist_arr * w.reshape(1, -1), axis=1)
+                if normalize:
+                    denom = np.sum(np.abs(w)) or 1.0
+                    comp = comp / denom
+                df["fib_composite"] = comp
+
+    # Deterministic ordering
     ordered = [
         "close", "high", "low", "log_close",
         "ret_1", "log_ret_1", "ret_5", "log_ret_5",
     ]
-    # moving avgs deterministic
-    for L in [5, 10, 20, 50, window_long]:
-        ordered += [f"sma_{L}", f"ema_{L}", f"ma_diff_{L}"]
-    ordered += ["bb_m", "bb_std", "bb_up", "bb_dn", "bb_width", "rsi_14", "atr_14", "raw_vol_10", "raw_vol_30"]
-    fib_ints = [0, 236, 382, 500, 618, 786, 1000]
-    for f in fib_ints:
-        ordered += [f"fib_{f}", f"dist_fib_{f}"]
+    for L in sorted(set(MA_WINDOWS)):
+        ordered.append(f"sma_{L}")
+    for L in sorted(set(EMA_WINDOWS)):
+        ordered.append(f"ema_{L}")
+    ordered += ["ma_diff_20", "bb_m", "bb_std", "bb_up", "bb_dn", "bb_width", "rsi_14", "atr_14", "raw_vol_10", "raw_vol_30"]
+    for (_t, fval, tag) in all_f_levels:
+        if tag in df.columns:
+            ordered.append(tag)
+            if include_fib_dist_cols:
+                ordered.append(f"dist_{tag}")
     ordered += ["td_buy_setup", "td_sell_setup"]
     if "volume" in df.columns:
         ordered += ["volume", "vp_poc", "dist_vp"]
+    if "fib_composite" in df.columns:
+        ordered.append("fib_composite")
 
     remaining = [c for c in df.columns if c not in ordered]
-    df = df.loc[:, [c for c in ordered if c in df.columns] + remaining]
+    final_cols = [c for c in ordered if c in df.columns] + remaining
+    df = df.loc[:, final_cols]
+
+    if dropna_after:
+        df = df.dropna().reset_index(drop=True)
+
+    # ---- final cleanup antes de devolver ----
+    # coercer objetos a numérico donde proceda, reemplazar infinitos por NaN
+    for c in df.columns:
+        if df[c].dtype == object:
+            df[c] = pd.to_numeric(df[c], errors="coerce")
+    df.replace([np.inf, -np.inf], np.nan, inplace=True)
+
+    # cast final de float64 -> out_dtype si procede
+    if out_dtype == "float32":
+        for c in df.select_dtypes(include=["float64"]).columns:
+            df[c] = df[c].astype(np.float32)
+
     return df
+
 
 
 # ------------------------------

@@ -1,0 +1,12 @@
+[2025-10-01 00:19:50] INFO root: init_logging: logfile=logs\log_20250930_221950.txt
+[2025-10-01 00:19:50] INFO __main__: Logging initialized
+[2025-10-01 00:19:53] INFO root: Config loaded from config\gui_config.json
+[2025-10-01 00:20:08] INFO root: Preview loaded: 200 rows.
+[2025-10-01 00:20:18] INFO root: No dataframe available for preview: scaled
+[2025-10-01 00:20:22] INFO root: Preview loaded: 200 rows.
+[2025-10-01 00:20:25] INFO root: Prepare: loading data from sqlite...
+[2025-10-01 00:20:25] INFO root: Prepare thread started.
+[2025-10-01 00:20:25] INFO root: Loaded 106182 rows from sqlite.
+[2025-10-01 00:20:26] INFO root: Computed features. Shape: (106182, 47)
+[2025-10-01 00:20:26] INFO root: dropna: before=106182, after=106133, removed=49
+[2025-10-01 00:20:26] INFO root: No numeric feature columns detected after cleaning. Abort.

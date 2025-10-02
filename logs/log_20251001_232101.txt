@@ -1,0 +1,941 @@
+[2025-10-02 01:21:01] INFO root: init_logging: logfile=logs\log_20251001_232101.txt
+[2025-10-02 01:21:01] INFO __main__: Logging initialized
+[2025-10-02 01:21:04] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 604, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+[2025-10-02 01:21:04] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 604, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+NameError: name 'sqlite3' is not defined
+
+[2025-10-02 01:21:36] INFO root: Preview loaded: 200 rows.
+[2025-10-02 01:21:44] INFO root: Preview loaded: 200 rows.
+[2025-10-02 01:26:21] INFO websocket: Websocket connected
+[2025-10-02 01:26:21] INFO root: WS open (callback)
+[2025-10-02 01:26:49] INFO root: Big trade sell 6.024@118213.0
+[2025-10-02 01:26:57] INFO root: Big trade sell 6.609@118220.3
+[2025-10-02 01:26:58] INFO root: Applied status intervals: inference=120.0s trade=240.0s refresh=120.0s
+[2025-10-02 01:26:59] INFO root: Big trade buy 6.095@118206.0
+[2025-10-02 01:27:00] INFO root: Big trade sell 11.001@118220.9
+[2025-10-02 01:27:01] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-10-02 01:27:01] INFO TradingDaemon: Daemon loop started.
+[2025-10-02 01:27:01] INFO root: Daemon started.
+[2025-10-02 01:27:01] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 01:27:01] INFO root: Big trade sell 6.594@118205.1
+[2025-10-02 01:27:02] INFO root: Big trade sell 51.915@118200.0
+[2025-10-02 01:27:02] INFO root: Big trade sell 5.717@118188.7
+[2025-10-02 01:27:05] INFO root: Big trade sell 7.198@118175.9
+[2025-10-02 01:27:07] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 01:27:08] INFO root: Big trade sell 10.387@118175.9
+[2025-10-02 01:27:10] INFO root: Big trade sell 5.537@118173.1
+[2025-10-02 01:27:12] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 01:27:13] INFO root: Big trade sell 11.002@118173.5
+[2025-10-02 01:27:17] INFO root: Big trade sell 11.17@118190.9
+[2025-10-02 01:27:18] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 01:27:21] INFO root: Background: loading model C:/Users/soyko/Documents/git2/Market/project assistant/env.model_0.9/0.9f/fibopkg5/artifacts/model_best.pt into daemon...
+[2025-10-02 01:27:21] INFO TradingDaemon: Attempting to load model from C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\artifacts\model_best.pt
+[2025-10-02 01:27:21] INFO TradingDaemon: Loaded meta: artifacts\meta.json
+[2025-10-02 01:27:21] INFO TradingDaemon: Loaded model state_dict (strict=True).
+[2025-10-02 01:27:21] INFO TradingDaemon: Model prepared on CPU.
+[2025-10-02 01:27:21] INFO TradingDaemon: Loaded scaler from artifacts\scaler.pkl
+[2025-10-02 01:27:21] INFO root: Model loaded into daemon (background).
+[2025-10-02 01:27:23] INFO TradingDaemon: Prediction computed: -0.000607
+[2025-10-02 01:27:23] INFO TradingDaemon: Paper trade simulated: sell 0.00084558 @ 118262.46
+[2025-10-02 01:27:26] INFO root: Status data fetched: 50 rows.
+[2025-10-02 01:27:29] INFO TradingDaemon: Prediction computed: -0.000607
+[2025-10-02 01:27:29] INFO TradingDaemon: Paper trade simulated: sell 0.00084558 @ 118262.46
+[2025-10-02 01:27:31] INFO root: Status data fetched: 50 rows.
+[2025-10-02 01:27:35] INFO TradingDaemon: Prediction computed: -0.000607
+[2025-10-02 01:27:35] INFO TradingDaemon: Paper trade simulated: sell 0.00084558 @ 118262.46
+[2025-10-02 01:27:36] INFO root: Refreshed model metadata from daemon.
+[2025-10-02 01:27:37] INFO root: Prediction worker started (background).
+[2025-10-02 01:27:37] INFO root: Prediction computed: log=-0.001066 pct=-0.10658331967176027 vol=0.6406824588775635
+[2025-10-02 01:27:40] INFO TradingDaemon: Prediction computed: -0.000607
+[2025-10-02 01:27:40] INFO TradingDaemon: Paper trade simulated: sell 0.00084558 @ 118262.46
+[2025-10-02 01:27:46] INFO root: Big trade buy 10.014@118197.0
+[2025-10-02 01:27:46] INFO TradingDaemon: Prediction computed: -0.000607
+[2025-10-02 01:27:46] INFO TradingDaemon: Paper trade simulated: sell 0.00084558 @ 118262.46
+[2025-10-02 01:27:51] INFO TradingDaemon: Prediction computed: -0.000607
+[2025-10-02 01:27:51] INFO TradingDaemon: Paper trade simulated: sell 0.00084558 @ 118262.46
+[2025-10-02 01:27:54] INFO root: Big trade sell 8.397@118239.2
+[2025-10-02 01:27:57] INFO TradingDaemon: Prediction computed: -0.000607
+[2025-10-02 01:27:57] INFO TradingDaemon: Paper trade simulated: sell 0.00084558 @ 118262.46
+[2025-10-02 01:27:57] INFO root: Big trade buy 5.0@118222.9
+[2025-10-02 01:28:02] INFO TradingDaemon: Prediction computed: -0.000652
+[2025-10-02 01:28:02] INFO TradingDaemon: Paper trade simulated: sell 0.00084554 @ 118268.30
+[2025-10-02 01:28:08] INFO root: Big trade sell 5.013@118248.8
+[2025-10-02 01:28:08] INFO TradingDaemon: Prediction computed: -0.000652
+[2025-10-02 01:28:08] INFO TradingDaemon: Paper trade simulated: sell 0.00084554 @ 118268.30
+[2025-10-02 01:28:14] INFO TradingDaemon: Prediction computed: -0.000652
+[2025-10-02 01:28:14] INFO TradingDaemon: Paper trade simulated: sell 0.00084554 @ 118268.30
+[2025-10-02 01:28:16] INFO root: Big trade buy 9.394@118237.6
+[2025-10-02 01:28:19] INFO root: Big trade sell 17.58@118251.1
+[2025-10-02 01:28:19] INFO TradingDaemon: Prediction computed: -0.000652
+[2025-10-02 01:28:19] INFO TradingDaemon: Paper trade simulated: sell 0.00084554 @ 118268.30
+[2025-10-02 01:28:19] INFO root: Big trade sell 6.283@118236.6
+[2025-10-02 01:28:19] INFO root: Applied status intervals: inference=120.0s trade=240.0s refresh=120.0s
+[2025-10-02 01:28:19] INFO TradingDaemon: Configuration updated from dict.
+[2025-10-02 01:28:19] INFO root: Pushed refresh interval to daemon.poll_interval.
+[2025-10-02 01:28:46] INFO root: Big trade buy 11.384@118221.8
+[2025-10-02 01:28:48] INFO root: Big trade buy 10.035@118225.3
+[2025-10-02 01:28:59] INFO root: Big trade buy 6.503@118241.9
+[2025-10-02 01:29:21] INFO root: Big trade sell 9.135@118353.8
+[2025-10-02 01:29:23] INFO root: Big trade sell 6.027@118330.2
+[2025-10-02 01:29:24] INFO root: Big trade sell 9.424@118325.5
+[2025-10-02 01:29:36] INFO root: Big trade sell 8.455@118308.1
+[2025-10-02 01:29:37] INFO root: Big trade buy 8.509@118299.3
+[2025-10-02 01:29:37] INFO root: Big trade buy 61.666@118303.1
+[2025-10-02 01:29:42] INFO root: Big trade sell 9.342@118294.2
+[2025-10-02 01:29:55] INFO root: Big trade sell 6.97@118326.1
+[2025-10-02 01:30:02] INFO root: Big trade buy 10.699@118311.3
+[2025-10-02 01:30:08] INFO root: Big trade sell 8.769@118320.9
+[2025-10-02 01:30:15] INFO root: Big trade sell 10.239@118311.2
+[2025-10-02 01:30:23] INFO root: Big trade sell 5.035@118282.4
+[2025-10-02 01:30:30] INFO TradingDaemon: Prediction computed: -0.000504
+[2025-10-02 01:30:30] INFO TradingDaemon: Paper trade simulated: sell 0.00084493 @ 118352.59
+[2025-10-02 01:30:32] INFO root: Big trade buy 12.989@118270.6
+[2025-10-02 01:30:34] INFO root: Big trade sell 8.005@118287.9
+[2025-10-02 01:30:40] INFO root: Big trade buy 5.437@118276.1
+[2025-10-02 01:30:41] INFO root: Big trade sell 6.327@118302.8
+[2025-10-02 01:30:56] INFO root: Big trade buy 11.042@118302.0
+[2025-10-02 01:31:01] INFO root: Big trade sell 6.732@118301.9
+[2025-10-02 01:31:04] INFO root: Big trade buy 5.511@118282.9
+[2025-10-02 01:31:23] INFO root: Big trade buy 9.719@118287.5
+[2025-10-02 01:32:19] INFO root: Big trade buy 5.889@118228.9
+[2025-10-02 01:32:40] INFO TradingDaemon: Prediction computed: -0.000343
+[2025-10-02 01:32:40] INFO TradingDaemon: No trade (signal -0.000343 within threshold).
+[2025-10-02 01:33:05] INFO root: Big trade buy 9.095@118180.7
+[2025-10-02 01:33:08] INFO root: Big trade buy 9.413@118184.3
+[2025-10-02 01:34:25] INFO root: Big trade buy 10.509@118117.3
+[2025-10-02 01:34:30] INFO root: Big trade buy 5.543@118126.6
+[2025-10-02 01:34:44] INFO root: Big trade buy 7.488@118132.5
+[2025-10-02 01:34:51] INFO TradingDaemon: Prediction computed: -0.000209
+[2025-10-02 01:34:51] INFO TradingDaemon: No trade (signal -0.000209 within threshold).
+[2025-10-02 01:34:58] INFO root: Big trade sell 5.008@118081.9
+[2025-10-02 01:35:39] INFO root: Big trade buy 11.763@118036.1
+[2025-10-02 01:36:24] INFO root: Big trade buy 8.569@118069.4
+[2025-10-02 01:36:28] INFO root: Big trade sell 17.616@118100.8
+[2025-10-02 01:36:36] INFO root: Big trade buy 8.065@118124.4
+[2025-10-02 01:36:48] INFO root: Big trade buy 12.253@118124.5
+[2025-10-02 01:37:01] INFO TradingDaemon: Prediction computed: -0.001066
+[2025-10-02 01:37:01] INFO TradingDaemon: Paper trade simulated: sell 0.00084617 @ 118179.73
+[2025-10-02 01:37:15] INFO root: Big trade sell 8.751@118156.9
+[2025-10-02 01:37:51] INFO root: Big trade sell 5.105@118135.5
+[2025-10-02 01:39:03] INFO root: Big trade sell 6.49@118141.1
+[2025-10-02 01:39:12] INFO TradingDaemon: Prediction computed: -0.002046
+[2025-10-02 01:39:12] INFO TradingDaemon: Paper trade simulated: sell 0.00084602 @ 118200.00
+[2025-10-02 01:39:45] INFO root: Big trade buy 8.154@118151.9
+[2025-10-02 01:39:46] INFO root: Big trade buy 5.094@118153.4
+[2025-10-02 01:40:00] INFO root: Big trade sell 12.161@118165.9
+[2025-10-02 01:40:05] INFO root: Big trade buy 7.085@118166.7
+[2025-10-02 01:40:27] INFO root: Big trade buy 12.258@118186.8
+[2025-10-02 01:40:45] INFO root: Big trade sell 5.24@118220.0
+[2025-10-02 01:40:53] INFO root: Big trade buy 7.748@118223.8
+[2025-10-02 01:41:17] INFO root: Big trade buy 7.657@118258.9
+[2025-10-02 01:41:22] INFO TradingDaemon: Prediction computed: -0.001961
+[2025-10-02 01:41:22] INFO TradingDaemon: Paper trade simulated: sell 0.00084535 @ 118293.54
+[2025-10-02 01:41:42] INFO root: Big trade sell 16.501@118294.2
+[2025-10-02 01:41:54] INFO root: Big trade buy 5.101@118300.0
+[2025-10-02 01:42:03] INFO root: Big trade buy 9.599@118288.7
+[2025-10-02 01:42:06] INFO root: Big trade buy 6.601@118275.3
+[2025-10-02 01:42:07] INFO root: Big trade sell 13.592@118304.9
+[2025-10-02 01:43:08] INFO root: Big trade sell 27.988@118310.0
+[2025-10-02 01:43:33] INFO TradingDaemon: Prediction computed: 0.000280
+[2025-10-02 01:43:33] INFO TradingDaemon: No trade (signal 0.000280 within threshold).
+[2025-10-02 01:44:11] INFO root: Big trade sell 15.171@118295.2
+[2025-10-02 01:44:20] INFO root: Big trade buy 11.222@118281.0
+[2025-10-02 01:45:01] INFO root: Big trade buy 5.209@118263.7
+[2025-10-02 01:45:43] INFO TradingDaemon: Prediction computed: -0.000792
+[2025-10-02 01:45:43] INFO TradingDaemon: Paper trade simulated: sell 0.00084523 @ 118310.49
+[2025-10-02 01:46:09] INFO root: Big trade sell 10.639@118294.2
+[2025-10-02 01:47:05] INFO root: Big trade buy 7.834@118230.0
+[2025-10-02 01:47:54] INFO TradingDaemon: Prediction computed: -0.001155
+[2025-10-02 01:47:54] INFO TradingDaemon: Paper trade simulated: sell 0.00084548 @ 118275.46
+[2025-10-02 01:47:57] INFO root: Big trade buy 7.08@118300.0
+[2025-10-02 01:48:08] INFO root: Big trade sell 5.382@118334.1
+[2025-10-02 01:49:00] INFO root: Big trade buy 10.013@118321.3
+[2025-10-02 01:49:01] INFO root: Big trade sell 11.653@118334.8
+[2025-10-02 01:49:10] INFO root: Big trade sell 11.729@118334.8
+[2025-10-02 01:49:30] INFO root: Big trade sell 15.403@118334.8
+[2025-10-02 01:49:49] INFO root: Big trade buy 8.081@118350.0
+[2025-10-02 01:50:05] INFO TradingDaemon: Prediction computed: -0.001371
+[2025-10-02 01:50:05] INFO TradingDaemon: Paper trade simulated: sell 0.00084468 @ 118388.51
+[2025-10-02 01:50:23] INFO root: Big trade buy 8.001@118342.6
+[2025-10-02 01:50:32] INFO root: Big trade buy 6.474@118346.8
+[2025-10-02 01:50:40] INFO root: Big trade sell 7.214@118365.4
+[2025-10-02 01:51:40] INFO root: Saved logs to C:/Users/soyko/Documents/git2/Market/project assistant/env.model_0.9/0.9f/fibopkg5/logs/manual_log.txt
+[2025-10-02 01:52:02] INFO root: Prepare: loading data from sqlite...
+[2025-10-02 01:52:02] INFO root: Prepare thread started.
+[2025-10-02 01:52:03] INFO root: Loaded 105556 rows from sqlite.
+[2025-10-02 01:52:03] INFO root: Computed features. Shape: (105556, 47)
+[2025-10-02 01:52:03] INFO root: dropna: before=105556, after=105507, removed=49
+[2025-10-02 01:52:03] INFO root: Feature cols selected (39): ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10']...
+[2025-10-02 01:52:03] INFO root: Building sequences...
+[2025-10-02 01:52:05] INFO root: Sequences built: N=105466, seq_len=32, features=39
+[2025-10-02 01:52:06] INFO root: Big trade buy 6.506@118330.1
+[2025-10-02 01:52:06] INFO root: Scaler fitted and df_scaled prepared.
+[2025-10-02 01:52:06] INFO root: Preview raw (first 5 rows):
+   id   symbol timeframe          ts       open       high        low      close     volume  source     created_at     updated_at                 timestamp
+0   1  BTCUSDT        1m  1752231240  118117.79  118129.59  118090.00  118093.63    9.27987  influx  1759324325000  1759324325000 2025-07-11 10:54:00+00:00
+1   2  BTCUSDT        1m  1752231300  118093.63  118093.63  117980.00  117980.01  111.28787  influx  1759324325000  1759324325000 2025-07-11 10:55:00+00:00
+2   3  BTCUSDT        1m  1752231360  117980.00  118023.34  117980.00  118022.39    9.13797  influx  1759324325000  1759324325000 2025-07-11 10:56:00+00:00
+3   4  BTCUSDT        1m  1752231420  118022.38  118022.38  117946.72  117968.01   30.41224  influx  1759324325000  1759324325000 2025-07-11 10:57:00+00:00
+4   5  BTCUSDT        1m  1752231480  117968.01  117968.01  117964.71  117964.72    7.69926  influx  1759324325000  1759324325000 2025-07-11 10:58:00+00:00
+[2025-10-02 01:52:06] INFO root: Preview features (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5          sma_5         sma_20         sma_50          ema_5         ema_20         ema_50  ma_diff_20           bb_m     bb_std          bb_up          bb_dn  bb_width     rsi_14     atr_14  raw_vol_10  raw_vol_30      fib_r_236  dist_fib_r_236      fib_r_382  dist_fib_r_382      fib_r_500  dist_fib_r_500      fib_r_618  dist_fib_r_618      fib_r_786  dist_fib_r_786   fibext_1272  dist_fibext_1272    fibext_1618  dist_fibext_1618    fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250  11.676602 -0.000158  -0.000158  0.000130   0.000130  117794.093750  117726.835938  117817.375000  117788.960938  117759.851562  117815.523438   56.574001  117726.835938  62.577103  117851.992188  117601.679688  0.002126  74.286270  28.154285    0.000165    0.000244  117712.117188        0.130470  117791.898438       -0.015530  117856.375000       -0.133530  117920.851562       -0.251530  118012.656250       -0.419530  118278.21875         -0.905530  118467.281250         -1.251530  118676.023438         -1.633530             1              0   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750  11.676430 -0.000173  -0.000173 -0.000181  -0.000181  117789.820312  117732.296875  117810.757812  117780.312500  117760.156250  117813.460938   30.714001  117732.296875  60.602898  117853.500000  117611.093750  0.002059  63.416958  25.852142    0.000176    0.000238  117707.632812        0.104987  117784.640625       -0.041013  117846.882812       -0.159013  117909.117188       -0.277013  117997.726562       -0.445013  118254.06250         -0.931013  118436.554688         -1.277013  118638.039062         -1.659013             2              0   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750  11.676239 -0.000190  -0.000190 -0.000493  -0.000493  117778.210938  117738.859375  117805.968750  117767.085938  117758.296875  117810.609375    1.772500  117738.859375  53.255333  117845.367188  117632.343750  0.001809  59.572964  27.683571    0.000189    0.000234  117707.632812        0.062555  117784.640625       -0.083445  117846.882812       -0.201445  117909.117188       -0.319445  117997.726562       -0.487445  118254.06250         -0.973445  118436.554688         -1.319445  118638.039062         -1.701445             3              0  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875  11.675980 -0.000260  -0.000260 -0.000781  -0.000781  117759.820312  117743.359375  117799.726562  117748.070312  117753.703125  117806.664062  -33.310501  117743.359375  45.987026  117835.335938  117651.382812  0.001562  48.687981  24.362858    0.000138    0.000239  117707.632812        0.004577  117784.640625       -0.141423  117846.882812       -0.259423  117909.117188       -0.377423  117997.726562       -0.545423  118254.06250         -1.031423  118436.554688         -1.377423  118638.039062         -1.759423             4              0   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000  11.675895 -0.000085  -0.000085 -0.000866  -0.000866  117739.421875  117744.781250  117794.367188  117732.054688  117748.585938  117802.476562  -44.774502  117744.781250  44.045681  117832.875000  117656.695312  0.001496  39.702305  22.860714    0.000137    0.000233  117707.632812       -0.014458  117784.640625       -0.160458  117846.882812       -0.278458  117909.117188       -0.396458  117997.726562       -0.564458  118254.06250         -1.050458  118436.554688         -1.396458  118638.039062         -1.778458             5              0  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-02 01:52:06] INFO root: Preview scaled (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5     sma_5    sma_20    sma_50     ema_5    ema_20    ema_50  ma_diff_20      bb_m    bb_std     bb_up     bb_dn  bb_width    rsi_14    atr_14  raw_vol_10  raw_vol_30  fib_r_236  dist_fib_r_236  fib_r_382  dist_fib_r_382  fib_r_500  dist_fib_r_500  fib_r_618  dist_fib_r_618  fib_r_786  dist_fib_r_786  fibext_1272  dist_fibext_1272  fibext_1618  dist_fibext_1618  fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250   0.649222 -0.360594  -0.359724  0.135298   0.135512  0.649736  0.628583  0.657342  0.648148  0.639137  0.657071    0.462720  0.628583 -0.170389  0.619793  0.636567 -0.186093  1.292493 -0.492692   -0.698951   -0.502079   0.666102       -0.442125   0.669309       -0.442125   0.671790       -0.442125   0.674174       -0.442125   0.677402       -0.442125     0.685619         -0.442125     0.690464         -0.442125     0.694865         -0.442125     -0.339364       -0.63692   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750   0.642967 -0.395638  -0.394708 -0.184369  -0.183541  0.648387  0.630308  0.655251  0.645418  0.639233  0.656419    0.253134  0.630308 -0.203918  0.620267  0.639547 -0.218955  0.711904 -0.562579   -0.655577   -0.525556   0.664681       -0.521619   0.667011       -0.521619   0.668789       -0.521619   0.670469       -0.521619   0.672697       -0.521619     0.678061         -0.521619     0.680914         -0.521618     0.683158         -0.521619     -0.044763       -0.63692   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750   0.636055 -0.434199  -0.433203 -0.505092  -0.503747  0.644722  0.632380  0.653738  0.641242  0.638645  0.655518    0.018574  0.632380 -0.328707  0.617709  0.646275 -0.341129  0.506575 -0.506982   -0.609761   -0.543046   0.664681       -0.653983   0.667011       -0.653983   0.668789       -0.653983   0.670469       -0.653983   0.672697       -0.653983     0.678061         -0.653983     0.680914         -0.653983     0.683158         -0.653983      0.249838       -0.63692  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875   0.626655 -0.593723  -0.592462 -0.801269  -0.799537  0.638917  0.633801  0.651765  0.635239  0.637195  0.654270   -0.265760  0.633801 -0.452150  0.614554  0.652303 -0.461958 -0.074851 -0.607789   -0.799952   -0.522894   0.664681       -0.834846   0.667011       -0.834846   0.668789       -0.834846   0.670469       -0.834846   0.672697       -0.834846     0.678061         -0.834846     0.680914         -0.834846     0.683158         -0.834846      0.544440       -0.63692   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000   0.623580 -0.194391  -0.193815 -0.888965  -0.887134  0.632477  0.634250  0.650072  0.630183  0.635578  0.652946   -0.358672  0.634250 -0.485121  0.613780  0.653985 -0.494231 -0.554825 -0.653389   -0.806386   -0.548423   0.664681       -0.894226   0.667011       -0.894226   0.668789       -0.894226   0.670469       -0.894226   0.672697       -0.894226     0.678061         -0.894226     0.680914         -0.894227     0.683158         -0.894226      0.839041       -0.63692  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-02 01:52:06] INFO root: Prepare stage finished successfully.
+[2025-10-02 01:52:15] INFO TradingDaemon: Prediction computed: -0.001102
+[2025-10-02 01:52:15] INFO TradingDaemon: Paper trade simulated: sell 0.00084475 @ 118378.73
+[2025-10-02 01:52:45] INFO root: Big trade sell 5.0@118300.0
+[2025-10-02 01:53:41] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:41] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:42] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:42] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:42] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:42] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:42] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:43] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:44] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:44] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:44] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:44] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:45] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:45] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:45] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:45] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:45] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:45] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:45] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:46] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:47] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:48] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:48] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:48] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:48] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:48] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:48] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:49] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:49] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:49] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:49] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:49] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:50] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:50] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:50] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:53] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:54] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:54] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:54] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:54] ERROR __main__: Failed updating orderbook_asks_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1262, in _process_ws_queue
+    self.orderbook_asks_tree.delete(*self.orderbook_asks_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview"
+[2025-10-02 01:53:54] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:55] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:55] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:55] ERROR __main__: Failed updating orderbook_bids_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1277, in _process_ws_queue
+    self.orderbook_bids_tree.delete(*self.orderbook_bids_tree.get_children())
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1220, in get_children
+    self.tk.call(self._w, "children", item or '') or ())
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame2.!treeview2"
+[2025-10-02 01:53:55] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:55] ERROR __main__: Failed updating trades_tree
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 1123, in _process_ws_queue
+    self.trades_tree.insert("", 0, values=(tstr, side, f"{price:.8g}", f"{qty:.8g}"))
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\ttk.py", line 1364, in insert
+    res = self.tk.call(self._w, "insert", parent, index, *opts)
+_tkinter.TclError: invalid command name ".!toplevel2.!frame2.!frame.!treeview"
+[2025-10-02 01:53:55] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 2915, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\tradingapp.py", line 2911, in main
+    root.mainloop()
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

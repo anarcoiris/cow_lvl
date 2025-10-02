@@ -1,0 +1,15 @@
+[2025-10-01 19:47:44] INFO root: init_logging: logfile=logs\log_20251001_174744.txt
+[2025-10-01 19:47:44] INFO __main__: Logging initialized
+[2025-10-01 19:47:47] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2905, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2900, in main
+    app = TradingAppExtended(root)
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 415, in __init__
+    self._build_ui()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 701, in _build_ui
+    self._build_status_tab()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 770, in _build_status_tab
+    Button(frm_settings, text="Disconnect", command=self._disconnect_websocket).grid(row=1, column=5, sticky=W, padx=2, pady=2)
+AttributeError: 'TradingAppExtended' object has no attribute '_disconnect_websocket'

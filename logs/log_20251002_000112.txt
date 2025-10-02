@@ -1,0 +1,18 @@
+[2025-10-02 02:01:12] INFO root: init_logging: logfile=logs\log_20251002_000112.txt
+[2025-10-02 02:01:12] INFO __main__: Logging initialized
+[2025-10-02 02:01:15] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 186, in <module>
+    from trading_daemon import TradingDaemon
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_daemon.py", line 48, in <module>
+    import ccxt
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\site-packages\ccxt\__init__.py", line 29, in <module>
+    from ccxt.base.exchange import Exchange                     # noqa: F401
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\site-packages\ccxt\base\__init__.py", line 24, in <module>
+    from ccxt.base import exchange
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\site-packages\ccxt\base\exchange.py", line 42, in <module>
+    from cryptography.hazmat.primitives import hashes
+  File "C:\Users\soyko\AppData\Local\Programs\Python\Python310\lib\site-packages\cryptography\hazmat\primitives\hashes.py", line 9, in <module>
+    from cryptography.hazmat.bindings._rust import openssl as rust_openssl
+  File "<frozen importlib._bootstrap>", line 1022, in _find_and_load
+KeyboardInterrupt

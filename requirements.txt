@@ -1,0 +1,8 @@
+pandas
+xlsxwriter
+ccxt
+joblib
+numpy
+pandas_ta
+scikit-learn
+torch

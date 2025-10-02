@@ -1,0 +1,13 @@
+[2025-10-01 17:57:02] INFO root: init_logging: logfile=logs\log_20251001_155702.txt
+[2025-10-01 17:57:02] INFO __main__: Logging initialized
+[2025-10-01 17:57:05] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2807, in <module>
+    main()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 2802, in main
+    app = TradingAppExtended(root)
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 413, in __init__
+    self._build_ui()
+  File "C:\Users\soyko\Documents\git2\Market\project assistant\env.model_0.9\0.9f\fibopkg5\trading_gui_extended.py", line 1061, in _build_ui
+    self._extend_status_ui_tab()
+AttributeError: 'TradingAppExtended' object has no attribute '_extend_status_ui_tab'

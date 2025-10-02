@@ -1,0 +1,5 @@
+[2025-10-01 17:42:45] INFO root: init_logging: logfile=logs\log_20251001_154245.txt
+[2025-10-01 17:42:45] INFO __main__: Logging initialized
+[2025-10-01 17:42:49] INFO root: Config loaded from config\gui_config.json
+[2025-10-01 17:43:04] INFO websocket: Websocket connected
+[2025-10-01 17:43:04] INFO root: WS open (callback)

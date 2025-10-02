@@ -1,0 +1,2 @@
+[2025-10-01 20:36:15] INFO root: init_logging: logfile=logs\log_20251001_183615.txt
+[2025-10-01 20:36:15] INFO __main__: Logging initialized
