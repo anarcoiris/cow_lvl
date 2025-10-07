@@ -151,6 +151,11 @@ def init_logging(log_dir: str = "logs", app_name: str = "trading_gui", level: in
     root.debug("sys.path: %s", sys.path)
     return logfile
 
+# detectar display
+if os.name == "nt":   # Windows
+    os.environ["DISPLAY"] = ":0"
+
+
 # Example of use (call at very top, before heavy imports):
 LOGFILE = init_logging(log_dir="logs", app_name="trading_gui", level=logging.INFO)
 logging.getLogger(__name__).info("Logging initialized")
@@ -158,6 +163,12 @@ logging.getLogger(__name__).info("Logging initialized")
 import queue
 from typing import Optional, List, Dict, Any
 import math
+
+# al principio del archivo (junto a otros imports)
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt  # opcional para estilos o utilidades
+
 
 import numpy as np
 import pandas as pd
@@ -322,7 +333,8 @@ class TradingAppExtended:
     def __init__(self, root):
         self.root = root
         root.title(APP_TITLE)
-        root.geometry("1200x800")
+        root.geometry("800x600")
+        root.state("zoomed")
 
         # logging widget
         self.ui_log_queue = queue.Queue(maxsize=2000)
@@ -449,6 +461,380 @@ class TradingAppExtended:
     # --------------------------
     # UI building
     # --------------------------
+
+    def _open_forecast_window(self):
+        """Ventana forecast con SCROLLER global (scrolla todo: controles + plot)."""
+        import tkinter as tk
+        from tkinter import Toplevel, Frame, Label, Entry, Button, Checkbutton, Canvas, Scrollbar, StringVar, IntVar, DoubleVar, BooleanVar
+        from matplotlib.figure import Figure
+        from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+        # si ya está abierta, la elevamos
+        if getattr(self, "_forecast_toplevel", None):
+            try:
+                self._forecast_toplevel.lift()
+                return
+            except Exception:
+                pass
+
+        top = Toplevel(self.root)
+        top.title("Forecast / Extend price")
+        top.geometry("1000x700")
+        self._forecast_toplevel = top
+
+        small_font = ("TkDefaultFont", 9)
+
+        # -----------------------
+        # SCROLLER GLOBAL (Canvas + Scrollbar)
+        # -----------------------
+        outer_canvas = Canvas(top, highlightthickness=0)
+        vscroll = Scrollbar(top, orient="vertical", command=outer_canvas.yview)
+        outer_canvas.configure(yscrollcommand=vscroll.set)
+
+        vscroll.pack(side="right", fill="y")
+        outer_canvas.pack(side="left", fill="both", expand=True)
+
+        # Frame interior que contendrá TODOS los widgets
+        inner = Frame(outer_canvas)
+        inner_id = outer_canvas.create_window((0, 0), window=inner, anchor="nw")
+
+        # Actualizar scrollregion cuando cambie el tamaño interno
+        def _on_inner_config(event):
+            outer_canvas.configure(scrollregion=outer_canvas.bbox("all"))
+        inner.bind("<Configure>", _on_inner_config)
+
+        # También ajustar el ancho del inner window al ancho del canvas para evitar clipping horizontal
+        def _on_outer_config(event):
+            try:
+                outer_canvas.itemconfig(inner_id, width=event.width)
+            except Exception:
+                pass
+        outer_canvas.bind("<Configure>", _on_outer_config)
+
+        # Scroll con rueda del ratón: Windows/macOS y Linux (Button-4/5)
+        def _on_mousewheel(event):
+            if event.num == 4:       # Linux wheel up
+                outer_canvas.yview_scroll(-1, "units")
+            elif event.num == 5:     # Linux wheel down
+                outer_canvas.yview_scroll(1, "units")
+            else:
+                # Windows/macOS: event.delta en múltiplos de 120
+                delta = int(-1 * (event.delta / 120))
+                outer_canvas.yview_scroll(delta, "units")
+
+        # Bind globalmente para que funcione la rueda cuando el puntero esté sobre la ventana
+        outer_canvas.bind_all("<MouseWheel>", _on_mousewheel)   # Win/mac
+        outer_canvas.bind_all("<Button-4>", _on_mousewheel)     # Linux up
+        outer_canvas.bind_all("<Button-5>", _on_mousewheel)     # Linux down
+
+        # -----------------------
+        # CONTENIDO: fila con CONTROLES (izq) y PLOT (derecha)
+        # -----------------------
+        content_row = Frame(inner)
+        content_row.pack(fill="both", expand=True, padx=6, pady=6)
+
+        # LEFT: panel de controles (ancho fijo para mayor consistencia)
+        ctrl = Frame(content_row, width=260)
+        ctrl.pack(side="left", fill="y", padx=(0,8))
+
+        pad_y = 4
+        Label(ctrl, text="Forecast steps (N):", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_steps_var = IntVar(value=30)
+        Entry(ctrl, textvariable=self._forecast_steps_var, width=8, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        Label(ctrl, text="Trajectories:", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_trajectories_var = IntVar(value=5)
+        Entry(ctrl, textvariable=self._forecast_trajectories_var, width=8, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        Label(ctrl, text="Seed (optional):", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_seed_var = StringVar(value="")
+        Entry(ctrl, textvariable=self._forecast_seed_var, width=12, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        Label(ctrl, text="Noise scale (std dev):", font=small_font).pack(anchor="w", pady=(0, pad_y))
+        self._forecast_noise_var = DoubleVar(value=0.0)
+        Entry(ctrl, textvariable=self._forecast_noise_var, width=8, font=small_font).pack(anchor="w", pady=(0, pad_y))
+
+        self._forecast_stochastic_var = BooleanVar(value=True)
+        Checkbutton(ctrl, text="Stochastic (add noise)", variable=self._forecast_stochastic_var, font=small_font).pack(anchor="w", pady=(6, pad_y))
+
+        Button(ctrl, text="Run forecast", command=self._run_forecast_thread, font=small_font, width=18).pack(anchor="w", pady=(8,4))
+        Button(ctrl, text="Clear forecast overlays", command=lambda: self._clear_forecast_plot(), font=small_font, width=18).pack(anchor="w", pady=(4,4))
+        Button(ctrl, text="Close", command=lambda: (setattr(self, "_forecast_toplevel", None), top.destroy()), font=small_font, width=18).pack(anchor="w", pady=(8,4))
+
+        # RIGHT: frame para el plot (dentro del mismo inner frame, por eso scrollea globalmente)
+        plot_frame = Frame(content_row)
+        plot_frame.pack(side="left", fill="both", expand=True)
+
+        # Matplotlib figure (ligeramente más compacta)
+        fig = Figure(figsize=(7, 4), dpi=100)
+        ax = fig.add_subplot(111)
+        ax.set_title("Price + forecast")
+        ax.set_xlabel("index / time")
+        ax.grid(True)
+
+        canvas = FigureCanvasTkAgg(fig, master=plot_frame)
+        canvas.get_tk_widget().pack(fill="both", expand=True)
+
+        # referencias para otros métodos
+        self._forecast_fig = fig
+        self._forecast_ax = ax
+        self._forecast_canvas = canvas
+        self._forecast_ctrl_canvas = outer_canvas  # si necesitas manipular el scroll externamente
+
+        # Pintamos el historial inicialmente
+        self._plot_history_on_forecast()
+
+
+
+    def _plot_history_on_forecast(self):
+        """Dibuja df_loaded en el canvas de forecast (llamar al abrir y después de cada forecast claro)."""
+        ax = getattr(self, "_forecast_ax", None)
+        fig = getattr(self, "_forecast_fig", None)
+        canvas = getattr(self, "_forecast_canvas", None)
+        if ax is None or fig is None or canvas is None:
+            return
+
+        ax.clear()
+        df = getattr(self, "df_loaded", None)
+        if df is None or df.empty:
+            ax.text(0.5, 0.5, "No df_loaded available", ha="center")
+            canvas.draw()
+            return
+
+        # intentar columna 'close' o 'price'
+        if "close" in df.columns:
+            series = pd.to_numeric(df["close"], errors="coerce")
+        elif "price" in df.columns:
+            series = pd.to_numeric(df["price"], errors="coerce")
+        else:
+            # elegir la última columna numérica
+            numcols = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])]
+            if not numcols:
+                ax.text(0.5,0.5,"No numeric column found in df_loaded", ha="center")
+                canvas.draw()
+                return
+            series = pd.to_numeric(df[numcols[-1]], errors="coerce")
+
+        series = series.dropna()
+        ax.plot(series.values, label="history")
+        ax.set_title(f"History (len={len(series)})")
+        ax.legend()
+        canvas.draw()
+
+    def _run_forecast_thread(self):
+        t = threading.Thread(target=self._run_forecast, daemon=True)
+        t.start()
+        self._enqueue_log("Forecast worker started (background).")
+
+    def _run_forecast(self):
+        """
+        Core loop: crea N pasos adelante por trajectory. Intenta reutilizar:
+          - self.model (puede ser PyTorch nn.Module) o modelo con .predict
+          - self.model_scaler / self.scaler_used para transformar
+          - self.model_meta['feature_cols'] o self.feature_cols_used para construir secuencia
+        NOTA: asume que el modelo devuelve retornos en forma 'pct change' (p.ej. 0.001 = 0.1%).
+        Si tus retornos son log-returns, sustituir price_next = last_price * np.exp(ret).
+        """
+        import numpy as _np
+        # params desde UI
+        N = int(getattr(self, "_forecast_steps_var", IntVar(value=30)).get())
+        n_traj = int(getattr(self, "_forecast_trajectories_var", IntVar(value=1)).get())
+        seed = getattr(self, "_forecast_seed_var", StringVar(value="")).get()
+        stochastic = bool(getattr(self, "_forecast_stochastic_var", BooleanVar(value=True)).get())
+        noise_scale = float(getattr(self, "_forecast_noise_var", DoubleVar(value=0.0)).get())
+
+        if seed != "":
+            try:
+                seed_i = int(seed)
+                _np.random.seed(seed_i)
+            except Exception:
+                # allow non-int seeds via hash
+                _np.random.seed(abs(hash(seed)) % (2**32 - 1))
+
+        df = getattr(self, "df_loaded", None)
+        if df is None or df.empty:
+            self._enqueue_log("No df_loaded available for forecast.")
+            return
+
+        # Detect last price
+        last_price = None
+        if "close" in df.columns:
+            last_price = float(pd.to_numeric(df["close"].iloc[-1], errors="coerce"))
+        elif "price" in df.columns:
+            last_price = float(pd.to_numeric(df["price"].iloc[-1], errors="coerce"))
+        else:
+            # fallback: attempt UI var
+            try:
+                last_price = float(self.last_price_var.get())
+            except Exception:
+                last_price = float(df.select_dtypes(include="number").iloc[-1, -1])
+
+        # Determine feature columns and seq_len
+        seq_len = int(getattr(self, "seq_len", IntVar(value=32)).get())
+        feature_cols = None
+        if getattr(self, "model_meta", None) and isinstance(self.model_meta, dict) and "feature_cols" in self.model_meta:
+            feature_cols = list(self.model_meta["feature_cols"])
+        elif getattr(self, "feature_cols_used", None):
+            feature_cols = list(self.feature_cols_used)
+        else:
+            # fallback: use numeric columns from df (exclude ts)
+            feature_cols = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])][-1:]
+        # Make sure we have at least one feature
+        if not feature_cols:
+            feature_cols = [df.select_dtypes(include="number").columns[-1]]
+
+        # Build last sequence (seq_len x n_features)
+        df_num = df.copy()
+        seq_src = df_num[feature_cols].astype(float).fillna(method="ffill").fillna(0.0)
+        if len(seq_src) < seq_len:
+            # pad by repeating first row
+            pad = pd.DataFrame([seq_src.iloc[0]] * (seq_len - len(seq_src)), columns=seq_src.columns)
+            seq_src = pd.concat([pad, seq_src], ignore_index=True)
+        seq0 = seq_src.iloc[-seq_len:].values.astype(float)  # shape (seq_len, n_features)
+
+        # scaler
+        scaler = getattr(self, "model_scaler", None) or getattr(self, "scaler_used", None)
+        uses_torch = (hasattr(self, "model") and torch is not None and isinstance(self.model, torch.nn.Module))
+
+        # prepare axes for plotting
+        ax = getattr(self, "_forecast_ax", None)
+        canvas = getattr(self, "_forecast_canvas", None)
+        if ax is None or canvas is None:
+            self._enqueue_log("Forecast plot canvas not found.")
+            return
+
+        # draw base history (so overlays are fresh)
+        self._plot_history_on_forecast()
+
+        trajectories = []
+        for t_i in range(n_traj):
+            seq = seq0.copy()
+            price = last_price
+            traj_prices = []
+            for step in range(N):
+                # scale
+                X_in = seq.copy()
+                if scaler is not None:
+                    try:
+                        X_in = scaler.transform(X_in)
+                    except Exception:
+                        # scaler may expect 2D (n_samples, n_features) - we supply seq shaped; many scalers use row-wise
+                        X_in = X_in
+
+                # prepare model input batch
+                y_pred = None
+                try:
+                    # Torch model path
+                    if uses_torch:
+                        # expects shape (batch, seq_len, n_features)
+                        xt = torch.tensor(X_in[None, :, :], dtype=torch.float32)
+                        device = next(self.model.parameters()).device if hasattr(self.model, "parameters") else torch.device("cpu")
+                        xt = xt.to(device)
+                        self.model.eval()
+                        with torch.no_grad():
+                            out = self.model(xt)
+                        # out may be tensor or tuple; try to extract scalar
+                        if isinstance(out, (tuple, list)):
+                            out = out[0]
+                        out = out.detach().cpu().numpy()
+                        # choose last output if shape (batch, steps, dim) or (batch, dim)
+                        if out.ndim == 3:
+                            y_pred = float(out[0, -1, 0])
+                        elif out.ndim == 2:
+                            y_pred = float(out[0, 0])
+                        else:
+                            y_pred = float(out)
+                    else:
+                        # sklearn-like predict
+                        model = getattr(self, "model", None)
+                        if model is None:
+                            raise RuntimeError("No model loaded (self.model is None).")
+                        # flatten input to 2D (1, seq_len * n_features) if necessary
+                        X_try = X_in[None, :, :]
+                        try:
+                            y_out = model.predict(X_try)
+                        except Exception:
+                            X_try2 = X_in.flatten()[None, :]
+                            y_out = model.predict(X_try2)
+                        if hasattr(y_out, "__len__"):
+                            y_pred = float(y_out[0])
+                        else:
+                            y_pred = float(y_out)
+                except Exception as e:
+                    # fallback: try a naive persistence (0 return)
+                    self._enqueue_log(f"Model predict failed at step {step}: {e}")
+                    y_pred = 0.0
+
+                # add stochastic noise if requested
+                if stochastic and (noise_scale is not None and noise_scale > 0.0):
+                    noise = _np.random.normal(scale=noise_scale)
+                    y_pred_noisy = y_pred + noise
+                else:
+                    y_pred_noisy = y_pred
+
+                # interpret prediction as pct-return by default (user may need to adapt)
+                price = price * np.exp(y_pred_noisy)
+                traj_prices.append(price)
+
+                # update seq: try to append either 'close' or 'ret' depending on feature_cols
+                # If 'close' in feature_cols -> append new close; elif any 'ret' substring in cols -> append return; else append ret to first feature
+                new_row = None
+                if any(c.lower() == "close" for c in feature_cols):
+                    # create a row matching feature_cols (copy last and replace close)
+                    last_row = seq[-1].copy()
+                    idx_close = feature_cols.index([c for c in feature_cols if c.lower() == "close"][0])
+                    last_row[idx_close] = price
+                    new_row = last_row
+                elif any("ret" in c.lower() or "return" in c.lower() for c in feature_cols):
+                    last_row = seq[-1].copy()
+                    # find first return-like column and set it
+                    for j, c in enumerate(feature_cols):
+                        if "ret" in c.lower() or "return" in c.lower():
+                            last_row[j] = float(y_pred_noisy)
+                            break
+                    new_row = last_row
+                else:
+                    # fallback: create new row by taking last and replacing first feature with predicted return
+                    last_row = seq[-1].copy()
+                    last_row[0] = float(y_pred_noisy)
+                    new_row = last_row
+
+                # roll the sequence
+                seq = _np.vstack([seq[1:], _np.array(new_row)])
+
+            trajectories.append(traj_prices)
+
+        # plot overlays
+        hist_len = 0
+        df_plot = getattr(self, "df_loaded", None)
+        if df_plot is not None:
+            if "close" in df_plot.columns:
+                hist_series = pd.to_numeric(df_plot["close"], errors="coerce").dropna()
+            elif "price" in df_plot.columns:
+                hist_series = pd.to_numeric(df_plot["price"], errors="coerce").dropna()
+            else:
+                hist_series = pd.to_numeric(df_plot.select_dtypes(include="number").iloc[:, -1], errors="coerce").dropna()
+            hist_len = len(hist_series)
+        else:
+            hist_series = None
+
+        colors = None
+        for i, traj in enumerate(trajectories):
+            x = list(range(hist_len, hist_len + len(traj)))
+            ax.plot(x, traj, linestyle="--", alpha=0.9, label=f"traj {i+1}")
+        ax.legend()
+        canvas.draw()
+        self._enqueue_log(f"Forecast finished: {len(trajectories)} trajectories x {N} steps.")
+
+
+    def _clear_forecast_plot(self):
+        ax = getattr(self, "_forecast_ax", None)
+        canvas = getattr(self, "_forecast_canvas", None)
+        if ax is None or canvas is None:
+            return
+        # redraw base history
+        self._plot_history_on_forecast()
+
 
     def _init_ui_logging(self, root_parent):
         """
@@ -1339,6 +1725,7 @@ class TradingAppExtended:
         self._build_train_tab()
         self._build_backtest_tab()
         self._build_status_tab()
+        self._build_audit_tab()
 
         # Logs area se puso en _init_ui_logging
         # frame_logs = Frame(self.root)
@@ -1396,6 +1783,261 @@ class TradingAppExtended:
         Button(top, text="Run simple backtest", command=self._start_backtest).pack(side=LEFT, padx=6)
         self.bt_text = Text(tab, height=20)
         self.bt_text.pack(fill=BOTH, expand=True, padx=6, pady=6)
+        
+    def _build_audit_tab(self):
+        """Añadir pestaña 'Audit' al Notebook. Llamar desde _build_ui()"""
+        tab = Frame(self.nb)
+        self.nb.add(tab, text="Audit")
+
+        top = Frame(tab)
+        top.pack(fill=X, padx=6, pady=6)
+
+        Label(top, text="Dataset Auditing Tools", font=("Arial", 11, "bold")).pack(anchor="w")
+
+        Button(top, text="Run Audit", command=self._run_audit).pack(side=LEFT, padx=6)
+        Button(top, text="Export features CSV", command=lambda: self._export_df(self.df_features, "features.csv")).pack(side=LEFT, padx=6)
+        Button(top, text="Export scaled CSV", command=lambda: self._export_df(self.df_scaled, "scaled.csv")).pack(side=LEFT, padx=6)
+        Button(top, text="Save Audit Report", command=lambda: self._save_audit_report()).pack(side=LEFT, padx=6)
+
+        # Audit display
+        self.audit_text = Text(tab, height=20)
+        self.audit_text.pack(fill=BOTH, expand=True, padx=6, pady=6)
+
+        # quick Treeview for a few checks results (optional)
+        cols = ("check", "result")
+        self.audit_tree = ttk.Treeview(tab, columns=cols, show="headings", height=6)
+        for c in cols:
+            self.audit_tree.heading(c, text=c)
+            self.audit_tree.column(c, width=300, anchor=W)
+        self.audit_tree.pack(fill=X, padx=6, pady=(0,6))
+
+    # ---------------------------
+    # Export helper
+    # ---------------------------
+    def _export_df(self, df: pd.DataFrame, filename: str):
+        if df is None:
+            self._append_audit_log(f"No hay dataframe para exportar: {filename}")
+            return
+        out_path = Path("exports")
+        out_path.mkdir(parents=True, exist_ok=True)
+        full = out_path / filename
+        try:
+            df.to_csv(full, index=False)
+            self._append_audit_log(f"Exportado {filename} → {full}")
+        except Exception as e:
+            self._append_audit_log(f"Error exportando {filename}: {e}")
+
+    # ---------------------------
+    # Small logger helper for the audit area
+    # ---------------------------
+    def _append_audit_log(self, msg: str):
+        ts = time.strftime("%Y-%m-%d %H:%M:%S")
+        line = f"[{ts}] {msg}\n"
+        try:
+            self.audit_text.insert("end", line)
+            self.audit_text.see("end")
+        except Exception:
+            # fallback if audit_text not ready
+            print(line)
+
+    # ---------------------------
+    # Save the last audit report to JSON
+    # ---------------------------
+    def _save_audit_report(self, outname: str = None):
+        outp = outname or f"audit_report_{int(time.time())}.json"
+        outdir = Path("exports")
+        outdir.mkdir(exist_ok=True)
+        full = outdir / outp
+        if not hasattr(self, "_last_audit_report") or self._last_audit_report is None:
+            self._append_audit_log("No hay informe de auditoría para guardar.")
+            return
+        try:
+            with open(full, "w", encoding="utf-8") as f:
+                json.dump(self._last_audit_report, f, indent=2, default=str)
+            self._append_audit_log(f"Audit report guardado en {full}")
+        except Exception as e:
+            self._append_audit_log(f"Error guardando informe: {e}")
+
+    # ---------------------------
+    # Rutina de auditoría principal
+    # ---------------------------
+    def _run_audit(self):
+        """
+        Ejecuta comprobaciones automáticas sobre:
+        - self.df_loaded (raw)
+        - self.df_features (technical features, pre-scaled)
+        - self.df_scaled  (features escaladas)
+        - self.feature_cols_used, self.scaler_used
+
+        Guarda resultados en self._last_audit_report (dict) y los escribe en audit_text / audit_tree.
+        """
+        # run in background thread to avoid bloquear UI
+        def _job():
+            report = {"timestamp": time.strftime("%Y-%m-%d %H:%M:%S"), "checks": [], "summary": {}}
+            self._last_audit_report = None
+
+            # Basic availability checks
+            if self.df_features is None:
+                report["checks"].append({"name": "df_features_present", "ok": False, "msg": "df_features is None"})
+                self._append_audit_log("df_features no cargado.")
+                self._last_audit_report = report
+                return
+            else:
+                report["checks"].append({"name": "df_features_present", "ok": True, "msg": f"shape={self.df_features.shape}"})
+
+            dff = self.df_features.copy()
+            dfs = self.df_scaled.copy() if self.df_scaled is not None else None
+
+            # 1) Metadata columns in features
+            meta_cols = [c for c in dff.columns if c.lower() in ("timestamp", "symbol", "created_at", "updated_at", "ts")]
+            if meta_cols:
+                report["checks"].append({"name": "metadata_columns", "ok": False, "msg": f"Metadata columns present: {meta_cols}"})
+            else:
+                report["checks"].append({"name": "metadata_columns", "ok": True, "msg": "no metadata columns detected"})
+
+            # 2) NaN / rows dropped detection (requires original df_loaded context)
+            if self.df_loaded is not None:
+                before = len(self.df_loaded)
+                after = len(dff)
+                dropped = before - after
+                report["checks"].append({"name": "dropna_rows", "ok": True, "msg": f"Rows before={before}, after features dropna={after}, dropped={dropped}"})
+            else:
+                report["checks"].append({"name": "dropna_rows", "ok": None, "msg": "df_loaded not available"})
+
+            # 3) Scaler checks
+            scaler = getattr(self, "scaler_used", None) or getattr(self, "model_scaler", None)
+            if scaler is None and dfs is None:
+                report["checks"].append({"name": "scaler_presence", "ok": False, "msg": "No scaler y no df_scaled disponibles"})
+            else:
+                if dfs is not None:
+                    # compute per-column means/std of scaled df
+                    means = dfs.mean(numeric_only=True).to_dict()
+                    stds = dfs.std(numeric_only=True, ddof=0).to_dict()
+                    # quick heuristic: if means ~ 0 and stds ~1 for many columns -> scaler likely fit on whole df
+                    near_zero = [c for c, v in means.items() if abs(v) < 1e-2]
+                    near_one = [c for c, v in stds.items() if abs(v - 1.0) < 0.05]
+                    pct_zero = len(near_zero) / max(1, len(means))
+                    pct_one = len(near_one) / max(1, len(stds))
+                    msg = f"{len(means)} cols: {len(near_zero)}≈0-mean ({pct_zero:.2%}), {len(near_one)}≈1-std ({pct_one:.2%})"
+                    suspect_full_scaler = pct_zero > 0.8 and pct_one > 0.8
+                    report["checks"].append({"name": "scaled_stats", "ok": not suspect_full_scaler, "msg": msg})
+                    if suspect_full_scaler:
+                        report["checks"].append({"name": "possible_scaler_fitted_on_all", "ok": False, "msg": "Scaled data statistics suggest scaler was fit on full dataset (means≈0,std≈1). Fit scaler only on train!"})
+                    else:
+                        report["checks"].append({"name": "scaler_stats_ok", "ok": True, "msg": "Scaled data not globally standardized OR scaler applied only to subset"})
+
+                if scaler is not None:
+                    # check feature_names_in_ alignment if available
+                    try:
+                        if hasattr(scaler, "feature_names_in_"):
+                            featnames = list(map(str, scaler.feature_names_in_))
+                            present = [c for c in featnames if c in dff.columns]
+                            missing = [c for c in featnames if c not in dff.columns]
+                            msg = f"scaler.feature_names_in_ count={len(featnames)}, missing in df_features={len(missing)}"
+                            ok = len(missing) == 0
+                            report["checks"].append({"name": "scaler_feature_names_alignment", "ok": ok, "msg": msg, "missing": missing})
+                        else:
+                            report["checks"].append({"name": "scaler_feature_names", "ok": None, "msg": "scaler has no feature_names_in_ attribute"})
+                    except Exception as e:
+                        report["checks"].append({"name": "scaler_feature_names_err", "ok": False, "msg": str(e)})
+
+            # 4) Exact-match leakage: features that equal future close shifted (close[t+k])
+            # We'll test k in 1..min(5, horizon)
+            if "close" in dff.columns:
+                M = min(5, int(getattr(self, "horizon", 5)))
+                matches = []
+                for k in range(1, M + 1):
+                    shifted = dff["close"].shift(-k)
+                    # For each feature, test if values equal shifted close (on the overlapping slice)
+                    for col in dff.columns:
+                        if col == "close": 
+                            continue
+                        a = dff[col].values
+                        b = shifted.values
+                        # align non-nans indices
+                        valid = ~np.isnan(b) & ~np.isnan(a)
+                        if valid.sum() < 10:
+                            continue
+                        # normalize floats with relatively tolerant check
+                        if np.allclose(a[valid], b[valid], atol=1e-6, rtol=1e-6):
+                            matches.append({"feature": col, "shift": k})
+                if matches:
+                    report["checks"].append({"name": "exact_shift_matches", "ok": False, "msg": f"Found {len(matches)} features that equal close.shift(-k)", "matches": matches})
+                else:
+                    report["checks"].append({"name": "exact_shift_matches", "ok": True, "msg": "No exact matches to future close detected"})
+
+            # 5) High correlation with future close (heuristic)
+            corr_flags = []
+            if "close" in dff.columns:
+                horizon = int(getattr(self, "horizon", 1))
+                future_close = dff["close"].shift(-horizon)
+                for col in dff.select_dtypes(include=[np.number]).columns:
+                    if col == "close":
+                        continue
+                    valid = (~dff[col].isna()) & (~future_close.isna())
+                    if valid.sum() < 20:
+                        continue
+                    c = np.corrcoef(dff[col].values[valid], future_close.values[valid])[0, 1]
+                    if not np.isfinite(c):
+                        continue
+                    if abs(c) > 0.95:  # very high correlation -> suspicious
+                        corr_flags.append({"feature": col, "corr_with_future_close": float(c)})
+                if corr_flags:
+                    report["checks"].append({"name": "very_high_corr_with_future_close", "ok": False, "msg": f"{len(corr_flags)} features highly correlated (>0.95) with future close", "details": corr_flags})
+                else:
+                    report["checks"].append({"name": "corr_with_future_close", "ok": True, "msg": "No features with extremely high corr (>0.95) with future close"})
+
+            # 6) Feature naming heuristics (suspicious patterns)
+            suspicious_names = [c for c in dff.columns if any(x in c.lower() for x in ["shift", "t+1", "next", "future", "target", "_lead", "_lag"]) ]
+            if suspicious_names:
+                report["checks"].append({"name": "suspicious_feature_names", "ok": False, "msg": f"Found suspicious names: {suspicious_names}"})
+            else:
+                report["checks"].append({"name": "suspicious_feature_names", "ok": True, "msg": "No suspicious names found"})
+
+            # 7) Recommend split indices for correct scaler fitting (if possible)
+            # Heuristic: if df length > seq_len + horizon, show recommended train_rows_end for val_frac if present
+            n_total = len(dff)
+            seq_len = int(getattr(self, "seq_len", 32))
+            val_frac = float(getattr(self, "val_frac", 0.2))
+            n_sequences = n_total - seq_len - int(getattr(self, "horizon", 1)) + 1
+            n_val_seq = max(1, int(round(val_frac * n_sequences)))
+            n_train_seq = n_sequences - n_val_seq
+            train_rows_end = seq_len + n_train_seq - 1
+            report["checks"].append({"name": "recommended_train_end", "ok": True, "msg": f"n_total={n_total}, n_seq={n_sequences}, recommended train_rows_end_idx={train_rows_end} (use df.iloc[:{train_rows_end+1}] to fit scaler)"})
+
+            # 8) Quick summary
+            report["summary"] = {
+                "n_features": len(dff.columns),
+                "n_rows": n_total,
+                "seq_len": seq_len,
+                "horizon": int(getattr(self, "horizon", 1)),
+                "scaler_present": scaler is not None,
+            }
+
+            # Save report to object and print to UI
+            self._last_audit_report = report
+
+            # Update GUI: textual and table
+            try:
+                self.audit_text.delete("1.0", "end")
+                for chk in report["checks"]:
+                    ok = chk.get("ok", None)
+                    tag = "OK" if ok else ("WARN" if ok is False else "N/A")
+                    line = f"{tag:4} {chk['name']:35} - {chk.get('msg','')}\n"
+                    self.audit_text.insert("end", line)
+                # populate tree with main flags (first 6)
+                for i in self.audit_tree.get_children():
+                    self.audit_tree.delete(i)
+                for chk in report["checks"][:8]:
+                    self.audit_tree.insert("", "end", values=(chk["name"], chk.get("msg","")))
+                self.audit_text.see("end")
+            except Exception:
+                print("Audit report:", report)
+
+        # run job in thread
+        t = threading.Thread(target=_job, daemon=True)
+        t.start()
+
 
     def _build_status_tab(self):
         tab = Frame(self.nb); self.nb.add(tab, text="Status")

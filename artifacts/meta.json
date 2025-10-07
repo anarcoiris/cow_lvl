@@ -40,7 +40,7 @@
     "td_buy_setup",
     "td_sell_setup"
   ],
-  "seq_len": 128,
+  "seq_len": 256,
   "horizon": 20,
   "hidden": 96
 }

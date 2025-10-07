@@ -1,0 +1,3 @@
+[2025-10-02 18:35:56] INFO root: init_logging: logfile=logs\log_20251002_163556.txt
+[2025-10-02 18:35:56] INFO __main__: Logging initialized
+[2025-10-02 18:36:03] INFO root: Config loaded from config\gui_config.json

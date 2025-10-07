@@ -1,0 +1,113 @@
+[2025-10-02 17:16:53] INFO root: init_logging: logfile=logs\log_20251002_151653.txt
+[2025-10-02 17:16:53] INFO __main__: Logging initialized
+[2025-10-02 17:17:00] INFO root: Config loaded from config\gui_config.json
+[2025-10-02 17:17:00] ERROR __main__: DB writer failed to start
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 1018, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+[2025-10-02 17:17:00] ERROR root: DB writer failed to start:
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 1018, in _db_writer_loop
+    conn = sqlite3.connect(str(db_path), check_same_thread=True, timeout=5.0)
+sqlite3.OperationalError: unable to open database file
+
+[2025-10-02 17:25:31] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:25:44] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:25:44] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:25:44] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:25:45] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:25:45] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:25:45] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:25:46] INFO root: Preview loaded: 200 rows.
+[2025-10-02 17:26:12] INFO root: meta.json leído: artifacts\meta.json
+[2025-10-02 17:26:13] INFO root: state_dict cargado con strict=True.
+[2025-10-02 17:26:13] INFO root: Modelo preparado en device cpu (input_size=39, hidden=96, num_layers=2).
+[2025-10-02 17:26:13] INFO root: Modelo cargado desde artifacts\model_best.pt y metadata aplicada: {'feature_cols': ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10', 'raw_vol_30', 'fib_r_236', 'dist_fib_r_236', 'fib_r_382', 'dist_fib_r_382', 'fib_r_500', 'dist_fib_r_500', 'fib_r_618', 'dist_fib_r_618', 'fib_r_786', 'dist_fib_r_786', 'fibext_1272', 'dist_fibext_1272', 'fibext_1618', 'dist_fibext_1618', 'fibext_2000', 'dist_fibext_2000', 'td_buy_setup', 'td_sell_setup'], 'seq_len': 128, 'horizon': 20, 'hidden': 96, 'input_size': 39, 'num_layers': 2}
+[2025-10-02 17:26:13] INFO root: Scaler cargado desde artifacts\scaler.pkl.
+[2025-10-02 17:26:51] INFO websocket: Websocket connected
+[2025-10-02 17:26:51] INFO root: WS open (callback)
+[2025-10-02 17:26:57] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-10-02 17:26:57] INFO TradingDaemon: Daemon loop started.
+[2025-10-02 17:26:57] INFO root: Daemon started.
+[2025-10-02 17:26:57] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:02] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:08] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:13] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:19] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:19] INFO root: meta.json leído: artifacts\meta.json
+[2025-10-02 17:27:19] INFO root: state_dict cargado con strict=True.
+[2025-10-02 17:27:19] INFO root: Modelo preparado en device cpu (input_size=39, hidden=96, num_layers=2).
+[2025-10-02 17:27:19] INFO root: Modelo cargado desde artifacts\model_best.pt y metadata aplicada: {'feature_cols': ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10', 'raw_vol_30', 'fib_r_236', 'dist_fib_r_236', 'fib_r_382', 'dist_fib_r_382', 'fib_r_500', 'dist_fib_r_500', 'fib_r_618', 'dist_fib_r_618', 'fib_r_786', 'dist_fib_r_786', 'fibext_1272', 'dist_fibext_1272', 'fibext_1618', 'dist_fibext_1618', 'fibext_2000', 'dist_fibext_2000', 'td_buy_setup', 'td_sell_setup'], 'seq_len': 128, 'horizon': 20, 'hidden': 96, 'input_size': 39, 'num_layers': 2}
+[2025-10-02 17:27:19] INFO root: Scaler cargado desde artifacts\scaler.pkl.
+[2025-10-02 17:27:24] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:30] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:31] INFO TradingDaemon: Daemon stopped.
+[2025-10-02 17:27:31] INFO root: Daemon stopped.
+[2025-10-02 17:27:33] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-10-02 17:27:33] INFO TradingDaemon: Daemon loop started.
+[2025-10-02 17:27:33] INFO root: Daemon started.
+[2025-10-02 17:27:33] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:38] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:27:40] INFO TradingDaemon: Daemon stopped.
+[2025-10-02 17:27:40] INFO root: Daemon stopped.
+[2025-10-02 17:27:46] INFO root: Prepare: loading data from sqlite...
+[2025-10-02 17:27:46] INFO root: Prepare thread started.
+[2025-10-02 17:27:47] INFO root: Loaded 106067 rows from sqlite.
+[2025-10-02 17:27:48] INFO root: Computed features. Shape: (106067, 47)
+[2025-10-02 17:27:48] INFO root: dropna: before=106067, after=106018, removed=49
+[2025-10-02 17:27:48] INFO root: Feature cols selected (39): ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10']...
+[2025-10-02 17:27:48] INFO root: Building sequences...
+[2025-10-02 17:27:55] INFO root: Sequences built: N=105871, seq_len=128, features=39
+[2025-10-02 17:27:56] INFO root: No model file selected in UI. Use 'Load artifacts model' to load artifacts/model_best.pt.
+[2025-10-02 17:28:01] INFO root: meta.json leído: artifacts\meta.json
+[2025-10-02 17:28:01] INFO root: state_dict cargado con strict=True.
+[2025-10-02 17:28:01] INFO root: Modelo preparado en device cpu (input_size=39, hidden=96, num_layers=2).
+[2025-10-02 17:28:01] INFO root: Modelo cargado desde artifacts\model_best.pt y metadata aplicada: {'feature_cols': ['log_close', 'ret_1', 'log_ret_1', 'ret_5', 'log_ret_5', 'sma_5', 'sma_20', 'sma_50', 'ema_5', 'ema_20', 'ema_50', 'ma_diff_20', 'bb_m', 'bb_std', 'bb_up', 'bb_dn', 'bb_width', 'rsi_14', 'atr_14', 'raw_vol_10', 'raw_vol_30', 'fib_r_236', 'dist_fib_r_236', 'fib_r_382', 'dist_fib_r_382', 'fib_r_500', 'dist_fib_r_500', 'fib_r_618', 'dist_fib_r_618', 'fib_r_786', 'dist_fib_r_786', 'fibext_1272', 'dist_fibext_1272', 'fibext_1618', 'dist_fibext_1618', 'fibext_2000', 'dist_fibext_2000', 'td_buy_setup', 'td_sell_setup'], 'seq_len': 128, 'horizon': 20, 'hidden': 96, 'input_size': 39, 'num_layers': 2}
+[2025-10-02 17:28:01] INFO root: Scaler cargado desde artifacts\scaler.pkl.
+[2025-10-02 17:28:06] INFO root: Scaler fitted and df_scaled prepared.
+[2025-10-02 17:28:06] INFO root: Preview raw (first 5 rows):
+   id   symbol timeframe          ts       open       high        low      close     volume  source     created_at     updated_at                 timestamp
+0   1  BTCUSDT        1m  1752231240  118117.79  118129.59  118090.00  118093.63    9.27987  influx  1759186315000  1759406605000 2025-07-11 10:54:00+00:00
+1   2  BTCUSDT        1m  1752231300  118093.63  118093.63  117980.00  117980.01  111.28787  influx  1759186315000  1759406605000 2025-07-11 10:55:00+00:00
+2   3  BTCUSDT        1m  1752231360  117980.00  118023.34  117980.00  118022.39    9.13797  influx  1759186315000  1759406605000 2025-07-11 10:56:00+00:00
+3   4  BTCUSDT        1m  1752231420  118022.38  118022.38  117946.72  117968.01   30.41224  influx  1759186315000  1759406605000 2025-07-11 10:57:00+00:00
+4   5  BTCUSDT        1m  1752231480  117968.01  117968.01  117964.71  117964.72    7.69926  influx  1759186315000  1759406605000 2025-07-11 10:58:00+00:00
+[2025-10-02 17:28:06] INFO root: Preview features (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5          sma_5         sma_20         sma_50          ema_5         ema_20         ema_50  ma_diff_20           bb_m     bb_std          bb_up          bb_dn  bb_width     rsi_14     atr_14  raw_vol_10  raw_vol_30      fib_r_236  dist_fib_r_236      fib_r_382  dist_fib_r_382      fib_r_500  dist_fib_r_500      fib_r_618  dist_fib_r_618      fib_r_786  dist_fib_r_786   fibext_1272  dist_fibext_1272    fibext_1618  dist_fibext_1618    fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250  11.676602 -0.000158  -0.000158  0.000130   0.000130  117794.093750  117726.835938  117817.375000  117788.960938  117759.851562  117815.523438   56.574001  117726.835938  62.577103  117851.992188  117601.679688  0.002126  74.286270  28.154285    0.000165    0.000244  117712.117188        0.130470  117791.898438       -0.015530  117856.375000       -0.133530  117920.851562       -0.251530  118012.656250       -0.419530  118278.21875         -0.905530  118467.281250         -1.251530  118676.023438         -1.633530             1              0   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750  11.676430 -0.000173  -0.000173 -0.000181  -0.000181  117789.820312  117732.296875  117810.757812  117780.312500  117760.156250  117813.460938   30.714001  117732.296875  60.602898  117853.500000  117611.093750  0.002059  63.416958  25.852142    0.000176    0.000238  117707.632812        0.104987  117784.640625       -0.041013  117846.882812       -0.159013  117909.117188       -0.277013  117997.726562       -0.445013  118254.06250         -0.931013  118436.554688         -1.277013  118638.039062         -1.659013             2              0   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750  11.676239 -0.000190  -0.000190 -0.000493  -0.000493  117778.210938  117738.859375  117805.968750  117767.085938  117758.296875  117810.609375    1.772500  117738.859375  53.255333  117845.367188  117632.343750  0.001809  59.572964  27.683571    0.000189    0.000234  117707.632812        0.062555  117784.640625       -0.083445  117846.882812       -0.201445  117909.117188       -0.319445  117997.726562       -0.487445  118254.06250         -0.973445  118436.554688         -1.319445  118638.039062         -1.701445             3              0  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875  11.675980 -0.000260  -0.000260 -0.000781  -0.000781  117759.820312  117743.359375  117799.726562  117748.070312  117753.703125  117806.664062  -33.310501  117743.359375  45.987026  117835.335938  117651.382812  0.001562  48.687981  24.362858    0.000138    0.000239  117707.632812        0.004577  117784.640625       -0.141423  117846.882812       -0.259423  117909.117188       -0.377423  117997.726562       -0.545423  118254.06250         -1.031423  118436.554688         -1.377423  118638.039062         -1.759423             4              0   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000  11.675895 -0.000085  -0.000085 -0.000866  -0.000866  117739.421875  117744.781250  117794.367188  117732.054688  117748.585938  117802.476562  -44.774502  117744.781250  44.045681  117832.875000  117656.695312  0.001496  39.702305  22.860714    0.000137    0.000233  117707.632812       -0.014458  117784.640625       -0.160458  117846.882812       -0.278458  117909.117188       -0.396458  117997.726562       -0.564458  118254.06250         -1.050458  118436.554688         -1.396458  118638.039062         -1.778458             5              0  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-02 17:28:06] INFO root: Preview scaled (first 5 rows):
+           close           high            low  log_close     ret_1  log_ret_1     ret_5  log_ret_5     sma_5    sma_20    sma_50     ema_5    ema_20    ema_50  ma_diff_20      bb_m    bb_std     bb_up     bb_dn  bb_width    rsi_14    atr_14  raw_vol_10  raw_vol_30  fib_r_236  dist_fib_r_236  fib_r_382  dist_fib_r_382  fib_r_500  dist_fib_r_500  fib_r_618  dist_fib_r_618  fib_r_786  dist_fib_r_786  fibext_1272  dist_fibext_1272  fibext_1618  dist_fibext_1618  fibext_2000  dist_fibext_2000  td_buy_setup  td_sell_setup    volume           timestamp       open   symbol timeframe
+0  117783.406250  117802.007812  117783.406250   0.653864 -0.360892  -0.360023  0.135259   0.135473  0.654387  0.633246  0.661992  0.652800  0.643795  0.661724    0.462637  0.633246 -0.170567  0.624459  0.641221 -0.186455  1.292396 -0.492627   -0.699378   -0.502334   0.670764       -0.441500   0.673970       -0.441500   0.676452       -0.441500   0.678835       -0.441500   0.682062       -0.441500     0.690270         -0.441500     0.695105         -0.441500     0.699491         -0.441500     -0.339823      -0.636844   9.38562 2025-07-11 11:43:00  117802.00  BTCUSDT        1m
+1  117763.007812  117783.421875  117751.218750   0.647611 -0.395959  -0.395031 -0.184571  -0.183744  0.653039  0.634970  0.659902  0.650071  0.643891  0.661072    0.253025  0.634970 -0.204125  0.624933  0.644200 -0.219341  0.711972 -0.562617   -0.655946   -0.525845   0.669343       -0.520956   0.671674       -0.520956   0.673452       -0.520956   0.675131       -0.520956   0.677358       -0.520956     0.682715         -0.520956     0.685557         -0.520956     0.687787         -0.520956     -0.045284      -0.636844   8.65069 2025-07-11 11:44:00  117783.42  BTCUSDT        1m
+2  117740.632812  117763.007812  117727.843750   0.640702 -0.434546  -0.433552 -0.505456  -0.504114  0.649375  0.637041  0.658389  0.645897  0.643304  0.660171    0.018437  0.637041 -0.329018  0.622376  0.650925 -0.341607  0.506701 -0.506937   -0.610071   -0.543360   0.669343       -0.653258   0.671674       -0.653258   0.673452       -0.653258   0.675131       -0.653258   0.677358       -0.653258     0.682715         -0.653258     0.685557         -0.653258     0.687787         -0.653258      0.249255      -0.636844  12.10969 2025-07-11 11:45:00  117763.01  BTCUSDT        1m
+3  117710.046875  117740.632812  117710.046875   0.631305 -0.594178  -0.592920 -0.801784  -0.800056  0.643572  0.638462  0.656417  0.639896  0.641853  0.658924   -0.265933  0.638462 -0.452565  0.619221  0.656951 -0.462527 -0.074559 -0.607895   -0.800512   -0.523179   0.669343       -0.834035   0.671674       -0.834035   0.673452       -0.834035   0.675131       -0.834035   0.677358       -0.834035     0.682715         -0.834035     0.685557         -0.834035     0.687787         -0.834035      0.543794      -0.636844   9.20696 2025-07-11 11:46:00  117740.63  BTCUSDT        1m
+4  117700.007812  117710.062500  117700.000000   0.628230 -0.194577  -0.194001 -0.889524  -0.887698  0.637135  0.638910  0.654724  0.634841  0.640238  0.657601   -0.358856  0.638910 -0.485563  0.618448  0.658632 -0.494824 -0.554397 -0.653563   -0.806954   -0.548744   0.669343       -0.893388   0.671674       -0.893388   0.673452       -0.893388   0.675131       -0.893388   0.677358       -0.893387     0.682715         -0.893388     0.685557         -0.893388     0.687787         -0.893388      0.838332      -0.636844  10.32029 2025-07-11 11:47:00  117710.06  BTCUSDT        1m
+[2025-10-02 17:28:06] INFO root: Prepare stage finished successfully.
+[2025-10-02 17:28:06] INFO TradingDaemon: TradingDaemon initialized (symbol=BTCUSDT, tf=1m, paper=True, ledger=artifacts\ledger.csv).
+[2025-10-02 17:28:06] INFO TradingDaemon: Daemon loop started.
+[2025-10-02 17:28:06] INFO root: Daemon started.
+[2025-10-02 17:28:06] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:28:12] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:28:17] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:28:23] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:28:29] INFO TradingDaemon: Model or torch unavailable; skipping prediction.
+[2025-10-02 17:28:34] INFO TradingDaemon: Daemon stopped.
+[2025-10-02 17:28:34] INFO root: Daemon stopped.
+[2025-10-02 18:20:50] INFO root: WS error: Connection to remote host was lost.
+[2025-10-02 18:20:50] ERROR websocket: Connection to remote host was lost. - goodbye
+[2025-10-02 18:20:50] ERROR root: WS error: Connection to remote host was lost.
+[2025-10-02 18:20:50] INFO root: WS closed: None None
+[2025-10-02 18:24:19] CRITICAL root: Uncaught exception
+Traceback (most recent call last):
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 3497, in <module>
+    main()
+  File "C:\Users\aladin\Documents\github\cow-lvl\tradeapp.py", line 3493, in main
+    root.mainloop()
+  File "C:\Users\aladin\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
